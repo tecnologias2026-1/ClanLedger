@@ -1,0 +1,183 @@
+/* ESTILOS GENERALES DE TODA LA PÁGINA */
+body{
+font-family: Arial, sans-serif; /* tipo de letra de toda la página */
+margin:0; /* elimina el margen que los navegadores ponen por defecto */
+background:#f5f5f5; /* color de fondo gris claro */
+
+display:flex; /* activa flexbox para organizar los elementos */
+flex-direction:column; /* organiza header, main y footer en columna */
+
+height:100vh; /* hace que el body tenga exactamente la altura de la ventana */
+overflow:hidden; /* evita que aparezca scroll - REGLA DEL PROFE */
+}
+
+
+/* HEADER */
+.header{
+background:#d9d9d9; /* color de fondo del header */
+/* REJILLA */
+background-image:
+linear-gradient(#cfcfcf 1px, transparent 1px),
+linear-gradient(90deg, #cfcfcf 1px, transparent 1px);
+background-size:40px 40px;
+padding:20px 80px; /* espacio interno arriba/abajo y lados */
+}
+
+
+/* CONTENEDOR DEL LOGO Y TEXTO */
+.logo{
+display:flex; /* coloca el logo y el texto en una fila */
+align-items:center; /* alinea verticalmente el logo y el texto */
+gap:10px; /* espacio entre el logo y el texto */
+font-size:28px; /* tamaño del texto del logo */
+font-weight:bold; /* hace el texto más grueso */
+color:#1c2340; /* color del texto */
+}
+
+
+/* TAMAÑO DEL LOGO */
+.logo-img{
+height:50px; /* altura del logo */
+}
+
+
+/* CONTENEDOR PRINCIPAL DE LA PÁGINA (donde está el formulario) */
+.container{
+flex:1; /* ocupa todo el espacio disponible entre header y footer */
+display:flex; /* activa flexbox */
+justify-content:center; /* centra horizontalmente el formulario */
+align-items:center; /* centra verticalmente el formulario */
+padding:10px; /* pequeño espacio interno */
+}
+
+
+/* CAJA DEL FORMULARIO */
+.form-box{
+background:#ffffff; /* color de fondo blanco */
+padding:25px; /* espacio entre el contenido y el borde */
+border-radius:12px; /* esquinas redondeadas */
+width:100%;
+max-width:680px; /* ancho ajustado para que no force el scroll */
+
+
+/* SOMBRA MEJORADA MÁS SUAVE */
+box-shadow:0 8px 20px rgba(0,0,0,0.1); 
+
+/* ANIMACIÓ*/
+transition:0.2s ease;
+display: flex;
+flex-direction: column;
+align-items: center; /* centra todo el contenido */
+
+}
+.login-box {
+    max-width: 400px; /* Esto hace que el Login sea más angosto que el Registro */
+}
+
+/* TITULO DEL FORMULARIO */
+.form-box h2{
+text-align:center; 
+margin-bottom:20px; 
+color:#1c2340; 
+font-size: 22px;
+}
+
+
+/* FILAS DE INPUTS */
+.row{
+display:flex; 
+gap:15px; 
+width: 100%;
+}
+
+
+/* ESTILO GENERAL DE TODOS LOS INPUTS */
+input{
+width:100%; 
+padding:10px; 
+margin:5px 0; 
+border:none; 
+border-radius:8px; 
+background:#e0e0e0; 
+font-size:13px; 
+box-sizing: border-box; /* asegura que el padding no agrande el input */
+}
+
+
+/* BOTÓN DE REGISTRO / LOGIN */
+.register{
+margin-top:15px; 
+width:auto;
+min-width: 160px;
+padding:10px 25px; 
+border:none; 
+border-radius:10px; 
+background:#1c2340; 
+color:white; 
+font-size:14px; 
+font-weight: bold;
+cursor:pointer; 
+transition:0.3s;
+display: block;    /* Permite que el botón acepte márgenes automáticos */
+margin-left: auto;  /* Empuja desde la izquierda */
+margin-right: auto; /* Empuja desde la derecha */
+    width: auto;        /* Para que no ocupe todo el ancho si no quieres */
+min-width: 180px;   /* Mantiene un tamaño elegante como en Figma */
+}
+
+
+/* FOOTER (parte inferior de la página) */
+.footer{
+padding:10px 80px 20px 80px; /* reducido para evitar scroll */
+background: #f5f5f5;
+}
+
+/* LÍNEA DEL FOOTER: Simple y no tan larga */
+.footer-line {
+border: 0;
+border-top: 1px solid #ccc;
+margin-bottom: 10px;
+width: 100%;
+}
+
+
+/* LOGO DEL FOOTER */
+.footer-logo{
+height:35px; 
+display:block; 
+margin-bottom: 5px;
+}
+
+/* TEXTO HEADER */
+.subtitle{
+font-size:28px;   
+color:#555;       
+margin-top:5px;   
+font-weight: normal;
+}
+
+/* TEXTO FOOTER */
+.footer-subtitle{
+font-size:13px; 
+color:#666; 
+margin:0; 
+}
+
+.footer-year{
+font-size:11px; 
+color:#999; 
+margin-top:2px;
+}
+
+/* GÉNERO (Para el registro) */
+.gender{
+display:flex; 
+gap:8px; 
+width: 100%;
+margin: 10px 0;
+}
+.gender input{ display:none; }
+.gender label{
+flex:1; padding:8px; border-radius:8px; background:#e0e0e0; text-align:center; cursor:pointer; font-size:12px;
+}
+.gender input:checked + label{ background:#1c2340; color:white; }
