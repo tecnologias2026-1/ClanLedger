@@ -70,6 +70,12 @@ body {
   gap: 0;
 }
 
+.user-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .toggle-circle {
   position: absolute;
   width: 38px;
@@ -78,13 +84,13 @@ body {
   border-radius: 50%;
   top: 5px;
   left: 5px;
-  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
   pointer-events: none;
 }
 
-.toggle-circle.active-family {
-  left: 43px; /* 5px padding + 38px first button */
+#view-family:checked ~ .toggle-circle {
+  transform: translateX(38px);
 }
 
 .toggle-btn {
@@ -112,6 +118,12 @@ body {
   height: 22px;
   object-fit: contain;
   display: block;
+  transition: filter 0.2s ease;
+}
+
+#view-person:checked ~ label[for="view-person"] img,
+#view-family:checked ~ label[for="view-family"] img {
+  filter: brightness(0) invert(1);
 }
 
 /* =============================================
@@ -187,6 +199,7 @@ body {
     transform 0.15s,
     box-shadow 0.2s;
   letter-spacing: 0.1px;
+  text-decoration: none;
 }
 
 .btn-primary:hover {
@@ -315,6 +328,8 @@ body {
     opacity 0.18s,
     color 0.15s,
     transform 0.18s;
+  text-decoration: none;
+  display: inline-flex;
 }
 
 .budget-item:hover .item-edit-btn {
@@ -458,6 +473,11 @@ body {
   visibility: visible;
 }
 
+body:has(.modal:target) .modal-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* =============================================
    MODAL
    ============================================= */
@@ -481,6 +501,12 @@ body {
 }
 
 .modal.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%);
+}
+
+.modal:target {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, -50%);
@@ -572,7 +598,26 @@ body {
   width: 100%;
 }
 
+.form-group select {
+  border: 1px solid #dde0e8;
+  border-radius: 8px;
+  padding: 10px 13px;
+  font-size: 14px;
+  color: #1a2744;
+  background: #f8f9fb;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  width: 100%;
+}
+
 .form-group input:focus {
+  border-color: #1a2744;
+  background: #ffffff;
+}
+
+.form-group select:focus {
   border-color: #1a2744;
   background: #ffffff;
 }
@@ -750,6 +795,7 @@ body {
     background 0.18s,
     color 0.18s;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
 .btn-danger:hover {
