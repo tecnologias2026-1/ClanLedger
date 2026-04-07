@@ -1,155 +1,214 @@
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name = "viewport" content = "width=device-width">
-    <link rel="stylesheet" href="../css/stylestransacciones.css" >
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="../css/stylestransacciones.css" />
     <title>ClanLedger</title>
-</head>
+  </head>
 
-<body>
-    <div class="header">
-        <div class="headleft">
+  <body>
+    <div class="layout">
+      <aside class="sidebar"></aside>
+
+      <main class="main-content">
+        <div class="header">
+          <div class="headleft">
             <h2>Transacciones</h2>
             <h3>Gestiona tus ingresos y gastos</h3>
-        </div>
-        <div class="headright">
-            <div class="bgheadright">
-                <img src="../assets/imagenes/person_1.png" alt="modo personal" class="modopers">
-                <img src="../assets/imagenes/famgroup.png" alt="modo familiar" class="modofam">
+          </div>
+          <div class="headright">
+            <div class="user-toggle">
+              <input
+                type="radio"
+                name="view-mode"
+                id="view-person"
+                class="view-radio"
+                checked
+              />
+              <input
+                type="radio"
+                name="view-mode"
+                id="view-family"
+                class="view-radio"
+              />
+              <div class="toggle-circle"></div>
+              <label
+                class="toggle-btn"
+                id="btn-person"
+                for="view-person"
+                title="Vista personal"
+              >
+                <img
+                  class="toggle-icon toggle-icon-person-default"
+                  src="../assets/imagenes/person_2.png"
+                  id="icon-person"
+                  alt="Persona"
+                />
+                <img
+                  class="toggle-icon toggle-icon-person-active"
+                  src="../assets/imagenes/person_1.png"
+                  alt="Persona activa"
+                />
+              </label>
+              <label
+                class="toggle-btn"
+                id="btn-family"
+                for="view-family"
+                title="Vista familiar"
+              >
+                <img
+                  class="toggle-icon toggle-icon-family-default"
+                  src="../assets/imagenes/family_group_1.png"
+                  id="icon-family"
+                  alt="Familiar"
+                />
+                <img
+                  class="toggle-icon toggle-icon-family-active"
+                  src="../assets/imagenes/family_group_2.png"
+                  alt="Familiar activo"
+                />
+              </label>
             </div>
-            
+          </div>
         </div>
-    </div>
 
-    <button class="nuevatransaccion">
-        <a href="#">Nueva Transacción</a>
-    </button>
+        <a class="nuevatransaccion" href="#">Nueva Transacción</a>
 
-   <div class="busqueda">
-    <div class="grupo-filtro filtro-grande">
-        <label>Buscar</label>
-        <input type="text" placeholder="Búsqueda">
-    </div>
-    <div class="grupo-filtro">
-        <label>Tipo</label>
-        <div class="select-falso">Elige la opción</div>
-    </div>
-    <div class="grupo-filtro">
-        <label>Categoría</label>
-        <div class="select-falso">Todas</div>
-    </div>
-    <div class="grupo-filtro">
-        <label>Miembro</label>
-        <div class="select-falso">Todos</div>
-    </div>
-</div>
+        <div class="busqueda">
+          <div class="grupo-filtro filtro-grande">
+            <label>Buscar</label>
+            <input type="text" placeholder="Búsqueda" />
+          </div>
+          <div class="grupo-filtro">
+            <label>Tipo</label>
+            <div class="select-falso">Elige la opción</div>
+          </div>
+          <div class="grupo-filtro">
+            <label>Categoría</label>
+            <div class="select-falso">Todas</div>
+          </div>
+          <div class="grupo-filtro">
+            <label>Miembro</label>
+            <div class="select-falso">Todos</div>
+          </div>
+        </div>
 
-    <div class="cards">
-        <div class="card">
-            <div class="cardleft">
-                <div class="leftsup">
-                    <h4>Salario</h4>
-                    <img src = "../assets/imagenes/delete.png" alt = "Icono de eliminar">
-                </div>
-                <div class="leftinf">
-                    <p>21/02/26</p>
-                    <p>Salario</p>
-                    <p>Fernando</p>
-                    <p>Efectivo</p>
-                </div>
-            </div>
-            <div class="cardright">
-                <h3>+$4.000.000</h3>
-            </div>
-        </div>
-        <div class="card">
-            <div class="cardleft">
-                <div class="leftsup">
-                    <h4>Salario</h4>
-                    <img src = "../assets/imagenes/delete.png" alt = "Icono de eliminar">
-                </div>
-                <div class="leftinf">
-                    <p>21/02/26</p>
-                    <p>Salario</p>
-                    <p>Fernando</p>
-                    <p>Efectivo</p>
-                </div>
-            </div>
-            <div class="cardright">
-                <h3>+$4.000.000</h3>
-            </div>
-        </div>
+        <div class="cards">
           <div class="card">
             <div class="cardleft">
-                <div class="leftsup">
-                    <h4>Salario</h4>
-                    <img src = "../assets/imagenes/delete.png" alt = "Icono de eliminar">
-                </div>
-                <div class="leftinf">
-                    <p>21/02/26</p>
-                    <p>Salario</p>
-                    <p>Fernando</p>
-                    <p>Efectivo</p>
-                </div>
+              <div class="leftsup">
+                <h4>Salario</h4>
+                <img
+                  src="../assets/imagenes/delete.png"
+                  alt="Icono de eliminar"
+                />
+              </div>
+              <div class="leftinf">
+                <p>21/02/26</p>
+                <p>Salario</p>
+                <p>Fernando</p>
+                <p>Efectivo</p>
+              </div>
             </div>
             <div class="cardright">
-                <h3>+$4.000.000</h3>
+              <h3>+$4.000.000</h3>
             </div>
-        </div>
+          </div>
           <div class="card">
             <div class="cardleft">
-                <div class="leftsup">
-                    <h4>Salario</h4>
-                    <img src = "../assets/imagenes/delete.png" alt = "Icono de eliminar">
-                </div>
-                <div class="leftinf">
-                    <p>21/02/26</p>
-                    <p>Salario</p>
-                    <p>Fernando</p>
-                    <p>Efectivo</p>
-                </div>
+              <div class="leftsup">
+                <h4>Salario</h4>
+                <img
+                  src="../assets/imagenes/delete.png"
+                  alt="Icono de eliminar"
+                />
+              </div>
+              <div class="leftinf">
+                <p>21/02/26</p>
+                <p>Salario</p>
+                <p>Fernando</p>
+                <p>Efectivo</p>
+              </div>
             </div>
             <div class="cardright">
-                <h3>+$4.000.000</h3>
+              <h3>+$4.000.000</h3>
             </div>
-        </div>
+          </div>
           <div class="card">
             <div class="cardleft">
-                <div class="leftsup">
-                    <h4>Salario</h4>
-                    <img src = "../assets/imagenes/delete.png" alt = "Icono de eliminar">
-                </div>
-                <div class="leftinf">
-                    <p>21/02/26</p>
-                    <p>Salario</p>
-                    <p>Fernando</p>
-                    <p>Efectivo</p>
-                </div>
+              <div class="leftsup">
+                <h4>Salario</h4>
+                <img
+                  src="../assets/imagenes/delete.png"
+                  alt="Icono de eliminar"
+                />
+              </div>
+              <div class="leftinf">
+                <p>21/02/26</p>
+                <p>Salario</p>
+                <p>Fernando</p>
+                <p>Efectivo</p>
+              </div>
             </div>
             <div class="cardright">
-                <h3>+$4.000.000</h3>
+              <h3>+$4.000.000</h3>
             </div>
+          </div>
+          <div class="card">
+            <div class="cardleft">
+              <div class="leftsup">
+                <h4>Salario</h4>
+                <img
+                  src="../assets/imagenes/delete.png"
+                  alt="Icono de eliminar"
+                />
+              </div>
+              <div class="leftinf">
+                <p>21/02/26</p>
+                <p>Salario</p>
+                <p>Fernando</p>
+                <p>Efectivo</p>
+              </div>
+            </div>
+            <div class="cardright">
+              <h3>+$4.000.000</h3>
+            </div>
+          </div>
+          <div class="card">
+            <div class="cardleft">
+              <div class="leftsup">
+                <h4>Salario</h4>
+                <img
+                  src="../assets/imagenes/delete.png"
+                  alt="Icono de eliminar"
+                />
+              </div>
+              <div class="leftinf">
+                <p>21/02/26</p>
+                <p>Salario</p>
+                <p>Fernando</p>
+                <p>Efectivo</p>
+              </div>
+            </div>
+            <div class="cardright">
+              <h3>+$4.000.000</h3>
+            </div>
+          </div>
         </div>
+
+        <footer>
+          <div class="footer" id="foot">
+            <hr class="divisor" />
+            <div class="textofoot" id="fimg">
+              <img src="../assets/imagenes/Logo.png" alt="logo" />
+            </div>
+            <div class="textosvert" id="ftxt">
+              <h4>Tu ecosistema financiero todo en uno.</h4>
+              <h4>© 2026. The ClanLedger Team</h4>
+            </div>
+          </div>
+        </footer>
+      </main>
     </div>
-
-     <footer>
-        <div class="footer" id="foot">
-
-            <hr class="divisor">
-
-            <div class="textofoot" id = "fimg">
-                <img src = "../assets/imagenes/Logo.png" alt = "logo">
-            </div>
-
-            <div class="textosvert" id = "ftxt">
-                <h4>Tu ecosistema financiero todo en uno.</h4>
-                <h4>© 2026. The ClanLedger Team</h4>
-            </div>
-
-        </div>
-    </footer>
-
-
-</body>
-
+  </body>
 </html>

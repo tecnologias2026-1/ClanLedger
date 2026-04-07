@@ -70,7 +70,7 @@ body {
   gap: 0;
 }
 
-.user-toggle input {
+.view-radio {
   position: absolute;
   opacity: 0;
   pointer-events: none;
@@ -84,13 +84,13 @@ body {
   border-radius: 50%;
   top: 5px;
   left: 5px;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
   pointer-events: none;
 }
 
 #view-family:checked ~ .toggle-circle {
-  transform: translateX(38px);
+  left: 43px; /* 5px padding + 38px first button */
 }
 
 .toggle-btn {
@@ -107,6 +107,7 @@ body {
   justify-content: center;
   padding: 0;
   transition: transform 0.15s;
+  text-decoration: none;
 }
 
 .toggle-btn:hover {
@@ -118,12 +119,43 @@ body {
   height: 22px;
   object-fit: contain;
   display: block;
-  transition: filter 0.2s ease;
 }
 
-#view-person:checked ~ label[for="view-person"] img,
-#view-family:checked ~ label[for="view-family"] img {
-  filter: brightness(0) invert(1);
+.toggle-icon-person-active,
+.toggle-icon-family-active {
+  display: none;
+}
+
+#view-person:checked ~ .toggle-btn#btn-person .toggle-icon-person-default {
+  display: block;
+}
+
+#view-person:checked ~ .toggle-btn#btn-person .toggle-icon-person-active {
+  display: none;
+}
+
+#view-person:checked ~ .toggle-btn#btn-family .toggle-icon-family-default {
+  display: block;
+}
+
+#view-person:checked ~ .toggle-btn#btn-family .toggle-icon-family-active {
+  display: none;
+}
+
+#view-family:checked ~ .toggle-btn#btn-person .toggle-icon-person-default {
+  display: none;
+}
+
+#view-family:checked ~ .toggle-btn#btn-person .toggle-icon-person-active {
+  display: block;
+}
+
+#view-family:checked ~ .toggle-btn#btn-family .toggle-icon-family-default {
+  display: none;
+}
+
+#view-family:checked ~ .toggle-btn#btn-family .toggle-icon-family-active {
+  display: block;
 }
 
 /* =============================================
@@ -329,7 +361,6 @@ body {
     color 0.15s,
     transform 0.18s;
   text-decoration: none;
-  display: inline-flex;
 }
 
 .budget-item:hover .item-edit-btn {
@@ -466,16 +497,13 @@ body {
   transition:
     opacity 0.25s ease,
     visibility 0.25s ease;
-}
-
-.modal-overlay.active {
-  opacity: 1;
-  visibility: visible;
+  pointer-events: none;
 }
 
 body:has(.modal:target) .modal-overlay {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* =============================================
@@ -498,12 +526,6 @@ body:has(.modal:target) .modal-overlay {
     opacity 0.25s ease,
     transform 0.25s ease,
     visibility 0.25s ease;
-}
-
-.modal.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -50%);
 }
 
 .modal:target {
@@ -546,6 +568,7 @@ body:has(.modal:target) .modal-overlay {
   border-radius: 6px;
   flex-shrink: 0;
   transition: opacity 0.15s;
+  text-decoration: none;
 }
 
 .modal-close:hover {
@@ -598,26 +621,26 @@ body:has(.modal:target) .modal-overlay {
   width: 100%;
 }
 
-.form-group select {
-  border: 1px solid #dde0e8;
-  border-radius: 8px;
-  padding: 10px 13px;
-  font-size: 14px;
-  color: #1a2744;
-  background: #f8f9fb;
-  outline: none;
-  transition:
-    border-color 0.2s,
-    background 0.2s;
-  width: 100%;
-}
-
 .form-group input:focus {
   border-color: #1a2744;
   background: #ffffff;
 }
 
-.form-group select:focus {
+.native-select {
+  border: 1px solid #dde0e8;
+  border-radius: 8px;
+  padding: 10px 13px;
+  font-size: 14px;
+  color: #374151;
+  background: #f8f9fb;
+  outline: none;
+  width: 100%;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.native-select:focus {
   border-color: #1a2744;
   background: #ffffff;
 }
