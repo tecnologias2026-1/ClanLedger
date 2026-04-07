@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reportes - ClanLedger</title>
+    <link rel="stylesheet" href="../css/reportes.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar"></aside>
+
+      <main class="main-content">
+        <header class="page-header">
+          <div>
+            <h1 class="page-title">Reportes</h1>
+            <p class="page-subtitle">Gestiona tus ingresos y gastos</p>
+          </div>
+
+          <div class="user-toggle">
+            <input
+              type="radio"
+              name="view-mode"
+              id="view-person"
+              class="view-radio"
+              checked
+            />
+            <input
+              type="radio"
+              name="view-mode"
+              id="view-family"
+              class="view-radio"
+            />
+            <div class="toggle-circle"></div>
+            <label
+              class="toggle-btn"
+              id="btn-person"
+              for="view-person"
+              title="Vista personal"
+            >
+              <img
+                class="toggle-icon toggle-icon-person-default"
+                src="../assets/imagenes/person_2.png"
+                id="icon-person"
+                alt="Persona"
+              />
+              <img
+                class="toggle-icon toggle-icon-person-active"
+                src="../assets/imagenes/person_1.png"
+                alt="Persona activa"
+              />
+            </label>
+            <label
+              class="toggle-btn"
+              id="btn-family"
+              for="view-family"
+              title="Vista familiar"
+            >
+              <img
+                class="toggle-icon toggle-icon-family-default"
+                src="../assets/imagenes/family_group_1.png"
+                id="icon-family"
+                alt="Familiar"
+              />
+              <img
+                class="toggle-icon toggle-icon-family-active"
+                src="../assets/imagenes/family_group_2.png"
+                alt="Familiar activo"
+              />
+            </label>
+          </div>
+        </header>
+
+        <section class="filters-panel">
+          <div class="filter-group">
+            <label class="filter-label" for="filter-periodo">Periodo</label>
+            <select id="filter-periodo" class="filter-select">
+              <option>Este mes</option>
+              <option>Ultimos 3 meses</option>
+              <option>Este anio</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="filter-miembro">Miembro</label>
+            <select id="filter-miembro" class="filter-select">
+              <option>Todos</option>
+              <option>Fernando</option>
+              <option>Ana</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="kpi-grid">
+          <article class="kpi-card" id="kpi-ahorro">
+            <p class="kpi-label">Ahorro Acumulado</p>
+            <p class="kpi-value primary">$8.450.000</p>
+            <p class="kpi-note">Suma de todas las cuentas</p>
+          </article>
+          <article class="kpi-card" id="kpi-ingresos">
+            <p class="kpi-label">Ingresos (Febrero)</p>
+            <p class="kpi-value green">$10.000.000</p>
+            <p class="kpi-note">+2.5% vs mes anterior</p>
+          </article>
+          <article class="kpi-card" id="kpi-balance-neto">
+            <p class="kpi-label">Balance neto</p>
+            <p class="kpi-value red">$7.420.000</p>
+            <p class="kpi-note">-0.1% vs mes anterior</p>
+          </article>
+          <article class="kpi-card" id="kpi-balance-mensual">
+            <p class="kpi-label">Balance mensual</p>
+            <p class="kpi-value primary">$2.760.000</p>
+            <p class="kpi-note">4 miembros</p>
+          </article>
+        </section>
+
+        <section class="charts-row">
+          <article>
+            <h2 class="section-title">Tendencia Diaria</h2>
+            <div class="chart-card" id="chart-tendencia">
+              <div class="chart-surface line">
+                <div class="y-axis-labels">
+                  <span>10M</span>
+                  <span>8M</span>
+                  <span>6M</span>
+                  <span>4M</span>
+                  <span>2M</span>
+                </div>
+                <div class="chart-plot">
+                  <div class="line-series">
+                    <svg
+                      viewBox="0 0 100 50"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                    >
+                      <polyline
+                        fill="none"
+                        stroke="#2ea35b"
+                        stroke-width="1.2"
+                        points="0,46 14,34 28,18 42,18 56,0 70,0 84,18 98,18"
+                      />
+                      <polyline
+                        fill="none"
+                        stroke="#d35a5a"
+                        stroke-width="1.2"
+                        points="0,50 14,40 28,24 42,34 56,18 70,40 84,40 98,40"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div class="x-axis-labels x-axis-labels-line">
+                  <span>Sep</span>
+                  <span>Oct</span>
+                  <span>Nov</span>
+                  <span>Dic</span>
+                  <span>Ene</span>
+                  <span>Feb</span>
+                </div>
+                <div class="legend">
+                  <span
+                    ><span class="legend-dot" style="background: #1f8f49"></span
+                    >Ingresos</span
+                  >
+                  <span
+                    ><span class="legend-dot" style="background: #d6475f"></span
+                    >Egresos</span
+                  >
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article>
+            <h2 class="section-title">Distribucion de Gastos</h2>
+            <div class="chart-card" id="chart-distribucion">
+              <div class="chart-surface">
+                <div class="pie-wrap">
+                  <div class="pie-chart" aria-hidden="true"></div>
+                </div>
+                <div class="pie-legend">
+                  <span style="color: #395bd6">314E89 (28%)</span>
+                  <span style="color: #e17b3c">D35135 (12%)</span>
+                  <span style="color: #d8374a">BB2A48 (10%)</span>
+                  <span style="color: #1f8f49">157A4B (17%)</span>
+                  <span style="color: #f0be2a">ECBC35 (13%)</span>
+                  <span style="color: #8d62eb">9165E9 (20%)</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="charts-row">
+          <article>
+            <h2 class="section-title">Top Categorias de Gastos</h2>
+            <div class="chart-card" id="chart-top-categorias">
+              <div class="chart-surface line">
+                <div class="y-axis-labels">
+                  <span>5M</span>
+                  <span>4M</span>
+                  <span>3M</span>
+                  <span>2M</span>
+                  <span>1M</span>
+                </div>
+                <div class="chart-plot">
+                  <div class="bars-wrap">
+                    <div class="bar-group">
+                      <div class="bar-track">
+                        <div class="bar red" style="height: 40%"></div>
+                      </div>
+                      <span class="bar-label">Vivienda</span>
+                    </div>
+                    <div class="bar-group">
+                      <div class="bar-track">
+                        <div class="bar blue" style="height: 30%"></div>
+                      </div>
+                      <span class="bar-label">Alimentacion</span>
+                    </div>
+                    <div class="bar-group">
+                      <div class="bar-track">
+                        <div class="bar orange" style="height: 20%"></div>
+                      </div>
+                      <span class="bar-label">Ocio</span>
+                    </div>
+                    <div class="bar-group">
+                      <div class="bar-track">
+                        <div class="bar green" style="height: 10%"></div>
+                      </div>
+                      <span class="bar-label">Transportes</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article>
+            <h2 class="section-title">Gastos por Miembros</h2>
+            <div class="chart-card" id="chart-miembros">
+              <div class="chart-surface line">
+                <div class="y-axis-labels">
+                  <span>2.5M</span>
+                  <span>2M</span>
+                  <span>1.5M</span>
+                  <span>1M</span>
+                  <span>500K</span>
+                </div>
+                <div class="chart-plot">
+                  <div class="bars-wrap">
+                    <div class="bar-group">
+                      <div class="bar-track">
+                        <div class="bar red" style="height: 50%"></div>
+                      </div>
+                      <span class="bar-label">Ana</span>
+                    </div>
+                    <div class="bar-group">
+                      <div class="bar-track">
+                        <div class="bar blue" style="height: 50%"></div>
+                      </div>
+                      <span class="bar-label">Fernando</span>
+                    </div>
+                    <div class="bar-group">
+                      <div class="bar-track">
+                        <div class="bar orange" style="height: 24%"></div>
+                      </div>
+                      <span class="bar-label">Alejandro</span>
+                    </div>
+                    <div class="bar-group">
+                      <div class="bar-track">
+                        <div class="bar green" style="height: 50%"></div>
+                      </div>
+                      <span class="bar-label">Sofia</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="stats-grid">
+          <article class="stat-card" id="kpi-total-transacciones">
+            <p class="stat-label">Total de Transacciones</p>
+            <p class="stat-value">33</p>
+            <p class="stat-note">En el periodo seleccionado</p>
+          </article>
+          <article class="stat-card" id="kpi-transacciones-ingreso">
+            <p class="stat-label">Transacciones de Ingreso</p>
+            <p class="stat-value">10</p>
+            <p class="stat-note">30% de las transacciones</p>
+          </article>
+          <article class="stat-card" id="kpi-transacciones-gasto">
+            <p class="stat-label">Transacciones de Gastos</p>
+            <p class="stat-value">23</p>
+            <p class="stat-note">70% de las transacciones</p>
+          </article>
+        </section>
+
+        <footer class="page-footer">
+          <hr class="footer-divider" />
+          <div class="footer-content">
+            <img
+              src="../assets/imagenes/Logo.png"
+              alt="ClanLedger"
+              class="footer-logo"
+            />
+            <div class="footer-text">
+              <p class="footer-brand">ClanLedger</p>
+              <p class="footer-tagline">Tu ecosistema financiero todo en uno</p>
+              <p class="footer-copy">2026 The ClanLedger Team</p>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
