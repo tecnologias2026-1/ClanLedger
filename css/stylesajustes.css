@@ -1,0 +1,520 @@
+/* COLORES  */
+:root {
+  --primary: #1B264F;
+  --secondary: #B1B8C4;/* SUB  */
+  --accent: #DEE1E6;
+  --light: #657185; /* SUB 2  */
+
+}
+
+/* BASE DE ATRAS BLAN*/
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#f4f6f9;
+}
+
+.layout{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR BARRA GRIS IZQ */
+.sidebar{
+  width:230px;
+  background:#DEE1E6;
+  padding:20px;
+  min-height:100vh;
+}
+
+.logo img{
+  width:150px;
+}
+
+.sidebar ul{
+  list-style:none;
+  padding:0;
+  margin-top:30px;
+}
+
+/* LETRAS AZULES IZQ */
+.sidebar li{
+  padding:12px;
+  margin-bottom:8px;
+  border-radius:8px;
+  cursor:pointer;
+  color:#1B264F;
+  transition:0.2s;
+}
+
+/* ARRASTRAR IZQ */
+.sidebar li:hover{
+  background:#c9ced8;
+}
+
+/* COLOR EN AJUSTES IZQ*/
+.sidebar .active{
+  background:#1B264F;;
+  color:white;
+}
+
+/* MAIN */
+.main{
+  flex:1;
+  padding:40px 60px;
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+.header-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+/* COLOR TITULO AJUSTES */
+h1{
+  margin:0;
+  color:#1B264F;;
+  font-size:28px;
+}
+
+/*Alejandro admin*/
+.sub{
+  color:#DEE1E6;
+  margin-top:5px; 
+}
+
+/* AVATAR */
+.avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+}
+
+/* SECTIONS */
+.section{
+  margin-top:30px;
+}
+
+/* (Miembros, Cuentas, etc) */
+.section h3{
+  color:#b1b8C4; /* (subtitulo) */
+  font-weight:600;
+  margin-bottom:18px;
+}
+
+/* HEADER SECTION */
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* CARD BASE FONDITO DE LOS CUADROS*/
+.card-box{
+  background:#DEE1E6;
+  padding:20px;
+  border-radius:18px;
+  margin-top:10px;
+}
+
+/* MEMBERS */
+.members{
+  display:flex;
+  justify-content:space-between; 
+  gap:16px;
+  width:100%;
+}
+
+.member{
+  background:#F6F7F8; /* CUADROS ARRIBA */
+  padding:16px;
+  border-radius:14px;
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  flex:1; 
+  max-width:200px; 
+
+  transition:0.2s;
+}
+
+.member:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+
+.member img{
+  width:32px;
+}
+/* NOMBRES (Ana, Checking, etc) */
+.name{
+  font-weight:600;
+  font-size:16px;
+  color:#1B264F; 
+}
+
+.member span{
+  font-size:12px;
+  color:#1B264F /* LETRAS MADRE, ADMIN, ETC*/
+}
+
+/* ACCOUNTS */
+.accounts{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.account{
+  background:#F6F7F8; /*fondo cuadros eliminar cuenta*/
+  padding:18px; /* un poquito más de espacio */
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  gap:18px; /* más espacio entre icono y texto */
+}
+
+.account img{
+  width:36px;
+  height:36px;
+  object-fit:contain; /* evita deformaciones */
+}
+
+.title{
+  font-weight:600;
+  font-size:16px;
+  color:#1B264F;
+}
+
+.account span{
+  font-size:12px;
+  color:#657185; /* Letras cuenta corriente etc */
+}
+
+/* BUTTON */
+.btn{
+  background:#1B264F;;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:12px;
+  font-size:13px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.btn:hover{
+  background:#1B264F;
+}
+
+/* ADMIN */
+.danger{
+  background:#ffffff;
+  padding:20px;
+  border-radius:14px;
+}
+
+.danger-title{
+  color:#BE3232;
+  font-weight:700;
+  font-size:14px;
+}
+
+.btn-danger{
+  background:#BE3232;
+  color:white;
+  border:none;
+  padding:8px 16px;
+  border-radius:10px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+/* INFO */
+.info p{
+  font-size:13px;
+  color:#657185; /*Letras versión*/
+  margin:5px 0;
+}
+
+/* ALERT */
+.alert{
+  display:flex;
+  justify-content:space-between;
+  color:#657185; /*Letras versión*/
+  align-items:center;
+}
+
+.switch{
+  width:40px;
+  height:20px;
+  background:#b1b8C4;
+  border-radius:20px;
+  position:relative;
+}
+
+.circle{
+  width:16px;
+  height:16px;
+  background:#1B264F;;
+  border-radius:50%;
+  position:absolute;
+  right:2px;
+  top:2px;
+}
+
+/* FOOTER DASHBOARD */
+.dashboard-footer{
+  margin-top:40px;
+  width:100%;
+}
+
+/* línea */
+.footer-line{
+  border:0;
+  border-top:1px solid #657185; /*línea delgada*/
+  margin:25px 0;
+  width:100%;
+}
+
+/* CONTENEDOR */
+.footer-content{
+  display:flex;
+  flex-direction:column; /* vertical */
+  align-items:flex-start;
+  gap:10px;
+}
+
+/* LOGO GRANDE */
+.footer-logo{
+  width:160px; /* aquí agranda el logo */
+}
+
+/* TEXTO */
+.footer-sub{
+  font-size:14px;
+  color:#DEE1E6;
+}
+
+.footer-year{
+  font-size:12px;
+  color:#DEE1E6; /**/
+  margin-top:5px;
+}
+
+.footer-text span{
+  font-size:12px;
+  color:#657185;/*letras tu ecosistema financiero*/
+}
+
+.footer-text p{
+  font-size:11px;
+  color:#657185; /*2026 the clan*/
+  margin-top:5px;
+}
+
+.danger{
+  background:#F6F7F8; /*pre fondo eliminar cuenta*/
+  padding:24px;
+  border-radius:14px;
+
+  display:flex;
+  flex-direction:column;
+}
+
+.danger-title{
+  color:#BE3232;
+  font-weight:700;
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.danger-text{
+  font-size:13px;
+  color:#657185; /*letras eliminar cuenta*/
+}
+
+/* espacio elegante antes del botón */
+.danger-btn{
+  margin-top:20px;
+}
+
+.btn-danger{
+  background:#BE3232;
+  color:white;
+  border:none;
+  padding:12px 22px; /* un poco más grande */
+  border-radius:14px; /* más suave */
+  cursor:pointer;
+  font-weight:600;
+
+  transition:0.2s;
+}
+
+.btn-danger:hover{
+  background:#c62828;
+  transform:scale(1.03);
+}
+
+.switch{
+  position:relative;
+  display:inline-block;
+  width:46px;
+  height:24px;
+}
+
+/* ocultamos el checkbox */
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+}
+
+/* fondo del switch */
+.slider{
+  position:absolute;
+  cursor:pointer;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#3e5170;
+  border-radius:20px;
+  transition:0.3s;
+}
+
+/* bolita */
+.slider::before{
+  content:"";
+  position:absolute;
+  height:18px;
+  width:18px;
+  left:3px;
+  top:3px;
+  background:#1B264F;  /*coloar al correr al izquier*/
+  border-radius:50%;
+  transition:0.3s;
+}
+
+/* CUANDO ESTÁ ACTIVADO */
+.switch input:checked + .slider{
+  background:#b1b8C4;  /*Fondo boton*/
+}
+
+.switch input:checked + .slider::before{
+  transform:translateX(22px);
+}
+
+.inner-card{
+  background:#ffffff;
+  padding:18px;
+  border-radius:14px;
+}
+
+/* las tarjetitas de la interacción */
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:#ffffff;
+  padding:25px;
+  border-radius:16px;
+  width:400px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:15px;
+  top:20px;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.modal-sub{
+  font-size:13px;
+  color:#8b93a7;
+  margin-bottom:15px;
+}
+
+.modal-content input{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#e5e7eb;
+  margin-bottom:15px;
+}
+
+.colors{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.colors span{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.modal-btn{
+  width:100%;
+}
+
+.color {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* EFECTO HOVER */
+.color:hover {
+  transform: scale(1.1);
+}
+
+/* COLOR SELECCIONADO */
+.color.selected {
+  outline: 3px solid #1c2340;
+  transform: scale(1.15);
+}
+
+/* interaccion nueva cuenta*/
+.select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #e5e7eb;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.close{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:22px;
+  cursor:pointer;
+}
