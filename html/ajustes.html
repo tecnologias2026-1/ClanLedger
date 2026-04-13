@@ -399,13 +399,40 @@
         />
 
         <label>Tipo</label>
-        <select class="select" id="account-type-input">
+        <select class="select native-select-hidden" id="account-type-input">
           <option value="" selected>Tipo cuenta</option>
           <option value="Cuenta de Ahorros">Ahorro</option>
           <option value="Cuenta Corriente">Corriente</option>
           <option value="Tarjeta de Credito">Credito</option>
           <option value="Efectivo">Efectivo</option>
         </select>
+        <div class="account-type-select" id="account-type-select">
+          <button type="button" class="account-type-header">
+            <span class="account-type-display">Tipo cuenta</span>
+            <img
+              src="../assets/imagenes/keyboard_arrow_down_gris.png"
+              alt=""
+              class="account-type-arrow"
+            />
+          </button>
+          <div class="account-type-dropdown">
+            <div class="account-type-option selected" data-value="">
+              <span>Tipo cuenta</span><span class="check">✓</span>
+            </div>
+            <div class="account-type-option" data-value="Cuenta de Ahorros">
+              <span>Ahorro</span><span class="check">✓</span>
+            </div>
+            <div class="account-type-option" data-value="Cuenta Corriente">
+              <span>Corriente</span><span class="check">✓</span>
+            </div>
+            <div class="account-type-option" data-value="Tarjeta de Credito">
+              <span>Credito</span><span class="check">✓</span>
+            </div>
+            <div class="account-type-option" data-value="Efectivo">
+              <span>Efectivo</span><span class="check">✓</span>
+            </div>
+          </div>
+        </div>
 
         <label>Logo</label>
         <div class="account-icon-picker" id="account-icon-picker">

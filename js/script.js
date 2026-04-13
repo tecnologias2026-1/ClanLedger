@@ -55,6 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const accountTypeSelect = modalAccount
     ? document.getElementById("account-type-input")
     : null;
+  const accountTypeCustomSelect = modalAccount
+    ? document.getElementById("account-type-select")
+    : null;
   const accountIconOptions = modalAccount
     ? modalAccount.querySelectorAll(".account-icon-option")
     : [];
@@ -319,6 +322,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function setAccountTypeSelection(typeValue) {
+    if (!accountTypeSelect || !accountTypeCustomSelect) return;
+    const nextValue = typeValue || "";
+    const displayText = accountTypeCustomSelect.querySelector(
+      ".account-type-display",
+    );
+    const options = accountTypeCustomSelect.querySelectorAll(
+      ".account-type-option",
+    );
+
+    accountTypeSelect.value = nextValue;
+    options.forEach((option) => {
+      const isMatch = option.getAttribute("data-value") === nextValue;
+      option.classList.toggle("selected", isMatch);
+      const check = option.querySelector(".check");
+      if (check) check.style.opacity = isMatch ? "1" : "0";
+    });
+
+    if (displayText) {
+      const selected = Array.from(options).find(
+        (option) => option.getAttribute("data-value") === nextValue,
+      );
+      displayText.textContent = selected
+        ? selected.querySelector("span")?.textContent || "Tipo cuenta"
+        : "Tipo cuenta";
+    }
+  }
+
+  function toggleAccountTypeDropdown(forceOpen) {
+    if (!accountTypeCustomSelect) return;
+    const shouldOpen =
+      typeof forceOpen === "boolean"
+        ? forceOpen
+        : !accountTypeCustomSelect.classList.contains("open");
+    accountTypeCustomSelect.classList.toggle("open", shouldOpen);
+  }
+
+  function closeAccountTypeDropdown() {
+    if (accountTypeCustomSelect) {
+      accountTypeCustomSelect.classList.remove("open");
+    }
+  }
+
   function openCreateAccountModal(originRef) {
     editingAccountId = null;
     if (accountModalTitle) accountModalTitle.textContent = "Nueva Cuenta";
@@ -328,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (accountSaveBtn) accountSaveBtn.textContent = "Agregar Cuenta";
     if (accountDeleteBtn) accountDeleteBtn.style.display = "none";
     if (accountNameInput) accountNameInput.value = "";
-    if (accountTypeSelect) accountTypeSelect.value = "";
+    setAccountTypeSelection("");
     if (accountBalanceInput) accountBalanceInput.value = "";
     setAccountIconSelection("checking");
     openModal(modalAccount, originRef);
@@ -349,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (accountSaveBtn) accountSaveBtn.textContent = "Guardar cambios";
     if (accountDeleteBtn) accountDeleteBtn.style.display = "inline-block";
     if (accountNameInput) accountNameInput.value = account.name || "";
-    if (accountTypeSelect) accountTypeSelect.value = account.type || "";
+    setAccountTypeSelection(account.type || "");
     if (accountBalanceInput) {
       const balanceValue = Number(account.balance) || 0;
       accountBalanceInput.value = moneyInput
@@ -457,6 +503,37 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => {
       setAccountIconSelection(button.getAttribute("data-icon"));
     });
+  });
+
+  if (accountTypeCustomSelect) {
+    const header = accountTypeCustomSelect.querySelector(
+      ".account-type-header",
+    );
+    const options = accountTypeCustomSelect.querySelectorAll(
+      ".account-type-option",
+    );
+
+    if (header) {
+      header.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const wasOpen = accountTypeCustomSelect.classList.contains("open");
+        closeAccountTypeDropdown();
+        if (!wasOpen) toggleAccountTypeDropdown(true);
+      });
+    }
+
+    options.forEach((option) => {
+      option.addEventListener("click", () => {
+        setAccountTypeSelection(option.getAttribute("data-value") || "");
+        closeAccountTypeDropdown();
+      });
+    });
+  }
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#account-type-select")) {
+      closeAccountTypeDropdown();
+    }
   });
 
   if (btnOpenMember)
@@ -635,7 +712,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (accountNameInput) accountNameInput.value = "";
       if (accountBalanceInput) accountBalanceInput.value = "";
-      if (accountTypeSelect) accountTypeSelect.value = "";
+      setAccountTypeSelection("");
       setAccountIconSelection("checking");
       closeModal(modalAccount);
       editingAccountId = null;
@@ -667,7 +744,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (accountNameInput) accountNameInput.value = "";
       if (accountBalanceInput) accountBalanceInput.value = "";
-      if (accountTypeSelect) accountTypeSelect.value = "";
+      setAccountTypeSelection("");
       setAccountIconSelection("checking");
       if (accountDeleteBtn) accountDeleteBtn.style.display = "none";
       closeModal(modalAccount);
