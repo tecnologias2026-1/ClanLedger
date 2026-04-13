@@ -228,6 +228,97 @@ body {
   outline: none;
 }
 
+.native-select-hidden {
+  display: none !important;
+}
+
+.report-custom-select {
+  position: relative;
+}
+
+.report-custom-select-header {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #f0f2f5;
+  color: #657185;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.report-custom-select-display {
+  text-align: left;
+}
+
+.report-custom-select-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.report-custom-select.open .report-custom-select-arrow {
+  transform: rotate(180deg);
+}
+
+.report-custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #f6f7f9;
+  border: 1px solid #cfd6e2;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(27, 38, 79, 0.18);
+  display: none;
+  z-index: 35;
+}
+
+.report-custom-select.open .report-custom-select-dropdown {
+  display: block;
+}
+
+.report-custom-select-option {
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #243454;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.report-custom-select-option + .report-custom-select-option {
+  border-top: 1px solid #e1e6ef;
+}
+
+.report-custom-select-option:hover {
+  background: #e9eef8;
+}
+
+.report-custom-select-option.selected {
+  background: #e3e8f2;
+  font-weight: 700;
+}
+
+.report-custom-select-option .check {
+  opacity: 0;
+  color: #1b264f;
+}
+
+.report-custom-select-option.selected .check {
+  opacity: 1;
+}
+
+.report-custom-select-option.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* =============================================
    KPI CARDS
    ============================================= */

@@ -33,11 +33,106 @@ document.addEventListener("DOMContentLoaded", () => {
   const periodSelect = document.getElementById("filter-periodo");
   const monthAnalysisSelect = document.getElementById("filter-mes-analisis");
   const memberSelect = document.getElementById("filter-miembro");
+  const CUSTOM_FILTER_IDS = [
+    "filter-periodo",
+    "filter-mes-analisis",
+    "filter-miembro",
+  ];
   const zoomInBtn = document.getElementById("trend-zoom-in");
   const zoomOutBtn = document.getElementById("trend-zoom-out");
   const zoomValueLabel = document.getElementById("trend-zoom-value");
   const TREND_ZOOM_LEVELS = [1, 1.5, 2, 3, 4, 6, 8, 12, 16, 24];
   let trendZoomIndex = 0;
+
+  function closeAllCustomSelects() {
+    document.querySelectorAll(".report-custom-select.open").forEach((el) => {
+      el.classList.remove("open");
+    });
+  }
+
+  function refreshCustomSelect(selectId) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+
+    const existing = select.parentElement.querySelector(
+      `.report-custom-select[data-select-id="${selectId}"]`,
+    );
+    if (existing) existing.remove();
+
+    select.classList.add("native-select-hidden");
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "report-custom-select";
+    wrapper.dataset.selectId = selectId;
+
+    const header = document.createElement("button");
+    header.type = "button";
+    header.className = "report-custom-select-header";
+
+    const display = document.createElement("span");
+    display.className = "report-custom-select-display";
+
+    const arrow = document.createElement("img");
+    arrow.src = "../assets/imagenes/keyboard_arrow_down_gris.png";
+    arrow.alt = "";
+    arrow.className = "report-custom-select-arrow";
+
+    header.appendChild(display);
+    header.appendChild(arrow);
+
+    const dropdown = document.createElement("div");
+    dropdown.className = "report-custom-select-dropdown";
+
+    const options = Array.from(select.options);
+    const selectedOption =
+      options.find((opt) => opt.selected) ||
+      options[select.selectedIndex] ||
+      null;
+    display.textContent = selectedOption
+      ? selectedOption.textContent
+      : "Selecciona";
+
+    options.forEach((opt) => {
+      const optEl = document.createElement("div");
+      optEl.className = "report-custom-select-option";
+      optEl.dataset.value = opt.value;
+      optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">✓</span>`;
+
+      if (opt.disabled) optEl.classList.add("disabled");
+      if (opt.selected) optEl.classList.add("selected");
+
+      optEl.addEventListener("click", () => {
+        if (opt.disabled) return;
+        select.value = opt.value;
+        display.textContent = opt.textContent;
+
+        dropdown
+          .querySelectorAll(".report-custom-select-option")
+          .forEach((node) => node.classList.remove("selected"));
+        optEl.classList.add("selected");
+
+        closeAllCustomSelects();
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+
+      dropdown.appendChild(optEl);
+    });
+
+    header.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const wasOpen = wrapper.classList.contains("open");
+      closeAllCustomSelects();
+      if (!wasOpen) wrapper.classList.add("open");
+    });
+
+    wrapper.appendChild(header);
+    wrapper.appendChild(dropdown);
+    select.parentElement.appendChild(wrapper);
+  }
+
+  function initializeCustomSelects() {
+    CUSTOM_FILTER_IDS.forEach((id) => refreshCustomSelect(id));
+  }
 
   if (memberSelect) {
     const state = store.getState();
@@ -47,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       op.textContent = m.name;
       memberSelect.appendChild(op);
     });
+    refreshCustomSelect("filter-miembro");
   }
 
   if (monthAnalysisSelect) {
@@ -59,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (idx === currentMonth) op.selected = true;
       monthAnalysisSelect.appendChild(op);
     });
+    refreshCustomSelect("filter-mes-analisis");
   }
 
   function normalizePeriodKey(value) {
@@ -741,6 +838,12 @@ document.addEventListener("DOMContentLoaded", () => {
       render();
     });
   }
+  initializeCustomSelects();
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".report-custom-select")) {
+      closeAllCustomSelects();
+    }
+  });
   updateZoomUI();
   render();
 });

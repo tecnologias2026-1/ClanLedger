@@ -130,6 +130,15 @@
               <option value="Familia">Familia</option>
             </select>
           </div>
+          <div class="grupo-filtro">
+            <label>Cuenta</label>
+            <select id="filtro-cuenta" onchange="filtrarCards()">
+              <option value="">Todas</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Checking">Checking</option>
+              <option value="Ahorros">Ahorros</option>
+            </select>
+          </div>
         </div>
 
         <!-- Lista de transacciones (la llena el JS) -->
@@ -341,6 +350,155 @@
         });
       }
 
+      const CUSTOM_SELECT_IDS = [
+        "filtro-tipo",
+        "filtro-categoria",
+        "filtro-miembro",
+        "filtro-cuenta",
+        "input-tipo",
+        "input-categoria",
+        "input-miembro",
+        "input-metodo",
+      ];
+
+      function closeAllCustomSelects() {
+        document.querySelectorAll(".trans-custom-select.open").forEach((el) => {
+          el.classList.remove("open");
+        });
+      }
+
+      function getScrollContainer(el) {
+        let current = el.parentElement;
+        while (current && current !== document.body) {
+          const style = window.getComputedStyle(current);
+          const overflowY = style.overflowY;
+          const canScroll =
+            (overflowY === "auto" || overflowY === "scroll") &&
+            current.scrollHeight > current.clientHeight;
+          if (canScroll) return current;
+          current = current.parentElement;
+        }
+        return document.scrollingElement || document.documentElement;
+      }
+
+      function ensureDropdownInView(wrapper, dropdown) {
+        requestAnimationFrame(() => {
+          const container = getScrollContainer(wrapper);
+          const dropdownRect = dropdown.getBoundingClientRect();
+          const containerRect =
+            container === document.scrollingElement ||
+            container === document.documentElement
+              ? {
+                  top: 0,
+                  bottom: window.innerHeight,
+                }
+              : container.getBoundingClientRect();
+
+          const bottomOverflow = dropdownRect.bottom - containerRect.bottom;
+          const topOverflow = containerRect.top - dropdownRect.top;
+          const padding = 18;
+
+          if (bottomOverflow > 0) {
+            container.scrollBy({
+              top: bottomOverflow + padding,
+              behavior: "smooth",
+            });
+          } else if (topOverflow > 0) {
+            container.scrollBy({
+              top: -(topOverflow + padding),
+              behavior: "smooth",
+            });
+          }
+        });
+      }
+
+      function refreshCustomSelect(selectId) {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+
+        const existing = select.parentElement.querySelector(
+          `.trans-custom-select[data-select-id="${selectId}"]`,
+        );
+        if (existing) existing.remove();
+
+        select.classList.add("native-select-hidden");
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "trans-custom-select";
+        wrapper.dataset.selectId = selectId;
+
+        const header = document.createElement("button");
+        header.type = "button";
+        header.className = "trans-custom-select-header";
+
+        const display = document.createElement("span");
+        display.className = "trans-custom-select-display";
+
+        const arrow = document.createElement("img");
+        arrow.src = "../assets/imagenes/keyboard_arrow_down_gris.png";
+        arrow.alt = "";
+        arrow.className = "trans-custom-select-arrow";
+
+        header.appendChild(display);
+        header.appendChild(arrow);
+
+        const dropdown = document.createElement("div");
+        dropdown.className = "trans-custom-select-dropdown";
+
+        const options = Array.from(select.options);
+        const selectedOption =
+          options.find((opt) => opt.selected) ||
+          options[select.selectedIndex] ||
+          null;
+        display.textContent = selectedOption
+          ? selectedOption.textContent
+          : "Selecciona";
+
+        options.forEach((opt) => {
+          const optEl = document.createElement("div");
+          optEl.className = "trans-custom-select-option";
+          optEl.dataset.value = opt.value;
+          optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">✓</span>`;
+
+          if (opt.disabled) optEl.classList.add("disabled");
+          if (opt.selected) optEl.classList.add("selected");
+
+          optEl.addEventListener("click", () => {
+            if (opt.disabled) return;
+            select.value = opt.value;
+            display.textContent = opt.textContent;
+
+            dropdown
+              .querySelectorAll(".trans-custom-select-option")
+              .forEach((node) => node.classList.remove("selected"));
+            optEl.classList.add("selected");
+
+            closeAllCustomSelects();
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+          });
+
+          dropdown.appendChild(optEl);
+        });
+
+        header.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const wasOpen = wrapper.classList.contains("open");
+          closeAllCustomSelects();
+          if (!wasOpen) {
+            wrapper.classList.add("open");
+            ensureDropdownInView(wrapper, dropdown);
+          }
+        });
+
+        wrapper.appendChild(header);
+        wrapper.appendChild(dropdown);
+        select.parentElement.appendChild(wrapper);
+      }
+
+      function initializeCustomSelects() {
+        CUSTOM_SELECT_IDS.forEach((id) => refreshCustomSelect(id));
+      }
+
       function replaceOptions(selectId, values, allLabel) {
         const select = document.getElementById(selectId);
         if (!select) return;
@@ -350,6 +508,7 @@
         select.innerHTML =
           first +
           values.map((v) => `<option value="${v}">${v}</option>`).join("");
+        refreshCustomSelect(selectId);
       }
 
       function replaceCategoryInputOptions(values) {
@@ -359,6 +518,7 @@
           '<option value="" disabled selected>Categoria</option>' +
           values.map((v) => `<option value="${v}">${v}</option>`).join("") +
           '<option value="__new__">+ Crear nueva categoría</option>';
+        refreshCustomSelect("input-categoria");
       }
 
       function replaceAccountOptions(values) {
@@ -373,6 +533,7 @@
               return `<option value="${account.name}">${label}</option>`;
             })
             .join("");
+        refreshCustomSelect("input-metodo");
       }
 
       function hydrateDynamicOptions() {
@@ -385,6 +546,11 @@
         replaceOptions("filtro-miembro", members, "Todos");
         replaceOptions("input-miembro", members, null);
         replaceAccountOptions(accounts);
+        replaceOptions(
+          "filtro-cuenta",
+          accounts.map((a) => a.name),
+          "Todas",
+        );
 
         if (categories.length > 0) {
           replaceOptions("filtro-categoria", categories, "Todas");
@@ -478,8 +644,31 @@
 
         hydrateDynamicOptions();
         const refreshed = document.getElementById("input-categoria");
-        if (refreshed) refreshed.value = clean;
+        if (refreshed) {
+          refreshed.value = clean;
+          refreshCustomSelect("input-categoria");
+        }
         closeNewCategoryModal();
+      }
+
+      function accountMatchesFilter(selectedAccount, txAccount) {
+        if (!selectedAccount) return true;
+        const accounts = store ? store.getState().accounts || [] : [];
+        const selectedIdx = findAccountIndex(selectedAccount, accounts);
+        const txIdx = findAccountIndex(txAccount, accounts);
+
+        if (selectedIdx >= 0 && txIdx >= 0) {
+          return selectedIdx === txIdx;
+        }
+
+        return (
+          String(selectedAccount || "")
+            .trim()
+            .toLowerCase() ===
+          String(txAccount || "")
+            .trim()
+            .toLowerCase()
+        );
       }
 
       // ── Toggle personal / familiar ──
@@ -548,6 +737,7 @@
         const tipo = document.getElementById("filtro-tipo").value;
         const categoria = document.getElementById("filtro-categoria").value;
         const miembro = document.getElementById("filtro-miembro").value;
+        const cuenta = document.getElementById("filtro-cuenta").value;
         const modo = getModoVista();
 
         const resultado = transacciones.filter(
@@ -557,7 +747,8 @@
             t.nombre.toLowerCase().includes(buscar) &&
             (tipo === "" || t.tipo === tipo) &&
             (categoria === "" || t.categoria === categoria) &&
-            (miembro === "" || t.miembro === miembro),
+            (miembro === "" || t.miembro === miembro) &&
+            accountMatchesFilter(cuenta, t.metodo),
         );
 
         renderCards(resultado);
@@ -691,7 +882,13 @@
           "input-categoria",
           "input-miembro",
           "input-metodo",
-        ].forEach((id) => (document.getElementById(id).selectedIndex = 0));
+        ].forEach((id) => {
+          const select = document.getElementById(id);
+          if (select) {
+            select.selectedIndex = 0;
+            refreshCustomSelect(id);
+          }
+        });
 
         filtrarCards();
       }
@@ -702,6 +899,14 @@
           document.getElementById("input-monto"),
         );
       }
+
+      initializeCustomSelects();
+
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".trans-custom-select")) {
+          closeAllCustomSelects();
+        }
+      });
 
       hydrateDynamicOptions();
       ensureCategoryFlow();

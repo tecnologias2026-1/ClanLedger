@@ -209,7 +209,7 @@ body {
 /* ── Filtros ── */
 .busqueda {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   gap: 16px;
   background: var(--titlesecondary);
   padding: 20px 24px;
@@ -241,6 +241,98 @@ body {
   width: 100%;
   outline: none;
   cursor: pointer;
+}
+
+.native-select-hidden {
+  display: none !important;
+}
+
+.trans-custom-select {
+  position: relative;
+}
+
+.trans-custom-select-header {
+  width: 100%;
+  background: var(--cardbg);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  color: var(--subtitlesecondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.trans-custom-select-display {
+  text-align: left;
+}
+
+.trans-custom-select-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.trans-custom-select.open .trans-custom-select-arrow {
+  transform: rotate(180deg);
+}
+
+.trans-custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #f6f7f9;
+  border: 1px solid #cfd6e2;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(27, 38, 79, 0.18);
+  display: none;
+  z-index: 30;
+}
+
+.trans-custom-select.open .trans-custom-select-dropdown {
+  display: block;
+}
+
+.trans-custom-select-option {
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #243454;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.trans-custom-select-option + .trans-custom-select-option {
+  border-top: 1px solid #e1e6ef;
+}
+
+.trans-custom-select-option:hover {
+  background: #e9eef8;
+}
+
+.trans-custom-select-option.selected {
+  background: #e3e8f2;
+  font-weight: 700;
+}
+
+.trans-custom-select-option .check {
+  opacity: 0;
+  color: #1b264f;
+}
+
+.trans-custom-select-option.selected .check {
+  opacity: 1;
+  color: #1b264f;
+}
+
+.trans-custom-select-option.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ── Cards ── */
@@ -450,6 +542,17 @@ body {
   outline: none;
   cursor: pointer;
   appearance: auto;
+}
+
+.campo .trans-custom-select-header {
+  background: #f0f2f5;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: var(--subtitlesecondary);
+}
+
+.campo .trans-custom-select-dropdown {
+  background: #f0f2f5;
 }
 
 .campo input:focus,
