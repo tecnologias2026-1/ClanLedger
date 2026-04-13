@@ -98,7 +98,7 @@ body {
    margin-top: 16px;
   font-size: 36px;
   font-weight: 800;
-  color: #1a2744;
+  color: var(--primary);
   letter-spacing: -0.5px;
   line-height: 1;
 }
@@ -106,7 +106,7 @@ body {
 .page-subtitle {
   margin-top: 4px;
   font-size: 36px;
-  color: #9aa3b5;
+  color: var(--subtitlesecondary);
   font-weight: 700;
   
 }
@@ -197,7 +197,7 @@ body {
 }
 
 .filter-label {
-  font-size: 13px;
+  font-size: 20px;
   color: #657185;
   font-weight: 700;
 }
@@ -236,7 +236,7 @@ body {
 }
 
 .kpi-label {
-  font-size: 12px;
+  font-size: 20px;
   color: #657185;
   font-weight: 700;
   margin-bottom: 10px;
@@ -248,6 +248,7 @@ body {
   letter-spacing: -0.4px;
   text-align: right;
   margin-bottom: 2px;
+  margin-top: 15px;
 }
 
 .kpi-value.primary {
@@ -263,7 +264,7 @@ body {
 }
 
 .kpi-note {
-  font-size: 10px;
+  font-size: 16px;
   color: #7f8797;
   text-align: right;
   font-weight: 600;
@@ -273,9 +274,9 @@ body {
    CHART BLOCKS
    ============================================= */
 .section-title {
-  font-size: 40px;
+  font-size: 30px;
   color: #a9b0bd;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.5px;
   margin-bottom: 10px;
 }
@@ -518,8 +519,8 @@ body {
 }
 
 .stat-label {
-  font-size: 12px;
-  color: #657185;
+  font-size: 20px;
+  color: var(--subtitlesecondary);
   font-weight: 700;
   margin-bottom: 12px;
 }
@@ -534,7 +535,7 @@ body {
 
 .stat-note {
   text-align: right;
-  font-size: 10px;
+  font-size: 16px;
   color: #7f8797;
   font-weight: 700;
 }

@@ -3,10 +3,10 @@
   --subtitlesecondary: #657185;
   --titleprimary:      #222b4d;
   --titlesecondary:    #dee2e7;
-  --cardbg:            #f6f7f8;
   --green:             #249a40;
   --red:               #be3232;
   --sidebar:           #c5c8d2;
+  --accent: #DEE1E6;
 }
 
 * { 
@@ -173,9 +173,7 @@
 #view-family:checked ~ label#btn-family .toggle-icon-family-default { display: none;  }
 #view-family:checked ~ label#btn-family .toggle-icon-family-active  { display: block; }
 
-/* ══════════════════════════════
-   KPI CARDS (las 4 tarjetas de arriba)
-══════════════════════════════ */
+/* KPI CARDS (tarjetas de arriba)*/
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -184,7 +182,7 @@
 }
 
 .kpi-card {
-  background: var(--cardbg);
+  background: var(--accent);
   border-radius: 14px;
   padding: 16px 20px;
   display: flex;
@@ -214,7 +212,7 @@
 
 /* Caja de cada gráfica */
 .chart-box {
-  background: var(--cardbg);
+  background: var(--accent);
   border-radius: 16px;
   padding: 20px;
 }

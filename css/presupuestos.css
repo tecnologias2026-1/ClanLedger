@@ -182,8 +182,7 @@ body {
 }
 
 .card {
-  background: #f2f4f7;
-  border: 1px solid #dddfe8;
+  background: var(--background);
   border-radius: 14px;
   padding: 16px 22px 22px;
   display: flex;
@@ -219,9 +218,9 @@ body {
 }
 
 .section-title {
-  font-size: 22px;
+  font-size: 36px;
   font-weight: 600;
-  color: #a0a8b8;
+  color: var(--subtitlesecondary);
 }
 
 /* =============================================
@@ -276,7 +275,7 @@ body {
    SECTION CARD
    ============================================= */
 .section-card {
-  background: #ffffff;
+  background: var(--background);
   border: 1px solid #e0e3ec;
   border-radius: 16px;
   padding: 20px 22px;
@@ -290,7 +289,7 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
   color: #374151;
   display: inline-flex;
@@ -346,13 +345,13 @@ body {
 }
 
 .item-name {
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 700;
   color: #1a2744;
 }
 
 .item-percent {
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 700;
   color: #1a2744;
 }
@@ -491,8 +490,7 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10, 14, 30, 0.45);
-  z-index: 100;
+  backdrop-filter: blur(6px);  z-index: 100;
   opacity: 0;
   visibility: hidden;
   transition:

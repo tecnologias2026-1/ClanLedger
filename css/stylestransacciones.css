@@ -7,7 +7,6 @@
   --cardbg:#f6f7f8;
   --green:#249a40;
   --red:#be3232;
-  --h2:#B1B8C4
 }
 
 /* ── Reset mínimo ── */
@@ -94,7 +93,7 @@ body {
 }
 .header p  {  /* SUB*/
   font-size: 36px; 
-  color: var(--h2); 
+  color: var(--subtitlesecondary); 
   font-weight: 600;
 }
 
