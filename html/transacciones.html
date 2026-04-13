@@ -1,232 +1,374 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
-  <link rel="stylesheet" href="../css/stylestransacciones.css" />
-  <title>Transacciones - ClanLedger</title>
-  <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png">
-</head>
-<body>
-
-<div class="layout">
-
-  <!-- ══ SIDEBAR ══ -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <img src="../assets/imagenes/Logo.png" alt="logo" />
-    </div>
-    <a class="nav-item" href="../html/dashboard.html"><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a>
-    <a class="nav-item active" href="../html/transacciones.html"><img src="../assets/imagenes/transaccionesfill.png" alt="" /> Transacciones</a>
-    <a class="nav-item" href="../html/presupuestos.html"><img src="../assets/imagenes/presupuestos.png" alt="" /> Presupuestos</a>
-    <a class="nav-item" href="../html/reportes.html"><img src="../assets/imagenes/reports.png" alt="" /> Reportes</a>
-    <a class="nav-item" href="../html/ajustes.html"><img src="../assets/imagenes/ajustes.png" alt="" /> Ajustes</a>
-  </aside>
-
-  <!-- ══ CONTENIDO PRINCIPAL ══ -->
-  <main class="main-content">
-
-    <!-- Header -->
-    <div class="header">
-      <div>
-        <h2>Transacciones</h2>
-        <p>Gestiona tus ingresos y gastos</p>
-      </div>
-      <div class="user-toggle">
-        <input type="radio" name="view-mode" id="view-person" class="view-radio" />
-        <input type="radio" name="view-mode" id="view-family" class="view-radio" checked/>
-        <div class="toggle-circle"></div>
-        <label class="toggle-btn" id="btn-person" for="view-person">
-          <img class="toggle-icon toggle-icon-person-default" src="../assets/imagenes/person_2.png" alt="Personal" />
-          <img class="toggle-icon toggle-icon-person-active"  src="../assets/imagenes/person_1.png" alt="Personal activo" />
-        </label>
-        <label class="toggle-btn" id="btn-family" for="view-family">
-          <img class="toggle-icon toggle-icon-family-default" src="../assets/imagenes/family_group_1.png" alt="Familiar" />
-          <img class="toggle-icon toggle-icon-family-active"  src="../assets/imagenes/family_group_2.png" alt="Familiar activo" />
-        </label>
-    </div>
-  </div>
-
-    <!-- Botón nueva transacción -->
-<button class="btn-nueva" onclick="abrirModal()">
-    <img src="../assets/imagenes/add.png" alt="icono agregar">
-    Nueva Transacción
-</button>
-    <!-- Filtros -->
-    <div class="busqueda">
-      <div class="grupo-filtro">
-        <label>Buscar</label>
-        <input type="text" id="filtro-buscar" placeholder="Búsqueda" oninput="filtrarCards()" />
-      </div>
-      <div class="grupo-filtro">
-        <label>Tipo</label>
-        <select id="filtro-tipo" onchange="filtrarCards()">
-          <option value="">Todos</option>
-          <option value="ingreso">Ingreso</option>
-          <option value="gasto">Gasto</option>
-        </select>
-      </div>
-      <div class="grupo-filtro">
-        <label>Categoría</label>
-        <select id="filtro-categoria" onchange="filtrarCards()">
-          <option value="">Todas</option>
-          <option value="Salario">Salario</option>
-          <option value="Alimentación">Alimentación</option>
-          <option value="Ocio">Ocio</option>
-          <option value="Extras">Extras</option>
-        </select>
-      </div>
-      <div class="grupo-filtro">
-        <label>Miembro</label>
-        <select id="filtro-miembro" onchange="filtrarCards()">
-          <option value="">Todos</option>
-          <option value="Fernando">Fernando</option>
-          <option value="Sofia">Sofia</option>
-          <option value="Ana">Ana</option>
-          <option value="Alejandro">Alejandro</option>
-          <option value="Familia">Familia</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Lista de transacciones (la llena el JS) -->
-    <div class="cards" id="lista-cards"></div>
-
-    <!-- Footer -->
-    <footer>
-      <div class="footer" id="foot">
-        <hr class="divisor" />
-        <div class="textofoot" id="fimg">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="../css/stylestransacciones.css" />
+    <title>Transacciones - ClanLedger</title>
+    <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
+  </head>
+  <body>
+    <div class="layout">
+      <!-- ══ SIDEBAR ══ -->
+      <aside class="sidebar">
+        <div class="sidebar-logo">
           <img src="../assets/imagenes/Logo.png" alt="logo" />
         </div>
-        <div class="textosvert" id="ftxt">
-          <h4>Tu ecosistema financiero todo en uno.</h4>
-          <h4>© 2026. The ClanLedger Team</h4>
+        <a class="nav-item" href="../html/dashboard.html"
+          ><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a
+        >
+        <a class="nav-item active" href="../html/transacciones.html"
+          ><img src="../assets/imagenes/transaccionesfill.png" alt="" />
+          Transacciones</a
+        >
+        <a class="nav-item" href="../html/presupuestos.html"
+          ><img src="../assets/imagenes/presupuestos.png" alt="" />
+          Presupuestos</a
+        >
+        <a class="nav-item" href="../html/reportes.html"
+          ><img src="../assets/imagenes/reports.png" alt="" /> Reportes</a
+        >
+        <a class="nav-item" href="../html/ajustes.html"
+          ><img src="../assets/imagenes/ajustes.png" alt="" /> Ajustes</a
+        >
+      </aside>
+
+      <!-- ══ CONTENIDO PRINCIPAL ══ -->
+      <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+          <div>
+            <h2>Transacciones</h2>
+            <p>Gestiona tus ingresos y gastos</p>
+          </div>
+          <div class="user-toggle">
+            <input
+              type="radio"
+              name="view-mode"
+              id="view-person"
+              class="view-radio"
+            />
+            <input
+              type="radio"
+              name="view-mode"
+              id="view-family"
+              class="view-radio"
+              checked
+            />
+            <div class="toggle-circle"></div>
+            <label class="toggle-btn" id="btn-person" for="view-person">
+              <img
+                class="toggle-icon toggle-icon-person-default"
+                src="../assets/imagenes/person_2.png"
+                alt="Personal"
+              />
+              <img
+                class="toggle-icon toggle-icon-person-active"
+                src="../assets/imagenes/person_1.png"
+                alt="Personal activo"
+              />
+            </label>
+            <label class="toggle-btn" id="btn-family" for="view-family">
+              <img
+                class="toggle-icon toggle-icon-family-default"
+                src="../assets/imagenes/family_group_1.png"
+                alt="Familiar"
+              />
+              <img
+                class="toggle-icon toggle-icon-family-active"
+                src="../assets/imagenes/family_group_2.png"
+                alt="Familiar activo"
+              />
+            </label>
+          </div>
         </div>
-      </div>
-    </footer>
 
-  </main>
-</div>
+        <!-- Botón nueva transacción -->
+        <button class="btn-nueva" onclick="abrirModal()">
+          <img src="../assets/imagenes/add.png" alt="icono agregar" />
+          Nueva Transacción
+        </button>
+        <!-- Filtros -->
+        <div class="busqueda">
+          <div class="grupo-filtro">
+            <label>Buscar</label>
+            <input
+              type="text"
+              id="filtro-buscar"
+              placeholder="Búsqueda"
+              oninput="filtrarCards()"
+            />
+          </div>
+          <div class="grupo-filtro">
+            <label>Tipo</label>
+            <select id="filtro-tipo" onchange="filtrarCards()">
+              <option value="">Todos</option>
+              <option value="ingreso">Ingreso</option>
+              <option value="gasto">Gasto</option>
+            </select>
+          </div>
+          <div class="grupo-filtro">
+            <label>Categoría</label>
+            <select id="filtro-categoria" onchange="filtrarCards()">
+              <option value="">Todas</option>
+              <option value="Salario">Salario</option>
+              <option value="Alimentación">Alimentación</option>
+              <option value="Ocio">Ocio</option>
+              <option value="Extras">Extras</option>
+            </select>
+          </div>
+          <div class="grupo-filtro">
+            <label>Miembro</label>
+            <select id="filtro-miembro" onchange="filtrarCards()">
+              <option value="">Todos</option>
+              <option value="Fernando">Fernando</option>
+              <option value="Sofia">Sofia</option>
+              <option value="Ana">Ana</option>
+              <option value="Alejandro">Alejandro</option>
+              <option value="Familia">Familia</option>
+            </select>
+          </div>
+        </div>
 
-<!-- Nueva Transacción ══ -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
+        <!-- Lista de transacciones (la llena el JS) -->
+        <div class="cards" id="lista-cards"></div>
 
-    <!-- X para cerrar -->
-    <button class="modal-close" onclick="cerrarModal()">&#x2715;</button>
-
-    <h3>Nueva Transacción</h3>
-    <p class="modal-subtitle">Registra un nuevo ingreso o gasto</p>
-
-    <!-- Formulario con borde azul -->
-    <div class="modal-form">
-
-      <div class="campo">
-        <label>Tipo</label>
-        <select id="input-tipo">
-          <option value="" disabled selected>Elige la opción</option>
-          <option value="ingreso">Ingreso</option>
-          <option value="gasto">Gasto</option>
-        </select>
-      </div>
-
-      <div class="campo">
-        <label>Fecha</label>
-        <input type="date" id="input-fecha" />
-      </div>
-
-      <div class="campo">
-        <label>Descripción</label>
-        <input type="text" id="input-nombre" placeholder="Ej: Compra en supermercado" />
-      </div>
-
-      <div class="campo">
-        <label>Monto</label>
-        <input type="number" id="input-monto" placeholder="0.00" />
-      </div>
-
-      <div class="campo">
-        <label>Categoría</label>
-        <select id="input-categoria">
-          <option value="" disabled selected>Categoria</option>
-          <option value="Salario">Salario</option>
-          <option value="Alimentación">Alimentación</option>
-          <option value="Ocio">Ocio</option>
-          <option value="Extras">Extras</option>
-        </select>
-      </div>
-
-      <div class="campo">
-        <label>Miembro</label>
-        <select id="input-miembro">
-          <option value="" disabled selected>Filtrar por miembro</option>
-          <option value="Fernando">Fernando</option>
-          <option value="Sofia">Sofia</option>
-          <option value="Ana">Ana</option>
-          <option value="Alejandro">Alejandro</option>
-          <option value="Familia">Familia</option>
-        </select>
-      </div>
-
-      <div class="campo">
-        <label>Cuenta</label>
-        <select id="input-metodo">
-          <option value="" disabled selected>Tipo cuenta</option>
-          <option value="Efectivo">Efectivo</option>
-          <option value="Checking">Checking</option>
-          <option value="Ahorros">Ahorros</option>
-        </select>
-      </div>
-
+        <!-- Footer -->
+        <footer>
+          <div class="footer" id="foot">
+            <hr class="divisor" />
+            <div class="textofoot" id="fimg">
+              <img src="../assets/imagenes/Logo.png" alt="logo" />
+            </div>
+            <div class="textosvert" id="ftxt">
+              <h4>Tu ecosistema financiero todo en uno.</h4>
+              <h4>© 2026. The ClanLedger Team</h4>
+            </div>
+          </div>
+        </footer>
+      </main>
     </div>
 
-    <button class="btn-agregar" onclick="guardarTransaccion()">Agregar Transacción</button>
+    <!-- Nueva Transacción ══ -->
+    <div class="modal-overlay" id="modal">
+      <div class="modal">
+        <!-- X para cerrar -->
+        <button class="modal-close" onclick="cerrarModal()">&#x2715;</button>
 
-  </div>
-</div>
+        <h3>Nueva Transacción</h3>
+        <p class="modal-subtitle">Registra un nuevo ingreso o gasto</p>
 
-<script>
+        <!-- Formulario con borde azul -->
+        <div class="modal-form">
+          <div class="campo">
+            <label>Tipo</label>
+            <select id="input-tipo">
+              <option value="" disabled selected>Elige la opción</option>
+              <option value="ingreso">Ingreso</option>
+              <option value="gasto">Gasto</option>
+            </select>
+          </div>
 
-  // ── Datos iniciales ──
-  let transacciones = [
-    { id: 1, nombre: "Salario",      tipo: "ingreso", monto: 4000000, categoria: "Salario",      miembro: "Alejandro", metodo: "Efectivo", fecha: "21/02/26" },
-    { id: 2, nombre: "Supermercado", tipo: "gasto",   monto: 600000,  categoria: "Alimentación", miembro: "Sofia",     metodo: "Checking", fecha: "20/02/26" },
-    { id: 3, nombre: "Cine",         tipo: "gasto",   monto: 96000,   categoria: "Ocio",         miembro: "Ana",       metodo: "Checking", fecha: "19/02/26" },
-    { id: 4, nombre: "Freelance",    tipo: "ingreso", monto: 600000,  categoria: "Extras",       miembro: "Alejandro", metodo: "Ahorros",  fecha: "19/02/26" },
-    { id: 5, nombre: "Cena",         tipo: "gasto",   monto: 150000,  categoria: "Alimentación", miembro: "Familia",   metodo: "Checking", fecha: "18/02/26" },
-  ];
+          <div class="campo">
+            <label>Fecha</label>
+            <input type="date" id="input-fecha" />
+          </div>
 
-  let nextId = 6;
+          <div class="campo">
+            <label>Descripción</label>
+            <input
+              type="text"
+              id="input-nombre"
+              placeholder="Ej: Compra en supermercado"
+            />
+          </div>
 
-  // ── Toggle personal / familiar ──
-  // Personal = solo transacciones de Alejandro | Familiar = todas
-  document.querySelectorAll(".view-radio").forEach(radio => {
-    radio.addEventListener("change", () => filtrarCards());
-  });
+          <div class="campo">
+            <label>Monto</label>
+            <input type="number" id="input-monto" placeholder="0.00" />
+          </div>
 
-  function getModoVista() {
-    return document.getElementById("view-person").checked ? "personal" : "familiar";
-  }
+          <div class="campo">
+            <label>Categoría</label>
+            <select id="input-categoria">
+              <option value="" disabled selected>Categoria</option>
+              <option value="Salario">Salario</option>
+              <option value="Alimentación">Alimentación</option>
+              <option value="Ocio">Ocio</option>
+              <option value="Extras">Extras</option>
+            </select>
+          </div>
 
-  // ── Dibujar las cards en pantalla ──
-  function renderCards(lista) {
-    const contenedor = document.getElementById("lista-cards");
-    contenedor.innerHTML = "";
+          <div class="campo">
+            <label>Miembro</label>
+            <select id="input-miembro">
+              <option value="" disabled selected>Filtrar por miembro</option>
+              <option value="Fernando">Fernando</option>
+              <option value="Sofia">Sofia</option>
+              <option value="Ana">Ana</option>
+              <option value="Alejandro">Alejandro</option>
+              <option value="Familia">Familia</option>
+            </select>
+          </div>
 
-    if (lista.length === 0) {
-      contenedor.innerHTML = "<p style='color:var(--muted);padding:10px'>No hay transacciones.</p>";
-      return;
-    }
+          <div class="campo">
+            <label>Cuenta</label>
+            <select id="input-metodo">
+              <option value="" disabled selected>Tipo cuenta</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Checking">Checking</option>
+              <option value="Ahorros">Ahorros</option>
+            </select>
+          </div>
+        </div>
 
-    lista.forEach(t => {
-      const esIngreso = t.tipo === "ingreso";
-      const monto     = `${esIngreso ? "+" : "-"}$${t.monto.toLocaleString("es-CO")}`;
+        <button class="btn-agregar" onclick="guardarTransaccion()">
+          Agregar Transacción
+        </button>
+      </div>
+    </div>
 
-      const card = document.createElement("div");
-      card.className = "card";
+    <script src="../js/clanledger-data.js"></script>
+    <script>
+      // ── Datos iniciales ──
+      let transacciones = [
+        {
+          id: 1,
+          nombre: "Salario",
+          tipo: "ingreso",
+          monto: 4000000,
+          categoria: "Salario",
+          miembro: "Alejandro",
+          metodo: "Efectivo",
+          fecha: "21/02/26",
+        },
+        {
+          id: 2,
+          nombre: "Supermercado",
+          tipo: "gasto",
+          monto: 600000,
+          categoria: "Alimentación",
+          miembro: "Sofia",
+          metodo: "Checking",
+          fecha: "20/02/26",
+        },
+        {
+          id: 3,
+          nombre: "Cine",
+          tipo: "gasto",
+          monto: 96000,
+          categoria: "Ocio",
+          miembro: "Ana",
+          metodo: "Checking",
+          fecha: "19/02/26",
+        },
+        {
+          id: 4,
+          nombre: "Freelance",
+          tipo: "ingreso",
+          monto: 600000,
+          categoria: "Extras",
+          miembro: "Alejandro",
+          metodo: "Ahorros",
+          fecha: "19/02/26",
+        },
+        {
+          id: 5,
+          nombre: "Cena",
+          tipo: "gasto",
+          monto: 150000,
+          categoria: "Alimentación",
+          miembro: "Familia",
+          metodo: "Checking",
+          fecha: "18/02/26",
+        },
+      ];
 
-      card.innerHTML = `
+      const store = window.ClanLedgerStore;
+      if (store) {
+        const state = store.getState();
+        if (
+          Array.isArray(state.transactions) &&
+          state.transactions.length > 0
+        ) {
+          transacciones = state.transactions.map((t) => ({ ...t }));
+        } else {
+          store.setState((s) => {
+            s.transactions = transacciones.map((t) => ({ ...t }));
+            return s;
+          });
+        }
+      }
+
+      let nextId =
+        transacciones.reduce((max, t) => Math.max(max, Number(t.id) || 0), 0) +
+        1;
+
+      function persistTransactions() {
+        if (!store) return;
+        store.setState((s) => {
+          s.transactions = transacciones.map((t) => ({ ...t }));
+          return s;
+        });
+      }
+
+      function replaceOptions(selectId, values, allLabel) {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+        const first = allLabel
+          ? `<option value="">${allLabel}</option>`
+          : '<option value="" disabled selected>Elige la opción</option>';
+        select.innerHTML =
+          first +
+          values.map((v) => `<option value="${v}">${v}</option>`).join("");
+      }
+
+      function hydrateDynamicOptions() {
+        if (!store) return;
+        const state = store.getState();
+        const members = state.members.map((m) => m.name);
+        const categories = (state.budgets.categories || []).map((c) => c.name);
+
+        replaceOptions("filtro-miembro", members, "Todos");
+        replaceOptions("input-miembro", members, null);
+
+        if (categories.length > 0) {
+          replaceOptions("filtro-categoria", categories, "Todas");
+          replaceOptions("input-categoria", categories, null);
+        }
+      }
+
+      // ── Toggle personal / familiar ──
+      // Personal = solo transacciones de Alejandro | Familiar = todas
+      document.querySelectorAll(".view-radio").forEach((radio) => {
+        radio.addEventListener("change", () => filtrarCards());
+      });
+
+      function getModoVista() {
+        return document.getElementById("view-person").checked
+          ? "personal"
+          : "familiar";
+      }
+
+      // ── Dibujar las cards en pantalla ──
+      function renderCards(lista) {
+        const contenedor = document.getElementById("lista-cards");
+        contenedor.innerHTML = "";
+
+        if (lista.length === 0) {
+          contenedor.innerHTML =
+            "<p style='color:var(--muted);padding:10px'>No hay transacciones.</p>";
+          return;
+        }
+
+        lista.forEach((t) => {
+          const esIngreso = t.tipo === "ingreso";
+          const monto = `${esIngreso ? "+" : "-"}$${t.monto.toLocaleString("es-CO")}`;
+
+          const card = document.createElement("div");
+          card.className = "card";
+
+          card.innerHTML = `
         <div>
           <div class="card-title">
             <span class="dot ${esIngreso ? "green" : "red"}"></span>
@@ -245,81 +387,116 @@
         <div class="cardright ${esIngreso ? "pos" : "neg"}">${monto}</div>
       `;
 
-      // El listener va directo al botón, sin pasar por el <img>
-      card.querySelector(".del-btn").addEventListener("click", () => eliminar(t.id));
+          // El listener va directo al botón, sin pasar por el <img>
+          card
+            .querySelector(".del-btn")
+            .addEventListener("click", () => eliminar(t.id));
 
-      contenedor.appendChild(card);
-    });
-  }
+          contenedor.appendChild(card);
+        });
+      }
 
-  // ── Filtrar según los controles y el modo de vista ──
-  function filtrarCards() {
-    const buscar    = document.getElementById("filtro-buscar").value.toLowerCase();
-    const tipo      = document.getElementById("filtro-tipo").value;
-    const categoria = document.getElementById("filtro-categoria").value;
-    const miembro   = document.getElementById("filtro-miembro").value;
-    const modo      = getModoVista();
+      // ── Filtrar según los controles y el modo de vista ──
+      function filtrarCards() {
+        const buscar = document
+          .getElementById("filtro-buscar")
+          .value.toLowerCase();
+        const tipo = document.getElementById("filtro-tipo").value;
+        const categoria = document.getElementById("filtro-categoria").value;
+        const miembro = document.getElementById("filtro-miembro").value;
+        const modo = getModoVista();
 
-    const resultado = transacciones.filter(t =>
-      // Si está en modo personal, solo muestra las de Alejandro
-      (modo === "personal" ? t.miembro === "Alejandro" : true) &&
-      t.nombre.toLowerCase().includes(buscar) &&
-      (tipo      === "" || t.tipo      === tipo)      &&
-      (categoria === "" || t.categoria === categoria) &&
-      (miembro   === "" || t.miembro   === miembro)
-    );
+        const resultado = transacciones.filter(
+          (t) =>
+            // Si está en modo personal, solo muestra las de Alejandro
+            (modo === "personal" ? t.miembro === "Alejandro" : true) &&
+            t.nombre.toLowerCase().includes(buscar) &&
+            (tipo === "" || t.tipo === tipo) &&
+            (categoria === "" || t.categoria === categoria) &&
+            (miembro === "" || t.miembro === miembro),
+        );
 
-    renderCards(resultado);
-  }
+        renderCards(resultado);
+      }
 
-  // ── Eliminar una transacción ──
-  function eliminar(id) {
-    transacciones = transacciones.filter(t => t.id !== id);
-    filtrarCards();
-  }
+      // ── Eliminar una transacción ──
+      function eliminar(id) {
+        transacciones = transacciones.filter((t) => t.id !== id);
+        persistTransactions();
+        filtrarCards();
+      }
 
-  // ── Abrir / cerrar modal ──
-  function abrirModal()  { document.getElementById("modal").classList.add("visible");    }
-  function cerrarModal() { document.getElementById("modal").classList.remove("visible"); }
+      // ── Abrir / cerrar modal ──
+      function abrirModal() {
+        document.getElementById("modal").classList.add("visible");
+      }
+      function cerrarModal() {
+        document.getElementById("modal").classList.remove("visible");
+      }
 
-  // Cerrar si se hace clic fuera del modal
-  document.getElementById("modal").addEventListener("click", e => {
-    if (e.target === document.getElementById("modal")) cerrarModal();
-  });
+      // Cerrar si se hace clic fuera del modal
+      document.getElementById("modal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("modal")) cerrarModal();
+      });
 
-  // ── Guardar nueva transacción ──
-  function guardarTransaccion() {
-    const nombre    = document.getElementById("input-nombre").value.trim();
-    const tipo      = document.getElementById("input-tipo").value;
-    const monto     = parseInt(document.getElementById("input-monto").value);
-    const categoria = document.getElementById("input-categoria").value;
-    const miembro   = document.getElementById("input-miembro").value;
-    const metodo    = document.getElementById("input-metodo").value;
-    const fechaRaw  = document.getElementById("input-fecha").value;
+      // ── Guardar nueva transacción ──
+      function guardarTransaccion() {
+        const nombre = document.getElementById("input-nombre").value.trim();
+        const tipo = document.getElementById("input-tipo").value;
+        const monto = parseInt(document.getElementById("input-monto").value);
+        const categoria = document.getElementById("input-categoria").value;
+        const miembro = document.getElementById("input-miembro").value;
+        const metodo = document.getElementById("input-metodo").value;
+        const fechaRaw = document.getElementById("input-fecha").value;
 
-    if (!nombre || !tipo || !monto || !categoria || !miembro || !metodo || !fechaRaw) {
-      alert("Completa todos los campos.");
-      return;
-    }
+        if (
+          !nombre ||
+          !tipo ||
+          !monto ||
+          !categoria ||
+          !miembro ||
+          !metodo ||
+          !fechaRaw
+        ) {
+          alert("Completa todos los campos.");
+          return;
+        }
 
-    // Convertir fecha de YYYY-MM-DD a DD/MM/AA
-    const [anio, mes, dia] = fechaRaw.split("-");
-    const fecha = `${dia}/${mes}/${anio.slice(2)}`;
+        // Convertir fecha de YYYY-MM-DD a DD/MM/AA
+        const [anio, mes, dia] = fechaRaw.split("-");
+        const fecha = `${dia}/${mes}/${anio.slice(2)}`;
 
-    transacciones.unshift({ id: nextId++, nombre, tipo, monto, categoria, miembro, metodo, fecha });
+        transacciones.unshift({
+          id: nextId++,
+          nombre,
+          tipo,
+          monto,
+          categoria,
+          miembro,
+          metodo,
+          fecha,
+        });
+        persistTransactions();
 
-    cerrarModal();
+        cerrarModal();
 
-    // Limpiar campos del modal
-    ["input-nombre","input-monto","input-fecha"].forEach(id => document.getElementById(id).value = "");
-    ["input-tipo","input-categoria","input-miembro","input-metodo"].forEach(id => document.getElementById(id).selectedIndex = 0);
+        // Limpiar campos del modal
+        ["input-nombre", "input-monto", "input-fecha"].forEach(
+          (id) => (document.getElementById(id).value = ""),
+        );
+        [
+          "input-tipo",
+          "input-categoria",
+          "input-miembro",
+          "input-metodo",
+        ].forEach((id) => (document.getElementById(id).selectedIndex = 0));
 
-    filtrarCards();
-  }
+        filtrarCards();
+      }
 
-  // ── Al cargar la página, mostrar las transacciones ──
-  renderCards(transacciones);
-
-</script>
-</body>
+      // ── Al cargar la página, mostrar las transacciones ──
+      hydrateDynamicOptions();
+      filtrarCards();
+    </script>
+  </body>
 </html>

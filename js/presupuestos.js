@@ -46,6 +46,98 @@ let selectedObjectiveMonth = MONTHS[new Date().getMonth()];
 const currentYear = String(new Date().getFullYear());
 let selectedObjectiveYear = currentYear;
 
+function getStore() {
+  return window.ClanLedgerStore || null;
+}
+
+function collectObjectivesFromDom() {
+  return Array.from(
+    document.querySelectorAll("#objetivos-grid .budget-item"),
+  ).map((item, index) => ({
+    id: item.dataset.id || `obj-${index + 1}`,
+    name: item.dataset.name || "Objetivo",
+    total: parseFloat(item.dataset.total) || 0,
+    year: item.dataset.year || currentYear,
+    savings: getObjectiveSavings(item),
+  }));
+}
+
+function collectCategoriesFromDom() {
+  return Array.from(
+    document.querySelectorAll("#categorias-grid .budget-item"),
+  ).map((item, index) => ({
+    id: item.dataset.id || `cat-${index + 1}`,
+    name: item.dataset.name || "Categoria",
+    current: parseFloat(item.dataset.current) || 0,
+    total: parseFloat(item.dataset.total) || 0,
+    period: item.dataset.period || "Mensual",
+  }));
+}
+
+function renderBudgetDataFromStore() {
+  const store = getStore();
+  if (!store) return;
+  const state = store.getState();
+  const budgets = state.budgets || {};
+  const objectives = budgets.objectives || [];
+  const categories = budgets.categories || [];
+
+  Object.assign(monthlyBudgetByMonth, budgets.monthlyBudgetByMonth || {});
+
+  if (objectives.length > 0) {
+    const grid = document.getElementById("objetivos-grid");
+    if (grid) {
+      grid.innerHTML = "";
+      objectives.forEach((obj) => {
+        const current = sumObjectiveSavings(obj.savings || {});
+        const el = buildItemEl(
+          obj.name,
+          current,
+          obj.total,
+          "",
+          obj.year || currentYear,
+        );
+        el.dataset.id = obj.id || "";
+        setObjectiveSavings(el, obj.savings || {});
+        el.dataset.current = current;
+        grid.appendChild(el);
+      });
+    }
+  }
+
+  if (categories.length > 0) {
+    const grid = document.getElementById("categorias-grid");
+    if (grid) {
+      grid.innerHTML = "";
+      categories.forEach((cat) => {
+        const el = buildItemEl(
+          cat.name,
+          cat.current,
+          cat.total,
+          cat.period || "Mensual",
+          "",
+        );
+        el.dataset.id = cat.id || "";
+        grid.appendChild(el);
+      });
+    }
+  }
+}
+
+function persistBudgetDataToStore() {
+  const store = getStore();
+  if (!store) return;
+  const objectives = collectObjectivesFromDom();
+  const categories = collectCategoriesFromDom();
+
+  store.setState((s) => {
+    s.budgets.monthlyBudgetByMonth = { ...monthlyBudgetByMonth };
+    s.budgets.objectives = objectives;
+    s.budgets.categories = categories;
+    return s;
+  });
+}
+
 function openModal(id) {
   document.getElementById("modal-overlay").classList.add("active");
   document.getElementById(id).classList.add("active");
@@ -197,8 +289,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  renderBudgetDataFromStore();
   initializeObjectiveMonthState();
   refreshAllProgress();
+  persistBudgetDataToStore();
 });
 
 /* =============================================
@@ -410,6 +504,7 @@ function updateSummaryCards() {
   }
 
   syncBudgetInputWithSelectedMonth();
+  persistBudgetDataToStore();
 }
 
 function syncBudgetInputWithSelectedMonth() {

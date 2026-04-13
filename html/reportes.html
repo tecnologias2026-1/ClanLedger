@@ -4,22 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reportes - ClanLedger</title>
-    <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png">
+    <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <link rel="stylesheet" href="../css/reportes.css" />
   </head>
   <body>
     <div class="layout">
-       <!-- ══ SIDEBAR ══ -->
-        <aside class="sidebar">
-          <div class="sidebar-logo">
-            <img src="../assets/imagenes/Logo.png" alt="logo" />
-          </div>
-          <a class="nav-item" href="../html/dashboard.html"><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a>
-          <a class="nav-item " href="../html/transacciones.html"><img src="../assets/imagenes/transacciones.png" alt="" /> Transacciones</a>
-          <a class="nav-item" href="../html/presupuestos.html"><img src="../assets/imagenes/presupuestos.png" alt="" /> Presupuestos</a>
-          <a class="nav-item active" href="../html/reportes.html"><img src="../assets/imagenes/reportsfill.png" alt="" /> Reportes</a>
-          <a class="nav-item" href="../html/ajustes.html"><img src="../assets/imagenes/ajustes.png" alt="" /> Ajustes</a>
-        </aside>
+      <!-- ══ SIDEBAR ══ -->
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <img src="../assets/imagenes/Logo.png" alt="logo" />
+        </div>
+        <a class="nav-item" href="../html/dashboard.html"
+          ><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a
+        >
+        <a class="nav-item" href="../html/transacciones.html"
+          ><img src="../assets/imagenes/transacciones.png" alt="" />
+          Transacciones</a
+        >
+        <a class="nav-item" href="../html/presupuestos.html"
+          ><img src="../assets/imagenes/presupuestos.png" alt="" />
+          Presupuestos</a
+        >
+        <a class="nav-item active" href="../html/reportes.html"
+          ><img src="../assets/imagenes/reportsfill.png" alt="" /> Reportes</a
+        >
+        <a class="nav-item" href="../html/ajustes.html"
+          ><img src="../assets/imagenes/ajustes.png" alt="" /> Ajustes</a
+        >
+      </aside>
 
       <main class="main-content">
         <header class="page-header">
@@ -29,16 +41,43 @@
           </div>
 
           <div class="user-toggle">
-            <input type="radio" name="view-mode" id="view-person" class="view-radio" />
-            <input type="radio" name="view-mode" id="view-family" class="view-radio" checked/>
+            <input
+              type="radio"
+              name="view-mode"
+              id="view-person"
+              class="view-radio"
+            />
+            <input
+              type="radio"
+              name="view-mode"
+              id="view-family"
+              class="view-radio"
+              checked
+            />
             <div class="toggle-circle"></div>
             <label class="toggle-btn" id="btn-person" for="view-person">
-              <img class="toggle-icon toggle-icon-person-default" src="../assets/imagenes/person_2.png" alt="Personal" />
-              <img class="toggle-icon toggle-icon-person-active"  src="../assets/imagenes/person_1.png" alt="Personal activo" />
+              <img
+                class="toggle-icon toggle-icon-person-default"
+                src="../assets/imagenes/person_2.png"
+                alt="Personal"
+              />
+              <img
+                class="toggle-icon toggle-icon-person-active"
+                src="../assets/imagenes/person_1.png"
+                alt="Personal activo"
+              />
             </label>
             <label class="toggle-btn" id="btn-family" for="view-family">
-              <img class="toggle-icon toggle-icon-family-default" src="../assets/imagenes/family_group_1.png" alt="Familiar" />
-              <img class="toggle-icon toggle-icon-family-active"  src="../assets/imagenes/family_group_2.png" alt="Familiar activo" />
+              <img
+                class="toggle-icon toggle-icon-family-default"
+                src="../assets/imagenes/family_group_1.png"
+                alt="Familiar"
+              />
+              <img
+                class="toggle-icon toggle-icon-family-active"
+                src="../assets/imagenes/family_group_2.png"
+                alt="Familiar activo"
+              />
             </label>
           </div>
         </header>
@@ -267,7 +306,6 @@
           </article>
         </section>
 
-        
         <!-- Footer -->
         <footer>
           <div class="footer" id="foot">
@@ -283,5 +321,7 @@
         </footer>
       </main>
     </div>
+    <script src="../js/clanledger-data.js"></script>
+    <script src="../js/reportes.js"></script>
   </body>
 </html>

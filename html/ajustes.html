@@ -1,285 +1,307 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ajustes - ClanLedger</title>
-  <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png">
-  <link rel="stylesheet" href="../css/stylesajustes.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajustes - ClanLedger</title>
+    <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
+    <link rel="stylesheet" href="../css/stylesajustes.css" />
+  </head>
 
-<body class="dashboard-body">
-
-<div class="layout">
-
- <!-- ══ SIDEBAR ══ -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <img src="../assets/imagenes/Logo.png" alt="logo" />
-    </div>
-    <a class="nav-item" href="../html/dashboard.html"><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a>
-    <a class="nav-item " href="../html/transacciones.html"><img src="../assets/imagenes/transacciones.png" alt="" /> Transacciones</a>
-    <a class="nav-item" href="../html/presupuestos.html"><img src="../assets/imagenes/presupuestos.png" alt="" /> Presupuestos</a>
-    <a class="nav-item" href="../html/reportes.html"><img src="../assets/imagenes/reports.png" alt="" /> Reportes</a>
-    <a class="nav-item active" href="../html/ajustes.html"><img src="../assets/imagenes/ajustesfill.png" alt="" /> Ajustes</a>
-  </aside>
-
-
-  <!-- CONTENIDO -->
-  <main class="main">
-
-    <!-- HEADER -->
-    <div class="header-top">
-      <div>
-        <h1>Ajustes</h1>
-        <p class="sub">Alejandro - Admin</p>
-      </div>
-      <img src="../assets/imagenes/hombre1.png">
-    </div>
-
-
-    <!-- MIEMBROS -->
-    <section class="section">
-      <div class="section-header">
-        <h3>Miembros</h3>
-        <button class="btn" id="abrirModal">+ Nuevo Miembro</button>
-      </div>
-
-      <div class="card-box members">
-
-        <div class="member">
-          <img src="../assets/imagenes/mujer1.png">
-          <div>
-            <p class="name">Ana</p>
-            <span>Madre - Admin</span>
-          </div>
-        </div>
-
-        <div class="member">
-          <img src="../assets/imagenes/mujer2.png">
-          <div>
-            <p class="name">Sofía</p>
-            <span>Hermana</span>
-          </div>
-        </div>
-
-        <div class="member">
-          <img src="../assets/imagenes/hombre1.png">
-          <div>
-            <p class="name">Fernando</p>
-            <span>Padre</span>
-          </div>
-        </div>
-
-        <div class="member">
-          <img src="../assets/imagenes/hombre2.png">
-          <div>
-            <p class="name">Alejandro</p>
-            <span>Tú - Admin</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- CUENTAS -->
-    <section class="section">
-      <div class="section-header">
-        <h3>Cuentas</h3>
-        <button class="btn" id="abrirModalCuenta">+ Nueva Cuenta</button>
-      </div>
-
-      <div class="card-box accounts">
-
-        <div class="account">
-          <img src="../assets/imagenes/checking.png">
-          <div>
-            <p class="title">Checking</p>
-            <span>Cuenta Corriente - Davivienda</span>
-          </div>
-        </div>
-
-        <div class="account">
-          <img src="../assets/imagenes/ahorro.png">
-          <div>
-            <p class="title">Ahorro</p>
-            <span>Cuenta de Ahorros - Davivienda</span>
-          </div>
-        </div>
-
-        <div class="account">
-          <img src="../assets/imagenes/credito.png">
-          <div>
-            <p class="title">Crédito</p>
-            <span>Tarjeta de Crédito - Bancolombia</span>
-          </div>
-        </div>
-
-        <div class="account">
-          <img src="../assets/imagenes/efectivo.png">
-          <div>
-            <p class="title">Cash</p>
-            <span>Dinero en Efectivo</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- ADMIN -->
-    <section class="section">
-      <h3>Administración de Datos</h3>
-
-      <div class="card-box">
-        <div class="danger">
-  <p class="danger-title">ELIMINAR CUENTA</p>
-
-  <p class="danger-text">
-    Elimina definitivamente tu cuenta y tus datos
-  </p>
-
-  <div class="danger-btn">
-    <button class="btn-danger" id="abrirEliminar">Eliminar todo</button>
-  </div>
-</div>
-    
-      </div>
-    </section>
-
-    <!-- INFO -->
-    <section class="section">
-      <h3>Información de la app</h3>
-
-      <div class="card-box">
-  <div class="inner-card">
-    <p>Versión 0.2.3</p>
-    <p>Total de transacciones: 13</p>
-    <p>Miembros registrados: 4</p>
-    <p>Cuentas registradas: 4</p>
-  </div>
-</div>
-    </section>
-
-
-    <!-- ALERTAS -->
-    <section class="section">
-      <h3>Alertas</h3>
-
-<div class="card-box">
-  <div class="inner-card alert">
-    <span>Permitir notificaciones Push</span>
-
-    <label class="switch">
-      <input type="checkbox" checked>
-      <span class="slider"></span>
-    </label>
-  </div>
-</div>
-    </section>
-
-
- 
-    <!-- Footer -->
-      <footer>
-      <div class="footer" id="foot">
-        <hr class="divisor" />
-        <div class="textofoot" id="fimg">
+  <body class="dashboard-body">
+    <div class="layout">
+      <!-- ══ SIDEBAR ══ -->
+      <aside class="sidebar">
+        <div class="sidebar-logo">
           <img src="../assets/imagenes/Logo.png" alt="logo" />
         </div>
-        <div class="textosvert" id="ftxt">
-          <h4>Tu ecosistema financiero todo en uno.</h4>
-          <h4>© 2026. The ClanLedger Team</h4>
+        <a class="nav-item" href="../html/dashboard.html"
+          ><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a
+        >
+        <a class="nav-item" href="../html/transacciones.html"
+          ><img src="../assets/imagenes/transacciones.png" alt="" />
+          Transacciones</a
+        >
+        <a class="nav-item" href="../html/presupuestos.html"
+          ><img src="../assets/imagenes/presupuestos.png" alt="" />
+          Presupuestos</a
+        >
+        <a class="nav-item" href="../html/reportes.html"
+          ><img src="../assets/imagenes/reports.png" alt="" /> Reportes</a
+        >
+        <a class="nav-item active" href="../html/ajustes.html"
+          ><img src="../assets/imagenes/ajustesfill.png" alt="" /> Ajustes</a
+        >
+      </aside>
+
+      <!-- CONTENIDO -->
+      <main class="main">
+        <!-- HEADER -->
+        <div class="header-top">
+          <div>
+            <h1>Ajustes</h1>
+            <p class="sub">Alejandro - Admin</p>
+          </div>
+          <img src="../assets/imagenes/hombre1.png" />
+        </div>
+
+        <!-- MIEMBROS -->
+        <section class="section">
+          <div class="section-header">
+            <h3>Miembros</h3>
+            <button class="btn" id="abrirModal">+ Nuevo Miembro</button>
+          </div>
+
+          <div class="card-box members">
+            <div class="member">
+              <img src="../assets/imagenes/mujer1.png" />
+              <div>
+                <p class="name">Ana</p>
+                <span>Madre - Admin</span>
+              </div>
+            </div>
+
+            <div class="member">
+              <img src="../assets/imagenes/mujer2.png" />
+              <div>
+                <p class="name">Sofía</p>
+                <span>Hermana</span>
+              </div>
+            </div>
+
+            <div class="member">
+              <img src="../assets/imagenes/hombre1.png" />
+              <div>
+                <p class="name">Fernando</p>
+                <span>Padre</span>
+              </div>
+            </div>
+
+            <div class="member">
+              <img src="../assets/imagenes/hombre2.png" />
+              <div>
+                <p class="name">Alejandro</p>
+                <span>Tú - Admin</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CUENTAS -->
+        <section class="section">
+          <div class="section-header">
+            <h3>Cuentas</h3>
+            <button class="btn" id="abrirModalCuenta">+ Nueva Cuenta</button>
+          </div>
+
+          <div class="card-box accounts">
+            <div class="account">
+              <img src="../assets/imagenes/checking.png" />
+              <div>
+                <p class="title">Checking</p>
+                <span>Cuenta Corriente - Davivienda</span>
+              </div>
+            </div>
+
+            <div class="account">
+              <img src="../assets/imagenes/ahorro.png" />
+              <div>
+                <p class="title">Ahorro</p>
+                <span>Cuenta de Ahorros - Davivienda</span>
+              </div>
+            </div>
+
+            <div class="account">
+              <img src="../assets/imagenes/credito.png" />
+              <div>
+                <p class="title">Crédito</p>
+                <span>Tarjeta de Crédito - Bancolombia</span>
+              </div>
+            </div>
+
+            <div class="account">
+              <img src="../assets/imagenes/efectivo.png" />
+              <div>
+                <p class="title">Cash</p>
+                <span>Dinero en Efectivo</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ADMIN -->
+        <section class="section">
+          <h3>Administración de Datos</h3>
+
+          <div class="card-box">
+            <div class="danger">
+              <p class="danger-title">ELIMINAR CUENTA</p>
+
+              <p class="danger-text">
+                Elimina definitivamente tu cuenta y tus datos
+              </p>
+
+              <div class="danger-btn">
+                <button class="btn-danger" id="abrirEliminar">
+                  Eliminar todo
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- INFO -->
+        <section class="section">
+          <h3>Información de la app</h3>
+
+          <div class="card-box">
+            <div class="inner-card">
+              <p>Versión 0.2.3</p>
+              <p>Total de transacciones: 13</p>
+              <p>Miembros registrados: 4</p>
+              <p>Cuentas registradas: 4</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ALERTAS -->
+        <section class="section">
+          <h3>Alertas</h3>
+
+          <div class="card-box">
+            <div class="inner-card alert">
+              <span>Permitir notificaciones Push</span>
+
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+          <div class="footer" id="foot">
+            <hr class="divisor" />
+            <div class="textofoot" id="fimg">
+              <img src="../assets/imagenes/Logo.png" alt="logo" />
+            </div>
+            <div class="textosvert" id="ftxt">
+              <h4>Tu ecosistema financiero todo en uno.</h4>
+              <h4>© 2026. The ClanLedger Team</h4>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <!-- interacción -->
+    <div class="modal" id="modalMiembro">
+      <div class="modal-content">
+        <span class="close" id="cerrarModal">&times;</span>
+
+        <h2>Nuevo Miembro</h2>
+        <p class="modal-sub">
+          Agrega un miembro de la familia para rastrear sus gastos
+        </p>
+
+        <label>Nombre</label>
+        <input type="text" placeholder="Ej: Juan" />
+
+        <label>Color</label>
+        <div class="colors">
+          <span
+            class="color"
+            data-color="#3b82f6"
+            style="background: #3b82f6"
+          ></span>
+          <span
+            class="color"
+            data-color="#10b981"
+            style="background: #10b981"
+          ></span>
+          <span
+            class="color"
+            data-color="#f59e0b"
+            style="background: #f59e0b"
+          ></span>
+          <span
+            class="color"
+            data-color="#ef4444"
+            style="background: #ef4444"
+          ></span>
+          <span
+            class="color"
+            data-color="#8b5cf6"
+            style="background: #8b5cf6"
+          ></span>
+          <span
+            class="color"
+            data-color="#ec4899"
+            style="background: #ec4899"
+          ></span>
+          <span
+            class="color"
+            data-color="#06b6d4"
+            style="background: #06b6d4"
+          ></span>
+          <span
+            class="color"
+            data-color="#84cc16"
+            style="background: #84cc16"
+          ></span>
+        </div>
+
+        <button class="btn modal-btn">Agregar Miembro</button>
+      </div>
+    </div>
+    <!-- interacción nueva cuenta-->
+    <!-- MODAL CUENTA -->
+    <div class="modal" id="modalCuenta">
+      <div class="modal-content">
+        <span class="close" id="cerrarModalCuenta">&times;</span>
+
+        <h2>Nueva Cuenta</h2>
+        <p class="modal-sub">Agrega una cuenta bancaria o de efectivo</p>
+
+        <label>Nombre</label>
+        <input type="text" placeholder="Ej: Cuenta de Ahorro" />
+
+        <label>Tipo</label>
+        <select class="select">
+          <option disabled selected>Tipo cuenta</option>
+          <option>Ahorro</option>
+          <option>Corriente</option>
+          <option>Crédito</option>
+          <option>Efectivo</option>
+        </select>
+
+        <label>Balance Inicial</label>
+        <input type="number" placeholder="0.00" />
+
+        <button class="btn modal-btn">Agregar Cuenta</button>
+      </div>
+    </div>
+    <div class="modal" id="modalEliminar">
+      <div class="modal-content">
+        <h2 style="text-align: center; margin-bottom: 25px">
+          ¿Está seguro de eliminar sus datos?
+        </h2>
+
+        <div style="display: flex; justify-content: space-between; gap: 15px">
+          <button class="btn" id="confirmarEliminar" style="flex: 1">
+            Sí, eliminar todo
+          </button>
+
+          <button class="btn-danger" id="cancelarEliminar" style="flex: 1">
+            Cancelar
+          </button>
         </div>
       </div>
-    </footer>
-
-  </main>
-
-</div>
-
-<!-- interacción -->
-<div class="modal" id="modalMiembro">
-  <div class="modal-content">
-
-    <span class="close" id="cerrarModal">&times;</span>
-
-    <h2>Nuevo Miembro</h2>
-    <p class="modal-sub">Agrega un miembro de la familia para rastrear sus gastos</p>
-
-    <label>Nombre</label>
-    <input type="text" placeholder="Ej: Juan">
-
-    <label>Color</label>
-    <div class="colors">
-  <span class="color" data-color="#3b82f6" style="background:#3b82f6"></span>
-  <span class="color" data-color="#10b981" style="background:#10b981"></span>
-  <span class="color" data-color="#f59e0b" style="background:#f59e0b"></span>
-  <span class="color" data-color="#ef4444" style="background:#ef4444"></span>
-  <span class="color" data-color="#8b5cf6" style="background:#8b5cf6"></span>
-  <span class="color" data-color="#ec4899" style="background:#ec4899"></span>
-  <span class="color" data-color="#06b6d4" style="background:#06b6d4"></span>
-  <span class="color" data-color="#84cc16" style="background:#84cc16"></span>
     </div>
 
-    <button class="btn modal-btn">Agregar Miembro</button>
-
-  </div>
-</div>
-<!-- interacción nueva cuenta-->
-<!-- MODAL CUENTA -->
-<div class="modal" id="modalCuenta">
-  <div class="modal-content">
-
-    <span class="close" id="cerrarModalCuenta">&times;</span>
-
-    <h2>Nueva Cuenta</h2>
-    <p class="modal-sub">Agrega una cuenta bancaria o de efectivo</p>
-
-    <label>Nombre</label>
-    <input type="text" placeholder="Ej: Cuenta de Ahorro">
-
-    <label>Tipo</label>
-    <select class="select">
-      <option disabled selected>Tipo cuenta</option>
-      <option>Ahorro</option>
-      <option>Corriente</option>
-      <option>Crédito</option>
-      <option>Efectivo</option>
-    </select>
-
-    <label>Balance Inicial</label>
-    <input type="number" placeholder="0.00">
-
-    <button class="btn modal-btn">Agregar Cuenta</button>
-
-  </div>
-</div>
-<div class="modal" id="modalEliminar">
-  <div class="modal-content">
-
-    <h2 style="text-align:center; margin-bottom:25px;">
-      ¿Está seguro de eliminar sus datos?
-    </h2>
-
-    <div style="display:flex; justify-content:space-between; gap:15px;">
-      <button class="btn" id="confirmarEliminar" style="flex:1;">
-        Sí, eliminar todo
-      </button>
-
-      <button class="btn-danger" id="cancelarEliminar" style="flex:1;">
-        Cancelar
-      </button>
-    </div>
-
-  </div>
-</div>
-
-<script src="../js/script.js"></script>
-
-</body>
+    <script src="../js/clanledger-data.js"></script>
+    <script src="../js/script.js"></script>
+  </body>
 </html>
-
-
-
