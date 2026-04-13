@@ -28,6 +28,7 @@ function switchView(view) {
 let pendingCatSelectId = null;
 let pendingCatDropId = null;
 const monthlyBudgetByMonth = {};
+let budgetSourceMode = "accounts";
 const MONTHS = [
   "Enero",
   "Febrero",
@@ -81,6 +82,8 @@ function renderBudgetDataFromStore() {
   const budgets = state.budgets || {};
   const objectives = budgets.objectives || [];
   const categories = budgets.categories || [];
+  budgetSourceMode =
+    budgets.budgetSourceMode === "manual" ? "manual" : "accounts";
 
   Object.assign(monthlyBudgetByMonth, budgets.monthlyBudgetByMonth || {});
 
@@ -124,6 +127,47 @@ function renderBudgetDataFromStore() {
   }
 }
 
+function getAccountsBudgetTotal() {
+  const store = getStore();
+  if (!store) return 0;
+  const state = store.getState();
+  return (state.accounts || []).reduce(
+    (acc, account) => acc + (Number(account.balance) || 0),
+    0,
+  );
+}
+
+function selectBudgetSource(mode, optionEl) {
+  const safeMode = mode === "accounts" ? "accounts" : "manual";
+  const label =
+    safeMode === "accounts" ? "Usar balance de cuentas" : "Ingresar valor";
+  selectOption("sel-budget-source", label, optionEl);
+  onBudgetSourceChange(safeMode);
+}
+
+function onBudgetSourceChange(mode) {
+  budgetSourceMode = mode === "accounts" ? "accounts" : "manual";
+  updateBudgetSourceControls();
+  updateSummaryCards();
+}
+
+function updateBudgetSourceControls() {
+  const controls = document.querySelector(".budget-setup-controls");
+  const budgetInput = document.getElementById("budget-total-input");
+  const saveBtn = document.getElementById("budget-save-btn");
+  const hint = document.getElementById("budget-source-hint");
+  const usingAccounts = budgetSourceMode === "accounts";
+
+  if (controls) controls.classList.toggle("readonly", usingAccounts);
+  if (budgetInput) budgetInput.disabled = usingAccounts;
+  if (saveBtn) saveBtn.disabled = usingAccounts;
+  if (hint) {
+    hint.textContent = usingAccounts
+      ? "Se utiliza automáticamente la suma del balance de todas las cuentas en Ajustes."
+      : "Define manualmente el presupuesto final del mes.";
+  }
+}
+
 function persistBudgetDataToStore() {
   const store = getStore();
   if (!store) return;
@@ -134,6 +178,7 @@ function persistBudgetDataToStore() {
     s.budgets.monthlyBudgetByMonth = { ...monthlyBudgetByMonth };
     s.budgets.objectives = objectives;
     s.budgets.categories = categories;
+    s.budgets.budgetSourceMode = budgetSourceMode;
     return s;
   });
 }
@@ -218,6 +263,50 @@ function selectOption(selectId, value, optionEl) {
   closeAllDropdowns();
 }
 
+function ensureCategoryOption(dropId, name) {
+  const dropdown = document.getElementById(dropId);
+  if (!dropdown) return;
+  const clean = String(name || "").trim();
+  if (!clean) return;
+
+  const exists = Array.from(
+    dropdown.querySelectorAll(".select-option span"),
+  ).some(
+    (span) => span.textContent.trim().toLowerCase() === clean.toLowerCase(),
+  );
+  if (exists) return;
+
+  const newCatBtn = dropdown.querySelector(".new-cat-opt");
+  const option = document.createElement("div");
+  option.className = "select-option";
+  option.innerHTML = `<span>${escapeHtml(clean)}</span>`;
+
+  if (dropId === "drop-obj-cat") {
+    option.onclick = function () {
+      selectOption("sel-obj-cat", clean, this);
+    };
+  } else {
+    option.onclick = function () {
+      selectOption("sel-pres-cat", clean, this);
+    };
+  }
+
+  dropdown.insertBefore(option, newCatBtn || null);
+}
+
+function syncCategoryDropdownsFromStore() {
+  const store = getStore();
+  if (!store) return;
+  const state = store.getState();
+  const names = (state.budgets.categories || [])
+    .map((c) => c.name)
+    .filter(Boolean);
+  names.forEach((name) => {
+    ensureCategoryOption("drop-obj-cat", name);
+    ensureCategoryOption("drop-pres-cat", name);
+  });
+}
+
 /* =============================================
    CREATE NEW CATEGORY (inline modal)
    ============================================= */
@@ -263,8 +352,17 @@ function confirmNewCategory() {
 
     dropdown.insertBefore(newOpt, newCatBtn);
 
+    const otherDropId =
+      pendingCatDropId === "drop-obj-cat" ? "drop-pres-cat" : "drop-obj-cat";
+    ensureCategoryOption(otherDropId, name);
+
     // Auto-select the new category
     selectOption(pendingCatSelectId, name, newOpt);
+
+    const store = getStore();
+    if (store && typeof store.addCategoryIfMissing === "function") {
+      store.addCategoryIfMissing(name);
+    }
   }
 
   document.getElementById("modal-nueva-cat").classList.remove("active");
@@ -290,9 +388,23 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   renderBudgetDataFromStore();
+  syncCategoryDropdownsFromStore();
   initializeObjectiveMonthState();
+  preselectDropdown(
+    "sel-budget-source",
+    budgetSourceMode === "manual"
+      ? "Ingresar valor"
+      : "Usar balance de cuentas",
+  );
+  updateBudgetSourceControls();
   refreshAllProgress();
   persistBudgetDataToStore();
+});
+
+window.addEventListener("focus", function () {
+  if (budgetSourceMode === "accounts") {
+    updateSummaryCards();
+  }
 });
 
 /* =============================================
@@ -487,7 +599,9 @@ function updateSummaryCards() {
 
   const presupuestoAsignado = totalObjetivosMes + totalCategorias;
   const presupuestoTotal =
-    monthlyBudgetByMonth[selectedObjectiveMonth] ?? presupuestoAsignado;
+    budgetSourceMode === "accounts"
+      ? getAccountsBudgetTotal()
+      : (monthlyBudgetByMonth[selectedObjectiveMonth] ?? presupuestoAsignado);
 
   const presupuestoEl = document.getElementById("sum-presupuesto-total");
   const gastosEl = document.getElementById("sum-total-gastos");
@@ -511,6 +625,11 @@ function syncBudgetInputWithSelectedMonth() {
   const budgetInput = document.getElementById("budget-total-input");
   if (!budgetInput) return;
 
+  if (budgetSourceMode === "accounts") {
+    budgetInput.value = Math.round(getAccountsBudgetTotal());
+    return;
+  }
+
   const objetivosSelector = "#objetivos-grid .budget-item";
   const categoriasSelector = "#categorias-grid .budget-item";
   const totalObjetivosMes = sumObjectiveMonthlyContributions(
@@ -525,6 +644,11 @@ function syncBudgetInputWithSelectedMonth() {
 }
 
 function saveBudgetTotal() {
+  if (budgetSourceMode === "accounts") {
+    updateSummaryCards();
+    return;
+  }
+
   const budgetInput = document.getElementById("budget-total-input");
   if (!budgetInput) return;
 

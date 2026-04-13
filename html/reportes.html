@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reportes - ClanLedger</title>
+    <title>ClanLedger</title>
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <link rel="stylesheet" href="../css/reportes.css" />
   </head>
@@ -88,8 +88,14 @@
             <select id="filter-periodo" class="filter-select">
               <option>Este mes</option>
               <option>Ultimos 3 meses</option>
-              <option>Este anio</option>
+              <option>Este año</option>
             </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="filter-mes-analisis"
+              >Mes de analisis</label
+            >
+            <select id="filter-mes-analisis" class="filter-select"></select>
           </div>
           <div class="filter-group">
             <label class="filter-label" for="filter-miembro">Miembro</label>
@@ -126,8 +132,27 @@
 
         <section class="charts-row">
           <article>
-            <h2 class="section-title">Tendencia Diaria</h2>
+            <h2 class="section-title">Tendencia mensual</h2>
             <div class="chart-card" id="chart-tendencia">
+              <div class="trend-zoom-controls" aria-label="Control de zoom">
+                <button
+                  type="button"
+                  class="zoom-btn"
+                  id="trend-zoom-out"
+                  title="Alejar"
+                >
+                  -
+                </button>
+                <span class="zoom-value" id="trend-zoom-value">100%</span>
+                <button
+                  type="button"
+                  class="zoom-btn"
+                  id="trend-zoom-in"
+                  title="Acercar"
+                >
+                  +
+                </button>
+              </div>
               <div class="chart-surface line">
                 <div class="y-axis-labels">
                   <span>10M</span>
@@ -159,12 +184,14 @@
                   </div>
                 </div>
                 <div class="x-axis-labels x-axis-labels-line">
-                  <span>Sep</span>
-                  <span>Oct</span>
-                  <span>Nov</span>
-                  <span>Dic</span>
-                  <span>Ene</span>
-                  <span>Feb</span>
+                  <div class="x-axis-track">
+                    <span>Sep</span>
+                    <span>Oct</span>
+                    <span>Nov</span>
+                    <span>Dic</span>
+                    <span>Ene</span>
+                    <span>Feb</span>
+                  </div>
                 </div>
                 <div class="legend">
                   <span

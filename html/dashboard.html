@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <link rel="stylesheet" href="../css/stylesdashboard.css" />
-    <title>Dashboard - ClanLedger</title>
+    <title>ClanLedger</title>
   </head>
   <body>
     <div class="layout">
@@ -113,76 +113,57 @@
           <!-- Tendencia mensual -->
           <div class="chart-box">
             <h3 class="chart-title">Tendencia mensual</h3>
-            <div class="chart-area line-chart">
-              <div class="y-labels">
-                <span>10M</span><span>8M</span><span>6M</span><span>4M</span
-                ><span>2M</span>
+            <div class="trend-surface" id="dashboard-trend">
+              <div class="trend-y-axis">
+                <span>10M</span>
+                <span>8M</span>
+                <span>6M</span>
+                <span>4M</span>
+                <span>2M</span>
               </div>
-              <div class="chart-plot">
-                <svg viewBox="0 0 100 50" preserveAspectRatio="none">
-                  <!-- Línea de ingresos (verde) -->
-                  <polyline
-                    fill="none"
-                    stroke="#249a40"
-                    stroke-width="1.2"
-                    points="0,46 14,34 28,18 42,18 56,0 70,0 84,18 98,18"
-                  />
-                  <!-- Línea de egresos (rojo) -->
-                  <polyline
-                    fill="none"
-                    stroke="#be3232"
-                    stroke-width="1.2"
-                    points="0,50 14,40 28,24 42,34 56,18 70,40 84,40 98,40"
-                  />
-                </svg>
-                <div class="x-labels">
-                  <span>Sep</span><span>Oct</span><span>Nov</span>
-                  <span>Dic</span><span>Ene</span><span>Feb</span>
+              <div class="trend-plot">
+                <div class="trend-line-series">
+                  <svg
+                    viewBox="0 0 100 50"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <polyline
+                      fill="none"
+                      stroke="#249a40"
+                      stroke-width="1.2"
+                      points=""
+                    />
+                    <polyline
+                      fill="none"
+                      stroke="#be3232"
+                      stroke-width="1.2"
+                      points=""
+                    />
+                  </svg>
                 </div>
               </div>
-            </div>
-            <!-- Leyenda -->
-            <div class="chart-legend">
-              <span><span class="legend-dot green"></span>Ingresos</span>
-              <span><span class="legend-dot red"></span>Egresos</span>
+              <div class="trend-x-axis"></div>
+              <div class="trend-legend">
+                <span><span class="legend-dot green"></span>Ingresos</span>
+                <span><span class="legend-dot red"></span>Egresos</span>
+              </div>
             </div>
           </div>
 
           <!-- Gastos por categoría (barras) -->
           <div class="chart-box">
             <h3 class="chart-title">Gastos por categoría</h3>
-            <div class="chart-area bar-chart">
-              <div class="y-labels">
-                <span>5M</span><span>4M</span><span>3M</span><span>2M</span
-                ><span>1M</span>
+            <div class="category-surface" id="dashboard-category-chart">
+              <div class="category-y-axis">
+                <span>5M</span>
+                <span>4M</span>
+                <span>3M</span>
+                <span>2M</span>
+                <span>1M</span>
               </div>
-              <div class="chart-plot">
-                <div class="bars-wrap">
-                  <div class="bar-group">
-                    <div class="bar-track">
-                      <div class="bar red" style="height: 80%"></div>
-                    </div>
-                    <span class="bar-label">Vivienda</span>
-                  </div>
-                  <div class="bar-group">
-                    <div class="bar-track">
-                      <div class="bar blue" style="height: 55%"></div>
-                    </div>
-                    <span class="bar-label">Alimentación</span>
-                  </div>
-                  <div class="bar-group">
-                    <div class="bar-track">
-                      <div class="bar orange" style="height: 35%"></div>
-                    </div>
-                    <span class="bar-label">Ocio</span>
-                  </div>
-                  <div class="bar-group">
-                    <div class="bar-track">
-                      <div class="bar green" style="height: 18%"></div>
-                    </div>
-                    <span class="bar-label">Transportes</span>
-                  </div>
-                </div>
+              <div class="category-plot">
+                <div class="bars-wrap"></div>
               </div>
             </div>
           </div>
@@ -190,7 +171,24 @@
 
         <!-- ══ GASTOS POR MIEMBRO (pie chart) ══ -->
         <div class="chart-box full-width">
-          <h3 class="chart-title">Gastos por miembro</h3>
+          <div class="chart-title-row">
+            <h3 class="chart-title">Gastos por miembro</h3>
+            <div
+              class="member-period-switch"
+              id="member-period-switch"
+              aria-label="Periodo de gastos por miembro"
+            >
+              <button type="button" class="period-btn active" data-period="mes">
+                Mes actual
+              </button>
+              <button type="button" class="period-btn" data-period="3m">
+                3 meses
+              </button>
+              <button type="button" class="period-btn" data-period="anio">
+                Año
+              </button>
+            </div>
+          </div>
           <div class="pie-section">
             <!-- Leyenda izquierda -->
             <div class="pie-legend left">

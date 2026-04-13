@@ -234,13 +234,54 @@ body {
   font-size: 15px;
   font-weight: 700;
   color: #1a2744;
+  margin-top: 2px;
   margin-bottom: 12px;
+}
+
+.budget-source-intro {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.budget-source-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.budget-source-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.budget-source-select {
+  width: 320px;
+}
+
+.budget-source-hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #7a8098;
 }
 
 .budget-setup-controls {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.budget-setup-controls.readonly .input-suffix-wrap {
+  background: #eef1f6;
+  border-color: #d2d8e5;
+}
+
+.budget-setup-controls.readonly input {
+  color: #657185;
+  cursor: not-allowed;
 }
 
 .budget-total-input-wrap {
@@ -298,6 +339,13 @@ body {
 
 .btn-primary:active {
   transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 .btn-primary .btn-icon {
@@ -928,4 +976,17 @@ body:has(.modal:target) .modal-overlay {
 
 .budget-item.entering {
   animation: itemEnter 0.32s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@media (max-width: 940px) {
+  .budget-source-row,
+  .budget-setup-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .budget-source-select,
+  .budget-total-input-wrap {
+    width: 100%;
+  }
 }

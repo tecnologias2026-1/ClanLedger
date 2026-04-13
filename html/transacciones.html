@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="../css/stylestransacciones.css" />
-    <title>Transacciones - ClanLedger</title>
+    <title>ClanLedger</title>
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
   </head>
   <body>
@@ -228,6 +228,26 @@
       </div>
     </div>
 
+    <div class="modal-overlay" id="modal-nueva-cat-trans">
+      <div class="modal modal-sm">
+        <button class="modal-close" onclick="closeNewCategoryModal()">
+          &#x2715;
+        </button>
+        <h3>Nueva Categoría</h3>
+        <p class="modal-subtitle">Escribe el nombre de la nueva categoría</p>
+        <div class="campo">
+          <label>Nombre de la Categoría</label>
+          <input type="text" id="new-cat-input-trans" placeholder="Ej: Salud" />
+        </div>
+        <button
+          class="btn-presupuesto-primary"
+          onclick="confirmNewCategoryFromTransactions()"
+        >
+          Crear Categoría
+        </button>
+      </div>
+    </div>
+
     <script src="../js/clanledger-data.js"></script>
     <script>
       // ── Datos iniciales ──
@@ -294,6 +314,11 @@
           transacciones = state.transactions.map((t) => ({ ...t }));
         } else {
           store.setState((s) => {
+            const seededAccounts = (s.accounts || []).map((a) => ({ ...a }));
+            transacciones.forEach((tx) =>
+              applyTransactionToAccounts(seededAccounts, tx, "add"),
+            );
+            s.accounts = seededAccounts;
             s.transactions = transacciones.map((t) => ({ ...t }));
             return s;
           });
@@ -323,19 +348,134 @@
           values.map((v) => `<option value="${v}">${v}</option>`).join("");
       }
 
+      function replaceCategoryInputOptions(values) {
+        const select = document.getElementById("input-categoria");
+        if (!select) return;
+        select.innerHTML =
+          '<option value="" disabled selected>Categoria</option>' +
+          values.map((v) => `<option value="${v}">${v}</option>`).join("") +
+          '<option value="__new__">+ Crear nueva categoría</option>';
+      }
+
+      function replaceAccountOptions(values) {
+        const select = document.getElementById("input-metodo");
+        if (!select) return;
+        select.innerHTML =
+          '<option value="" disabled selected>Tipo cuenta</option>' +
+          values
+            .map((account) => {
+              const balance = Number(account.balance) || 0;
+              const label = `${account.name} - ${account.type} | Saldo $${balance.toLocaleString("es-CO")}`;
+              return `<option value="${account.name}">${label}</option>`;
+            })
+            .join("");
+      }
+
       function hydrateDynamicOptions() {
         if (!store) return;
         const state = store.getState();
         const members = state.members.map((m) => m.name);
         const categories = (state.budgets.categories || []).map((c) => c.name);
+        const accounts = state.accounts || [];
 
         replaceOptions("filtro-miembro", members, "Todos");
         replaceOptions("input-miembro", members, null);
+        replaceAccountOptions(accounts);
 
         if (categories.length > 0) {
           replaceOptions("filtro-categoria", categories, "Todas");
-          replaceOptions("input-categoria", categories, null);
+          replaceCategoryInputOptions(categories);
+        } else {
+          replaceCategoryInputOptions([
+            "Salario",
+            "Alimentación",
+            "Ocio",
+            "Extras",
+          ]);
         }
+      }
+
+      function ensureCategoryFlow() {
+        const select = document.getElementById("input-categoria");
+        if (!select) return;
+        select.addEventListener("change", () => {
+          if (select.value !== "__new__") return;
+          select.selectedIndex = 0;
+          openNewCategoryModal();
+        });
+      }
+
+      function findAccountIndex(accountLabel, accounts) {
+        const clean = String(accountLabel || "")
+          .trim()
+          .toLowerCase();
+        if (!clean) return -1;
+
+        return accounts.findIndex((account) => {
+          const name = String(account.name || "")
+            .trim()
+            .toLowerCase();
+          const type = String(account.type || "")
+            .trim()
+            .toLowerCase();
+          return (
+            name === clean ||
+            type === clean ||
+            `${name} - ${type}` === clean ||
+            (clean === "efectivo" &&
+              (name === "cash" || type.includes("efectivo"))) ||
+            (clean === "ahorros" &&
+              (name === "ahorro" || type.includes("ahorros")))
+          );
+        });
+      }
+
+      function applyTransactionToAccounts(accounts, tx, mode) {
+        const idx = findAccountIndex(tx.metodo, accounts);
+        if (idx < 0) return;
+
+        const amount = Number(tx.monto) || 0;
+        const factor = mode === "remove" ? -1 : 1;
+
+        if (tx.tipo === "ingreso") {
+          accounts[idx].balance += amount * factor;
+        } else if (tx.tipo === "gasto") {
+          accounts[idx].balance -= amount * factor;
+        }
+      }
+
+      function openNewCategoryModal() {
+        const modal = document.getElementById("modal-nueva-cat-trans");
+        const input = document.getElementById("new-cat-input-trans");
+        if (modal) modal.classList.add("visible");
+        if (input) {
+          input.value = "";
+          setTimeout(() => input.focus(), 50);
+        }
+      }
+
+      function closeNewCategoryModal() {
+        const modal = document.getElementById("modal-nueva-cat-trans");
+        if (modal) modal.classList.remove("visible");
+      }
+
+      function confirmNewCategoryFromTransactions() {
+        const input = document.getElementById("new-cat-input-trans");
+        if (!input) return;
+        const clean = input.value.trim();
+        if (!clean) {
+          input.focus();
+          return;
+        }
+
+        if (store && typeof store.addCategoryIfMissing === "function") {
+          store.addCategoryIfMissing(clean);
+        }
+
+        hydrateDynamicOptions();
+        const refreshed = document.getElementById("input-categoria");
+        if (refreshed) refreshed.value = clean;
+        closeNewCategoryModal();
       }
 
       // ── Toggle personal / familiar ──
@@ -421,8 +561,26 @@
 
       // ── Eliminar una transacción ──
       function eliminar(id) {
+        const txEliminada = transacciones.find((t) => t.id === id);
         transacciones = transacciones.filter((t) => t.id !== id);
-        persistTransactions();
+        if (store && txEliminada) {
+          store.setState((s) => {
+            const idx = findAccountIndex(txEliminada.metodo, s.accounts || []);
+            if (idx >= 0) {
+              const amount = Number(txEliminada.monto) || 0;
+              if (txEliminada.tipo === "ingreso") {
+                s.accounts[idx].balance -= amount;
+              } else if (txEliminada.tipo === "gasto") {
+                s.accounts[idx].balance += amount;
+              }
+            }
+            s.transactions = transacciones.map((t) => ({ ...t }));
+            return s;
+          });
+        } else {
+          persistTransactions();
+        }
+        hydrateDynamicOptions();
         filtrarCards();
       }
 
@@ -438,6 +596,21 @@
       document.getElementById("modal").addEventListener("click", (e) => {
         if (e.target === document.getElementById("modal")) cerrarModal();
       });
+
+      document
+        .getElementById("modal-nueva-cat-trans")
+        .addEventListener("click", (e) => {
+          if (e.target === document.getElementById("modal-nueva-cat-trans")) {
+            closeNewCategoryModal();
+          }
+        });
+
+      document
+        .getElementById("new-cat-input-trans")
+        .addEventListener("keydown", (e) => {
+          if (e.key === "Enter") confirmNewCategoryFromTransactions();
+          if (e.key === "Escape") closeNewCategoryModal();
+        });
 
       // ── Guardar nueva transacción ──
       function guardarTransaccion() {
@@ -476,7 +649,25 @@
           metodo,
           fecha,
         });
-        persistTransactions();
+        if (store) {
+          store.setState((s) => {
+            const idx = findAccountIndex(metodo, s.accounts || []);
+            if (idx >= 0) {
+              const amount = Number(monto) || 0;
+              if (tipo === "ingreso") {
+                s.accounts[idx].balance += amount;
+              } else if (tipo === "gasto") {
+                s.accounts[idx].balance -= amount;
+              }
+            }
+            s.transactions = transacciones.map((t) => ({ ...t }));
+            return s;
+          });
+        } else {
+          persistTransactions();
+        }
+
+        hydrateDynamicOptions();
 
         cerrarModal();
 
@@ -496,6 +687,7 @@
 
       // ── Al cargar la página, mostrar las transacciones ──
       hydrateDynamicOptions();
+      ensureCategoryFlow();
       filtrarCards();
     </script>
   </body>

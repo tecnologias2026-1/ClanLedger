@@ -5,7 +5,7 @@ Aplicación web enfocada en la administración de finanzas personales y familiar
 
 Juan David Alvarado Rocha – 1202673
 Stefany Latorre Oyola – 1202615
-Esteban Ahumedo Marchena - 
+Esteban Ahumedo Marchena - 1202635
 
 🎯 1. Objetivo General
 
@@ -25,10 +25,9 @@ Gestionar cuentas (ahorro, crédito, efectivo)
 Crear presupuestos y reportes
 Administrar miembros del grupo familiar
 
-
 📋 3. Requerimientos del Sistema
 
-3.1   Requerimientos Funcionales 
+3.1 Requerimientos Funcionales
 
 RF01: Registrar ingresos y gastos manualmente
 RF02: Clasificar transacciones por categorías
@@ -63,11 +62,9 @@ Muestra el flujo de interacción entre el usuario y el sistema, por ejemplo:
 
 Usuario -- clic en “Nueva Cuenta” -- sistema abre modal -- usuario llena datos -- sistema valida -- sistema guarda -- dashboard se actualiza
 
-
 🎨 5. URL del Prototipo
 
-(https://www.figma.com/design/m4D9usRLkRsEvhctAsS9bN/Mockup-Web-y-App?node-id=155-864&t=6mUXTtTOaD7sSM2F-1) 
-
+(https://www.figma.com/design/m4D9usRLkRsEvhctAsS9bN/Mockup-Web-y-App?node-id=155-864&t=6mUXTtTOaD7sSM2F-1)
 
 🗄️ 6. Diseño de Base de Datos
 
@@ -107,12 +104,10 @@ CSS: define diseño UI basado en Figma (cards, botones, modales)
 JS: maneja modales, botones, selección de colores, etc.
 Assets: logos, iconos (como el marranito con el logo)
 
-
 🚀 8. Instalación y Ejecución
 Descargar el proyecto
-Abrir en Visual Studio 
+Abrir en Visual Studio
 Ejecutar ajustes.html o login.html
-
 
 El sistema ClanLedger se diferencia por:
 Enfoque multiusuario familiar

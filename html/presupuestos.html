@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
-    <title>Presupuestos - ClanLedger</title>
+    <title>ClanLedger</title>
     <link rel="stylesheet" href="../css/presupuestos.css" />
   </head>
   <body>
@@ -89,6 +89,48 @@
         </div>
 
         <div class="budget-setup-card">
+          <p class="budget-source-intro">
+            Elige primero el origen del presupuesto final.
+          </p>
+          <div class="budget-source-row">
+            <div
+              class="custom-select budget-source-select"
+              id="sel-budget-source"
+            >
+              <div
+                class="select-header"
+                onclick="
+                  toggleDropdown('drop-budget-source', 'sel-budget-source')
+                "
+              >
+                <span class="select-display">Usar balance de cuentas</span>
+                <img
+                  src="../assets/imagenes/keyboard_arrow_down_gris.png"
+                  alt=""
+                  class="select-arrow"
+                />
+              </div>
+              <div class="select-dropdown" id="drop-budget-source">
+                <div
+                  class="select-option selected"
+                  onclick="selectBudgetSource('accounts', this)"
+                >
+                  <span>Usar balance de cuentas</span>
+                  <img
+                    src="../assets/imagenes/Done.png"
+                    alt="✓"
+                    class="check-icon"
+                  />
+                </div>
+                <div
+                  class="select-option"
+                  onclick="selectBudgetSource('manual', this)"
+                >
+                  <span>Ingresar valor</span>
+                </div>
+              </div>
+            </div>
+          </div>
           <p class="budget-setup-message">Coloca tu presupuesto</p>
           <div class="budget-setup-controls">
             <div class="input-suffix-wrap budget-total-input-wrap">
@@ -100,10 +142,18 @@
               />
               <span class="input-suffix">$</span>
             </div>
-            <button class="btn-primary" onclick="saveBudgetTotal()">
+            <button
+              class="btn-primary"
+              id="budget-save-btn"
+              onclick="saveBudgetTotal()"
+            >
               Guardar presupuesto
             </button>
           </div>
+          <p class="budget-source-hint" id="budget-source-hint">
+            Se utiliza automaticamente la suma del balance de todas las cuentas
+            en Ajustes.
+          </p>
         </div>
 
         <!-- ===== SUMMARY CARDS ===== -->

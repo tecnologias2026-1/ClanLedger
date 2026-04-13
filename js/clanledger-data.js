@@ -178,6 +178,36 @@
     };
   }
 
+  function addCategoryIfMissing(name) {
+    const clean = String(name || "").trim();
+    if (!clean) return false;
+
+    let added = false;
+    setState((s) => {
+      const exists = (s.budgets.categories || []).some(
+        (c) => String(c.name || "").toLowerCase() === clean.toLowerCase(),
+      );
+      if (!exists) {
+        const nextId =
+          (s.budgets.categories || []).reduce(
+            (max, c) => Math.max(max, Number(c.id) || 0),
+            0,
+          ) + 1;
+        s.budgets.categories.push({
+          id: nextId,
+          name: clean,
+          current: 0,
+          total: 0,
+          period: "Mensual",
+        });
+        added = true;
+      }
+      return s;
+    });
+
+    return added;
+  }
+
   window.ClanLedgerStore = {
     MONTHS,
     formatCOP,
@@ -186,5 +216,6 @@
     saveState,
     getCurrentMonthName,
     computeFinancials,
+    addCategoryIfMissing,
   };
 })();
