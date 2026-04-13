@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajustes - ClanLedger</title>
+
+  <link rel="stylesheet" href="stylesajustes.css">
+</head>
+
+<body class="dashboard-body">
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      <img src="img/logo.png" alt="ClanLedger">
+    </div>
+
+    <nav>
+      <ul>
+        <li>Dashboard</li>
+        <li>Transacciones</li>
+        <li>Presupuestos</li>
+        <li>Reportes</li>
+        <li class="active">Ajustes</li>
+      </ul>
+    </nav>
+  </aside>
+
+
+  <!-- CONTENIDO -->
+  <main class="main">
+
+    <!-- HEADER -->
+    <div class="header-top">
+      <div>
+        <h1>Ajustes</h1>
+        <p class="sub">Alejandro - Admin</p>
+      </div>
+
+      <img src="img/hombre.png" class="avatar">
+    </div>
+
+
+    <!-- MIEMBROS -->
+    <section class="section">
+      <div class="section-header">
+        <h3>Miembros</h3>
+        <button class="btn" id="abrirModal">+ Nuevo Miembro</button>
+      </div>
+
+      <div class="card-box members">
+
+        <div class="member">
+          <img src="img/mujer.png">
+          <div>
+            <p class="name">Ana</p>
+            <span>Madre - Admin</span>
+          </div>
+        </div>
+
+        <div class="member">
+          <img src="img/mujer.png">
+          <div>
+            <p class="name">Sofía</p>
+            <span>Hermana</span>
+          </div>
+        </div>
+
+        <div class="member">
+          <img src="img/hombre.png">
+          <div>
+            <p class="name">Fernando</p>
+            <span>Padre</span>
+          </div>
+        </div>
+
+        <div class="member">
+          <img src="img/hombre.png">
+          <div>
+            <p class="name">Alejandro</p>
+            <span>Tú - Admin</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CUENTAS -->
+    <section class="section">
+      <div class="section-header">
+        <h3>Cuentas</h3>
+        <button class="btn" id="abrirModalCuenta">+ Nueva Cuenta</button>
+      </div>
+
+      <div class="card-box accounts">
+
+        <div class="account">
+          <img src="img/checking.png">
+          <div>
+            <p class="title">Checking</p>
+            <span>Cuenta Corriente - Davivienda</span>
+          </div>
+        </div>
+
+        <div class="account">
+          <img src="img/ahorro.png">
+          <div>
+            <p class="title">Ahorro</p>
+            <span>Cuenta de Ahorros - Davivienda</span>
+          </div>
+        </div>
+
+        <div class="account">
+          <img src="img/credito.png">
+          <div>
+            <p class="title">Crédito</p>
+            <span>Tarjeta de Crédito - Bancolombia</span>
+          </div>
+        </div>
+
+        <div class="account">
+          <img src="img/cash.png">
+          <div>
+            <p class="title">Cash</p>
+            <span>Dinero en Efectivo</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ADMIN -->
+    <section class="section">
+      <h3>Administración de Datos</h3>
+
+      <div class="card-box">
+        <div class="danger">
+  <p class="danger-title">ELIMINAR CUENTA</p>
+
+  <p class="danger-text">
+    Elimina definitivamente tu cuenta y tus datos
+  </p>
+
+  <div class="danger-btn">
+    <button class="btn-danger" id="abrirEliminar">Eliminar todo</button>
+  </div>
+</div>
+    
+      </div>
+    </section>
+
+    <!-- INFO -->
+    <section class="section">
+      <h3>Información de la app</h3>
+
+      <div class="card-box">
+  <div class="inner-card">
+    <p>Versión 0.2.3</p>
+    <p>Total de transacciones: 13</p>
+    <p>Miembros registrados: 4</p>
+    <p>Cuentas registradas: 4</p>
+  </div>
+</div>
+    </section>
+
+
+    <!-- ALERTAS -->
+    <section class="section">
+      <h3>Alertas</h3>
+
+<div class="card-box">
+  <div class="inner-card alert">
+    <span>Permitir notificaciones Push</span>
+
+    <label class="switch">
+      <input type="checkbox" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+    </section>
+
+
+  <footer class="dashboard-footer">
+
+  <hr class="footer-line">
+
+  <div class="footer-content">
+    
+    <!-- LOGO GRANDE -->
+    <img src="img/logo.png" class="footer-logo">
+
+    <!-- TEXTO DEBAJO -->
+    <div class="footer-text">
+      <span class="footer-sub">Tu ecosistema financiero todo en uno</span>
+      <p class="footer-year">2026 The ClanLedger Team</p>
+    </div>
+
+  </div>
+
+</footer>
+
+  </main>
+
+</div>
+
+/* interacción */
+<div class="modal" id="modalMiembro">
+  <div class="modal-content">
+
+    <span class="close" id="cerrarModal">&times;</span>
+
+    <h2>Nuevo Miembro</h2>
+    <p class="modal-sub">Agrega un miembro de la familia para rastrear sus gastos</p>
+
+    <label>Nombre</label>
+    <input type="text" placeholder="Ej: Juan">
+
+    <label>Color</label>
+    <div class="colors">
+  <span class="color" data-color="#3b82f6" style="background:#3b82f6"></span>
+  <span class="color" data-color="#10b981" style="background:#10b981"></span>
+  <span class="color" data-color="#f59e0b" style="background:#f59e0b"></span>
+  <span class="color" data-color="#ef4444" style="background:#ef4444"></span>
+  <span class="color" data-color="#8b5cf6" style="background:#8b5cf6"></span>
+  <span class="color" data-color="#ec4899" style="background:#ec4899"></span>
+  <span class="color" data-color="#06b6d4" style="background:#06b6d4"></span>
+  <span class="color" data-color="#84cc16" style="background:#84cc16"></span>
+    </div>
+
+    <button class="btn modal-btn">Agregar Miembro</button>
+
+  </div>
+</div>
+
+/* interacción nueva cuenta*/
+<!-- MODAL CUENTA -->
+<div class="modal" id="modalCuenta">
+  <div class="modal-content">
+
+    <span class="close" id="cerrarModalCuenta">&times;</span>
+
+    <h2>Nueva Cuenta</h2>
+    <p class="modal-sub">Agrega una cuenta bancaria o de efectivo</p>
+
+    <label>Nombre</label>
+    <input type="text" placeholder="Ej: Cuenta de Ahorro">
+
+    <label>Tipo</label>
+    <select class="select">
+      <option disabled selected>Tipo cuenta</option>
+      <option>Ahorro</option>
+      <option>Corriente</option>
+      <option>Crédito</option>
+      <option>Efectivo</option>
+    </select>
+
+    <label>Balance Inicial</label>
+    <input type="number" placeholder="0.00">
+
+    <button class="btn modal-btn">Agregar Cuenta</button>
+
+  </div>
+</div>
+<div class="modal" id="modalEliminar">
+  <div class="modal-content">
+
+    <h2 style="text-align:center; margin-bottom:25px;">
+      ¿Está seguro de eliminar sus datos?
+    </h2>
+
+    <div style="display:flex; justify-content:space-between; gap:15px;">
+      <button class="btn" id="confirmarEliminar" style="flex:1;">
+        Sí, eliminar todo
+      </button>
+
+      <button class="btn-danger" id="cancelarEliminar" style="flex:1;">
+        Cancelar
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+
+
