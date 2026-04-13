@@ -1,5 +1,6 @@
 /* COLORES  */
 :root {
+    --background: #edf0f5;
   --primary: #1B264F;
   --secondary: #B1B8C4;/* SUB  */
   --accent: #DEE1E6;
@@ -13,7 +14,7 @@ body{
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Arial,
     sans-serif;  
-    background:#f4f6f9;
+    background:var(--background);
 }
 
 .layout{
