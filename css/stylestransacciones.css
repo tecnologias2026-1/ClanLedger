@@ -1,12 +1,13 @@
 /* ── Variables de color ── */
 :root {
-  --background:        #edf0f5;
-  --subtitlesecondary: #657185;
-  --titleprimary:      #222b4d;
-  --titlesecondary:    #dee2e7;
-  --cardbg:            #f6f7f8;
-  --green:             #249a40;
-  --red:               #be3232;
+  --background: #f4f6f9;
+  --subtitlesecondary:#657185;
+  --titleprimary:#222b4d;
+  --titlesecondary:#dee2e7;
+  --cardbg:#f6f7f8;
+  --green:#249a40;
+  --red:#be3232;
+  --h2:#B1B8C4
 }
 
 /* ── Reset mínimo ── */
@@ -17,7 +18,7 @@
 }
 body { 
   font-family: Arial, sans-serif; 
-  color:  var(--background); 
+  background-color: var(--background);
 }
 
 /* ── Layout: sidebar + contenido ── */
@@ -33,7 +34,6 @@ body {
   flex-direction: column;
   padding: 16px 0;
   gap: 4px;
-  flex-shrink: 0;
 }
 
 .sidebar-logo {
@@ -85,15 +85,15 @@ body {
   margin-bottom: 24px;
 }
 
-.header h2 { 
+.header h2 {  /* TITULO*/
   color:  var(--titleprimary);
   font-size: 36px; 
   margin-bottom: 4px; 
   margin-top: 16px;
 }
-.header p  { 
+.header p  {  /* SUB*/
   font-size: 36px; 
-  color: var(--subtitlesecondary); 
+  color: var(--h2); 
   font-weight: 600;
 }
 

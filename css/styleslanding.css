@@ -5,12 +5,14 @@
     --titlesecondary: #B1B8C4;
 }
 body{
+      font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Arial,
+    sans-serif;
         margin: 0;
     }
 
 .seccion1{
     background-color: var(--background);
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 50px;
     color: var(--subtitlesecondary);
     margin: 0 auto;
@@ -18,11 +20,11 @@ body{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .seccionhorizontal{
     margin: 0px 100px;
-    font-family: Arial, Helvetica, sans-serif; 
     display: flex;
     flex-direction: row;    
     align-items: center;    /* arriba a abajo */
@@ -31,7 +33,6 @@ body{
 
 .seccionvertical{
     margin: 0px 100px;
-    font-family: Arial, Helvetica, sans-serif; 
     display: flex;
     flex-direction: column;    
     align-items: center;    /* arriba a abajo */
@@ -88,7 +89,6 @@ body{
     justify-content: left;
     padding-left: 60px;
     line-height: 0;
-    font-family: Arial, Helvetica, sans-serif;
     color:var(--titleprimary);
 }
 #imgref1 img{
@@ -113,38 +113,41 @@ body{
 
 
 
-#foot{
-    display: flex;
-    flex-direction: column;
-} 
-
-#fimg img{
-    padding-left: 60px;
-    height: 70px;
-    padding-top: 50px;
+/* ── Footer ── */
+.footer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 36px;
+  padding-left: 20px;
 }
 
-#ftxt{
-    font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    padding-left: 60px;
-    color:var(--subtitlesecondary);
-    font-weight: lighter;
-}
-   
-.divisor{
-    border: 0;
-    border-radius: 23px;
-    height: 3px;
-    background: var(--subtitlesecondary); /* Color de la línea */
-    margin: 20px 50px;  
+.divisor {
+  border: none;
+  height: 2px;
+  background: #657185;
+  border-radius: 10px;
+  margin: 0 40px 20px;
 }
 
- #btnsup{
+.textofoot img {
+  height: 60px;
+  padding-top: 20px;
+  object-fit: contain;
+  max-width: 200px;
+}
+
+.textosvert h4 {
+  font-weight: 300;
+  font-size: 13px;
+  color: #657185;
+  margin: 4px 0;
+}
+
+#btnsup{
     display: flex;
     justify-content: center;
     margin-left: auto;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
 }
 
@@ -153,7 +156,7 @@ body{
     color: var(--background);
     text-decoration: none;
     padding: 15px 20px;
-    border-radius: 30px; 
+    border-radius: 18px; 
     font-weight: bold; 
     font-size: 20px; 
     width: 130px;
@@ -164,7 +167,7 @@ body{
     color: var(--background);
     text-decoration: none;
     padding: 20px 20px;
-    border-radius: 30px; 
+    border-radius: 18px; 
     font-weight: bold; 
     font-size: 23px; 
     width: 170px;

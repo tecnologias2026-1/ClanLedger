@@ -8,8 +8,17 @@
   </head>
   <body>
     <div class="layout">
-      <aside class="sidebar"></aside>
-
+      <!-- ══ SIDEBAR ══ -->
+        <aside class="sidebar">
+          <div class="sidebar-logo">
+            <img src="../assets/imagenes/Logo.png" alt="logo" />
+          </div>
+          <a class="nav-item" href="#"><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a>
+          <a class="nav-item " href="../html/transacciones.html"><img src="../assets/imagenes/transacciones.png" alt="" /> Transacciones</a>
+          <a class="nav-item active" href="../html/presupuestos.html"><img src="../assets/imagenes/presupuestosfill.png" alt="" /> Presupuestos</a>
+          <a class="nav-item" href="../html/reportes.html"><img src="../assets/imagenes/reports.png" alt="" /> Reportes</a>
+          <a class="nav-item" href="../html/ajustes.html"><img src="../assets/imagenes/ajustes.png" alt="" /> Ajustes</a>
+        </aside>
       <main class="main-content">
         <!-- ===== PAGE HEADER ===== -->
         <div class="page-header">
@@ -261,18 +270,17 @@
         </section>
 
         <!-- ===== FOOTER ===== -->
-        <footer class="page-footer">
-          <hr class="footer-divider" />
-          <div class="footer-content">
-            <img
-              src="../assets/imagenes/Logo.png"
-              alt="ClanLedger"
-              class="footer-logo"
-            />
-            <div class="footer-text">
-              <p class="footer-brand">ClanLedger</p>
-              <p class="footer-tagline">Tu ecosistema financiero todo en uno</p>
-              <p class="footer-copy">2026 The ClanLedger Team</p>
+      
+        <!-- Footer -->
+        <footer>
+          <div class="footer" id="foot">
+            <hr class="divisor" />
+            <div class="textofoot" id="fimg">
+              <img src="../assets/imagenes/Logo.png" alt="logo" />
+            </div>
+            <div class="textosvert" id="ftxt">
+              <h4>Tu ecosistema financiero todo en uno.</h4>
+              <h4>© 2026. The ClanLedger Team</h4>
             </div>
           </div>
         </footer>

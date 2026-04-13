@@ -20,9 +20,9 @@
     <div class="form-box login-box">
         <h2>Iniciar Sesión</h2>
 
-        <form style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-            <input type="email" placeholder="Correo electrónico">
-            <input type="password" placeholder="Contraseña">
+        <form id="loginForm" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <input type="email" placeholder="Correo electrónico" required>
+            <input type="password" placeholder="Contraseña" required>
 
             <button type="submit" class="register">Iniciar Sesión</button>
 
@@ -36,9 +36,12 @@
 </main>
 
 <footer class="footer">
-    <hr class="footer-line"> <img src="../assets/imagenes/Logo.png" class="footer-logo">
+    <hr class="footer-line"> 
+    <img src="../assets/imagenes/Logo.png" class="footer-logo">
     <p class="footer-subtitle">Tu ecosistema financiero todo en uno</p>
     <p class="footer-year">2026 The ClanLedger Team</p>
+
+    <script src="../js/auth.js"></script>
 </footer>
 
 </body>

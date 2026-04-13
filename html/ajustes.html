@@ -4,30 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ajustes - ClanLedger</title>
-
-  <link rel="stylesheet" href="stylesajustes.css">
+  <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png">
+  <link rel="stylesheet" href="../css/stylesajustes.css">
 </head>
 
 <body class="dashboard-body">
 
 <div class="layout">
 
-  <!-- SIDEBAR -->
+ <!-- ══ SIDEBAR ══ -->
   <aside class="sidebar">
-
-    <div class="logo">
-      <img src="img/logo.png" alt="ClanLedger">
+    <div class="sidebar-logo">
+      <img src="../assets/imagenes/Logo.png" alt="logo" />
     </div>
-
-    <nav>
-      <ul>
-        <li>Dashboard</li>
-        <li>Transacciones</li>
-        <li>Presupuestos</li>
-        <li>Reportes</li>
-        <li class="active">Ajustes</li>
-      </ul>
-    </nav>
+    <a class="nav-item" href="#"><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a>
+    <a class="nav-item " href="../html/transacciones.html"><img src="../assets/imagenes/transacciones.png" alt="" /> Transacciones</a>
+    <a class="nav-item" href="../html/presupuestos.html"><img src="../assets/imagenes/presupuestos.png" alt="" /> Presupuestos</a>
+    <a class="nav-item" href="../html/reportes.html"><img src="../assets/imagenes/reports.png" alt="" /> Reportes</a>
+    <a class="nav-item active" href="../html/ajustes.html"><img src="../assets/imagenes/ajustesfill.png" alt="" /> Ajustes</a>
   </aside>
 
 
@@ -40,8 +34,7 @@
         <h1>Ajustes</h1>
         <p class="sub">Alejandro - Admin</p>
       </div>
-
-      <img src="img/hombre.png" class="avatar">
+      <img src="../assets/imagenes/hombre1.png">
     </div>
 
 
@@ -55,7 +48,7 @@
       <div class="card-box members">
 
         <div class="member">
-          <img src="img/mujer.png">
+          <img src="../assets/imagenes/mujer1.png">
           <div>
             <p class="name">Ana</p>
             <span>Madre - Admin</span>
@@ -63,7 +56,7 @@
         </div>
 
         <div class="member">
-          <img src="img/mujer.png">
+          <img src="../assets/imagenes/mujer2.png">
           <div>
             <p class="name">Sofía</p>
             <span>Hermana</span>
@@ -71,7 +64,7 @@
         </div>
 
         <div class="member">
-          <img src="img/hombre.png">
+          <img src="../assets/imagenes/hombre1.png">
           <div>
             <p class="name">Fernando</p>
             <span>Padre</span>
@@ -79,7 +72,7 @@
         </div>
 
         <div class="member">
-          <img src="img/hombre.png">
+          <img src="../assets/imagenes/hombre2.png">
           <div>
             <p class="name">Alejandro</p>
             <span>Tú - Admin</span>
@@ -100,7 +93,7 @@
       <div class="card-box accounts">
 
         <div class="account">
-          <img src="img/checking.png">
+          <img src="../assets/imagenes/checking.png">
           <div>
             <p class="title">Checking</p>
             <span>Cuenta Corriente - Davivienda</span>
@@ -108,7 +101,7 @@
         </div>
 
         <div class="account">
-          <img src="img/ahorro.png">
+          <img src="../assets/imagenes/ahorro.png">
           <div>
             <p class="title">Ahorro</p>
             <span>Cuenta de Ahorros - Davivienda</span>
@@ -116,7 +109,7 @@
         </div>
 
         <div class="account">
-          <img src="img/credito.png">
+          <img src="../assets/imagenes/credito.png">
           <div>
             <p class="title">Crédito</p>
             <span>Tarjeta de Crédito - Bancolombia</span>
@@ -124,7 +117,7 @@
         </div>
 
         <div class="account">
-          <img src="img/cash.png">
+          <img src="../assets/imagenes/efectivo.png">
           <div>
             <p class="title">Cash</p>
             <span>Dinero en Efectivo</span>
@@ -187,30 +180,26 @@
     </section>
 
 
-  <footer class="dashboard-footer">
-
-  <hr class="footer-line">
-
-  <div class="footer-content">
-    
-    <!-- LOGO GRANDE -->
-    <img src="img/logo.png" class="footer-logo">
-
-    <!-- TEXTO DEBAJO -->
-    <div class="footer-text">
-      <span class="footer-sub">Tu ecosistema financiero todo en uno</span>
-      <p class="footer-year">2026 The ClanLedger Team</p>
-    </div>
-
-  </div>
-
-</footer>
+ 
+    <!-- Footer -->
+      <footer>
+      <div class="footer" id="foot">
+        <hr class="divisor" />
+        <div class="textofoot" id="fimg">
+          <img src="../assets/imagenes/Logo.png" alt="logo" />
+        </div>
+        <div class="textosvert" id="ftxt">
+          <h4>Tu ecosistema financiero todo en uno.</h4>
+          <h4>© 2026. The ClanLedger Team</h4>
+        </div>
+      </div>
+    </footer>
 
   </main>
 
 </div>
 
-/* interacción */
+<!-- interacción -->
 <div class="modal" id="modalMiembro">
   <div class="modal-content">
 
@@ -238,8 +227,7 @@
 
   </div>
 </div>
-
-/* interacción nueva cuenta*/
+<!-- interacción nueva cuenta-->
 <!-- MODAL CUENTA -->
 <div class="modal" id="modalCuenta">
   <div class="modal-content">
@@ -288,7 +276,7 @@
   </div>
 </div>
 
-<script src="script.js"></script>
+<script src="../js/script.js"></script>
 
 </body>
 </html>
