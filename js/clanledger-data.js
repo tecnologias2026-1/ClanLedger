@@ -1,5 +1,34 @@
 (function () {
-  const STORAGE_KEY = "clanledger_state_v1";
+  // TEMP ADAPTER BRIDGE
+  // Swap adapter implementation (local/backend) without touching store logic.
+  function createFallbackAdapter() {
+    const STORAGE_KEY = "clanledger_state_v1__guest";
+    return {
+      type: "fallback-local",
+      getSessionId() {
+        return "guest";
+      },
+      getState(defaultState) {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return JSON.parse(JSON.stringify(defaultState));
+          return JSON.parse(raw);
+        } catch {
+          return JSON.parse(JSON.stringify(defaultState));
+        }
+      },
+      saveState(nextState) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+        return nextState;
+      },
+      clearState() {
+        localStorage.removeItem(STORAGE_KEY);
+      },
+    };
+  }
+
+  const storageAdapter =
+    window.ClanLedgerStorageAdapter || createFallbackAdapter();
 
   const DEFAULT_STATE = {
     members: [
@@ -101,9 +130,7 @@
 
   function loadState() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return deepClone(DEFAULT_STATE);
-      const parsed = JSON.parse(raw);
+      const parsed = storageAdapter.getState(DEFAULT_STATE);
       return mergeDefaults(parsed, deepClone(DEFAULT_STATE));
     } catch {
       return deepClone(DEFAULT_STATE);
@@ -116,7 +143,7 @@
     state = applyDerivedData(
       mergeDefaults(nextState, deepClone(DEFAULT_STATE)),
     );
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    storageAdapter.saveState(state);
     return state;
   }
 
@@ -209,6 +236,7 @@
   }
 
   window.ClanLedgerStore = {
+    adapterType: storageAdapter.type,
     MONTHS,
     formatCOP,
     getState,

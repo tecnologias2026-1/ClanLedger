@@ -852,7 +852,9 @@ body:has(.modal:target) .modal-overlay {
   border-bottom-right-radius: 8px;
   box-shadow: 0 6px 20px rgba(10, 14, 30, 0.12);
   z-index: 200;
-  overflow: hidden;
+  max-height: 240px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .select-dropdown.open {

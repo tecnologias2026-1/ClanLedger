@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../css/stylestransacciones.css" />
     <title>ClanLedger</title>
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
+    <link rel="stylesheet" href="../css/button-hover.css" />
+    <script defer src="../js/page-transition.js"></script>
   </head>
   <body>
     <div class="layout">
@@ -248,7 +250,9 @@
       </div>
     </div>
 
+    <script src="../js/storage-adapter.local.js"></script>
     <script src="../js/clanledger-data.js"></script>
+    <script src="../js/money-input-format.js"></script>
     <script>
       // ── Datos iniciales ──
       let transacciones = [
@@ -616,7 +620,14 @@
       function guardarTransaccion() {
         const nombre = document.getElementById("input-nombre").value.trim();
         const tipo = document.getElementById("input-tipo").value;
-        const monto = parseInt(document.getElementById("input-monto").value);
+        const moneyInput = window.ClanLedgerMoneyInput;
+        const monto = moneyInput
+          ? moneyInput.parseValue(document.getElementById("input-monto").value)
+          : Number(
+              String(
+                document.getElementById("input-monto").value || "",
+              ).replace(/[^\d-]/g, ""),
+            );
         const categoria = document.getElementById("input-categoria").value;
         const miembro = document.getElementById("input-miembro").value;
         const metodo = document.getElementById("input-metodo").value;
@@ -686,6 +697,12 @@
       }
 
       // ── Al cargar la página, mostrar las transacciones ──
+      if (window.ClanLedgerMoneyInput) {
+        window.ClanLedgerMoneyInput.attach(
+          document.getElementById("input-monto"),
+        );
+      }
+
       hydrateDynamicOptions();
       ensureCategoryFlow();
       filtrarCards();

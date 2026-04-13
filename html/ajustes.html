@@ -6,6 +6,8 @@
     <title>ClanLedger</title>
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <link rel="stylesheet" href="../css/stylesajustes.css" />
+    <link rel="stylesheet" href="../css/button-hover.css" />
+    <script defer src="../js/page-transition.js"></script>
   </head>
 
   <body class="dashboard-body">
@@ -40,9 +42,22 @@
         <div class="header-top">
           <div>
             <h1>Ajustes</h1>
-            <p class="sub">Alejandro - Admin</p>
+            <p class="sub">Usuario - Admin</p>
           </div>
-          <img src="../assets/imagenes/hombre1.png" />
+          <div class="user-menu" id="user-menu">
+            <button
+              class="user-menu-trigger"
+              id="user-menu-trigger"
+              type="button"
+            >
+              <img src="../assets/imagenes/hombre1.png" alt="Usuario" />
+            </button>
+            <div class="user-menu-dropdown" id="user-menu-dropdown">
+              <button type="button" class="user-menu-item" id="cerrarSesionBtn">
+                Cerrar sesion
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- MIEMBROS -->
@@ -134,17 +149,35 @@
           <h3>Administración de Datos</h3>
 
           <div class="card-box">
-            <div class="danger">
-              <p class="danger-title">ELIMINAR CUENTA</p>
+            <div class="danger-actions">
+              <div class="danger danger-left">
+                <p class="danger-title">BORRAR DATOS ACTUALES</p>
 
-              <p class="danger-text">
-                Elimina definitivamente tu cuenta y tus datos
-              </p>
+                <p class="danger-text">
+                  Borra tus transacciones y presupuestos, pero conserva la
+                  cuenta activa
+                </p>
 
-              <div class="danger-btn">
-                <button class="btn-danger" id="abrirEliminar">
-                  Eliminar todo
-                </button>
+                <div class="danger-btn">
+                  <button class="btn-danger" id="abrirBorrarDatos">
+                    Borrar datos
+                  </button>
+                </div>
+              </div>
+
+              <div class="danger danger-right">
+                <p class="danger-title">ELIMINAR CUENTA</p>
+
+                <p class="danger-text">
+                  Elimina definitivamente esta cuenta, sus datos locales y
+                  cierra sesión
+                </p>
+
+                <div class="danger-btn">
+                  <button class="btn-danger" id="abrirEliminarCuenta">
+                    Eliminar cuenta
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -207,7 +240,18 @@
         </p>
 
         <label>Nombre</label>
-        <input type="text" placeholder="Ej: Juan" />
+        <input type="text" id="member-name-input" placeholder="Ej: Juan" />
+
+        <label>Rol</label>
+        <input type="text" id="member-role-input" placeholder="Ej: Padre" />
+
+        <div class="admin-toggle-row">
+          <span>Permisos de administrador</span>
+          <label class="switch">
+            <input type="checkbox" id="member-admin-input" />
+            <span class="slider"></span>
+          </label>
+        </div>
 
         <label>Color</label>
         <div class="colors">
@@ -253,7 +297,87 @@
           ></span>
         </div>
 
-        <button class="btn modal-btn">Agregar Miembro</button>
+        <button class="btn modal-btn" id="guardarMiembroBtn">
+          Agregar Miembro
+        </button>
+      </div>
+    </div>
+
+    <div class="modal" id="modalEditarMiembro">
+      <div class="modal-content">
+        <span class="close" id="cerrarModalEditarMiembro">&times;</span>
+
+        <h2>Editar Miembro</h2>
+        <p class="modal-sub">Modifica los datos o elimina este miembro</p>
+
+        <label>Nombre</label>
+        <input
+          type="text"
+          id="edit-member-name-input"
+          placeholder="Nombre del miembro"
+        />
+
+        <label>Rol</label>
+        <input type="text" id="edit-member-role-input" placeholder="Rol" />
+
+        <div class="admin-toggle-row">
+          <span>Permisos de administrador</span>
+          <label class="switch">
+            <input type="checkbox" id="edit-member-admin-input" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <label>Color</label>
+        <div class="colors" id="edit-member-colors">
+          <span
+            class="color color-edit"
+            data-color="#3b82f6"
+            style="background: #3b82f6"
+          ></span>
+          <span
+            class="color color-edit"
+            data-color="#10b981"
+            style="background: #10b981"
+          ></span>
+          <span
+            class="color color-edit"
+            data-color="#f59e0b"
+            style="background: #f59e0b"
+          ></span>
+          <span
+            class="color color-edit"
+            data-color="#ef4444"
+            style="background: #ef4444"
+          ></span>
+          <span
+            class="color color-edit"
+            data-color="#8b5cf6"
+            style="background: #8b5cf6"
+          ></span>
+          <span
+            class="color color-edit"
+            data-color="#ec4899"
+            style="background: #ec4899"
+          ></span>
+          <span
+            class="color color-edit"
+            data-color="#06b6d4"
+            style="background: #06b6d4"
+          ></span>
+          <span
+            class="color color-edit"
+            data-color="#84cc16"
+            style="background: #84cc16"
+          ></span>
+        </div>
+
+        <div class="modal-actions-row">
+          <button class="btn-danger" id="eliminarMiembroBtn">Eliminar</button>
+          <button class="btn" id="guardarEdicionMiembroBtn">
+            Guardar cambios
+          </button>
+        </div>
       </div>
     </div>
     <!-- interacción nueva cuenta-->
@@ -262,36 +386,79 @@
       <div class="modal-content">
         <span class="close" id="cerrarModalCuenta">&times;</span>
 
-        <h2>Nueva Cuenta</h2>
-        <p class="modal-sub">Agrega una cuenta bancaria o de efectivo</p>
+        <h2 id="account-modal-title">Nueva Cuenta</h2>
+        <p class="modal-sub" id="account-modal-subtitle">
+          Agrega una cuenta bancaria o de efectivo
+        </p>
 
         <label>Nombre</label>
-        <input type="text" placeholder="Ej: Cuenta de Ahorro" />
+        <input
+          type="text"
+          id="account-name-input"
+          placeholder="Ej: Cuenta de Ahorro"
+        />
 
         <label>Tipo</label>
-        <select class="select">
-          <option disabled selected>Tipo cuenta</option>
-          <option>Ahorro</option>
-          <option>Corriente</option>
-          <option>Crédito</option>
-          <option>Efectivo</option>
+        <select class="select" id="account-type-input">
+          <option value="" selected>Tipo cuenta</option>
+          <option value="Cuenta de Ahorros">Ahorro</option>
+          <option value="Cuenta Corriente">Corriente</option>
+          <option value="Tarjeta de Credito">Credito</option>
+          <option value="Efectivo">Efectivo</option>
         </select>
 
-        <label>Balance Inicial</label>
-        <input type="number" placeholder="0.00" />
+        <label>Logo</label>
+        <div class="account-icon-picker" id="account-icon-picker">
+          <button
+            type="button"
+            class="account-icon-option selected"
+            data-icon="checking"
+          >
+            <img src="../assets/imagenes/checking.png" alt="Checking" />
+            <span>Checking</span>
+          </button>
+          <button type="button" class="account-icon-option" data-icon="ahorro">
+            <img src="../assets/imagenes/ahorro.png" alt="Ahorro" />
+            <span>Ahorro</span>
+          </button>
+          <button type="button" class="account-icon-option" data-icon="credito">
+            <img src="../assets/imagenes/credito.png" alt="Credito" />
+            <span>Credito</span>
+          </button>
+          <button
+            type="button"
+            class="account-icon-option"
+            data-icon="efectivo"
+          >
+            <img src="../assets/imagenes/efectivo.png" alt="Efectivo" />
+            <span>Efectivo</span>
+          </button>
+        </div>
 
-        <button class="btn modal-btn">Agregar Cuenta</button>
+        <label>Balance Inicial</label>
+        <input type="number" id="account-balance-input" placeholder="0.00" />
+
+        <div class="modal-actions-row">
+          <button
+            class="btn-danger"
+            id="eliminarCuentaIndividualBtn"
+            style="display: none"
+          >
+            Eliminar
+          </button>
+          <button class="btn" id="guardarCuentaBtn">Agregar Cuenta</button>
+        </div>
       </div>
     </div>
     <div class="modal" id="modalEliminar">
       <div class="modal-content">
         <h2 style="text-align: center; margin-bottom: 25px">
-          ¿Está seguro de eliminar sus datos?
+          ¿Seguro que deseas borrar los datos actuales?
         </h2>
 
         <div style="display: flex; justify-content: space-between; gap: 15px">
           <button class="btn" id="confirmarEliminar" style="flex: 1">
-            Sí, eliminar todo
+            Sí, borrar datos
           </button>
 
           <button class="btn-danger" id="cancelarEliminar" style="flex: 1">
@@ -301,7 +468,31 @@
       </div>
     </div>
 
+    <div class="modal" id="modalEliminarCuenta">
+      <div class="modal-content">
+        <h2 style="text-align: center; margin-bottom: 25px">
+          ¿Eliminar cuenta y cerrar sesión?
+        </h2>
+
+        <div style="display: flex; justify-content: space-between; gap: 15px">
+          <button class="btn" id="confirmarEliminarCuenta" style="flex: 1">
+            Sí, eliminar cuenta
+          </button>
+
+          <button
+            class="btn-danger"
+            id="cancelarEliminarCuenta"
+            style="flex: 1"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/storage-adapter.local.js"></script>
     <script src="../js/clanledger-data.js"></script>
+    <script src="../js/money-input-format.js"></script>
     <script src="../js/script.js"></script>
   </body>
 </html>

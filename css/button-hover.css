@@ -1,0 +1,69 @@
+/* Shared button hover system across ClanLedger */
+body {
+  transition: opacity 0.14s ease;
+}
+
+html.pt-loading body,
+html.pt-leave body {
+  opacity: 0;
+}
+
+html.pt-leave body {
+  pointer-events: none;
+}
+
+html.pt-ready body {
+  opacity: 1;
+}
+
+.btn,
+.btn-primary,
+.btn-danger,
+.btn-nueva,
+.btn-agregar,
+.btn-presupuesto-primary,
+.register,
+.member-edit-btn,
+.zoom-btn,
+.period-btn,
+#btnsup a,
+#btnbtm a {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease,
+    filter 0.2s ease;
+}
+
+.btn:not(:disabled):hover,
+.btn-primary:not(:disabled):hover,
+.btn-danger:not(:disabled):hover,
+.btn-nueva:not(:disabled):hover,
+.btn-agregar:not(:disabled):hover,
+.btn-presupuesto-primary:not(:disabled):hover,
+.register:not(:disabled):hover,
+.member-edit-btn:not(:disabled):hover,
+.zoom-btn:not(:disabled):hover,
+.period-btn:not(:disabled):hover,
+#btnsup a:hover,
+#btnbtm a:hover {
+  box-shadow: 0 3px 8px rgba(26, 39, 68, 0.16);
+  transform: translateY(-1px);
+}
+
+.btn:not(:disabled):active,
+.btn-primary:not(:disabled):active,
+.btn-danger:not(:disabled):active,
+.btn-nueva:not(:disabled):active,
+.btn-agregar:not(:disabled):active,
+.btn-presupuesto-primary:not(:disabled):active,
+.register:not(:disabled):active,
+.member-edit-btn:not(:disabled):active,
+.zoom-btn:not(:disabled):active,
+.period-btn:not(:disabled):active,
+#btnsup a:active,
+#btnbtm a:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

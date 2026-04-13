@@ -387,6 +387,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  if (window.ClanLedgerMoneyInput) {
+    window.ClanLedgerMoneyInput.attachByIds([
+      "budget-total-input",
+      "obj-meta",
+      "pres-limite",
+      "edit-current",
+      "edit-total",
+    ]);
+  }
+
   renderBudgetDataFromStore();
   syncCategoryDropdownsFromStore();
   initializeObjectiveMonthState();
@@ -626,7 +636,7 @@ function syncBudgetInputWithSelectedMonth() {
   if (!budgetInput) return;
 
   if (budgetSourceMode === "accounts") {
-    budgetInput.value = Math.round(getAccountsBudgetTotal());
+    setMoneyInputValue(budgetInput, getAccountsBudgetTotal());
     return;
   }
 
@@ -639,8 +649,10 @@ function syncBudgetInputWithSelectedMonth() {
   const fallbackTotal = Math.round(totalObjetivosMes + totalCategorias);
 
   const monthValue = monthlyBudgetByMonth[selectedObjectiveMonth];
-  budgetInput.value =
-    monthValue != null ? Math.round(monthValue) : fallbackTotal;
+  setMoneyInputValue(
+    budgetInput,
+    monthValue != null ? Math.round(monthValue) : fallbackTotal,
+  );
 }
 
 function saveBudgetTotal() {
@@ -652,15 +664,35 @@ function saveBudgetTotal() {
   const budgetInput = document.getElementById("budget-total-input");
   if (!budgetInput) return;
 
-  const parsed = parseFloat(budgetInput.value);
+  const parsed = parseMoneyInputValue(budgetInput.value);
   const value = Number.isFinite(parsed) ? Math.max(0, parsed) : 0;
   monthlyBudgetByMonth[selectedObjectiveMonth] = value;
-  budgetInput.value = Math.round(value);
+  setMoneyInputValue(budgetInput, value);
   updateSummaryCards();
 }
 
 function formatCOP(n) {
   return n.toLocaleString("es-CO");
+}
+
+function parseMoneyInputValue(raw) {
+  if (window.ClanLedgerMoneyInput) {
+    return window.ClanLedgerMoneyInput.parseValue(raw);
+  }
+  const text = String(raw == null ? "" : raw).trim();
+  if (!text) return 0;
+  const numeric = Number(text.replace(/[^\d-]/g, ""));
+  return Number.isFinite(numeric) ? numeric : 0;
+}
+
+function setMoneyInputValue(inputEl, value) {
+  if (!inputEl) return;
+  const rounded = Math.round(Number(value) || 0);
+  if (window.ClanLedgerMoneyInput) {
+    inputEl.value = window.ClanLedgerMoneyInput.formatInputValue(rounded);
+  } else {
+    inputEl.value = rounded;
+  }
 }
 
 // Read the currently selected value from a custom-select
@@ -707,8 +739,8 @@ function openEditItem(itemEl) {
 
   document.getElementById("edit-item-title").textContent = "Editar — " + name;
   document.getElementById("edit-name").value = name;
-  document.getElementById("edit-current").value = current;
-  document.getElementById("edit-total").value = total;
+  setMoneyInputValue(document.getElementById("edit-current"), current);
+  setMoneyInputValue(document.getElementById("edit-total"), total);
 
   // Periodo: show group only if item has a period, pre-select it
   const periodGroup = document.getElementById("edit-period-group");
@@ -732,10 +764,10 @@ function saveEditItem() {
 
   const newName = document.getElementById("edit-name").value.trim();
   const isObjective = !!currentEditItem.closest("#objetivos-grid");
-  const currentRaw = document.getElementById("edit-current").value.trim();
-  const totalRaw = document.getElementById("edit-total").value.trim();
-  const current = currentRaw === "" ? 0 : parseFloat(currentRaw) || 0;
-  const total = totalRaw === "" ? 0 : parseFloat(totalRaw) || 0;
+  const currentRaw = document.getElementById("edit-current").value;
+  const totalRaw = document.getElementById("edit-total").value;
+  const current = currentRaw === "" ? 0 : parseMoneyInputValue(currentRaw);
+  const total = totalRaw === "" ? 0 : parseMoneyInputValue(totalRaw);
 
   // Update name
   if (newName) {
@@ -872,7 +904,7 @@ function addObjetivo() {
     setTimeout(() => (nameEl.style.borderColor = ""), 1200);
     return;
   }
-  const meta = parseFloat(metaEl.value) || 0;
+  const meta = parseMoneyInputValue(metaEl.value);
   const grid = document.getElementById("objetivos-grid");
   grid.appendChild(buildItemEl(name, 0, meta > 0 ? meta : 1, "", year));
 
@@ -894,13 +926,13 @@ function addPresupuesto() {
     setTimeout(() => (nameEl.style.borderColor = ""), 1200);
     return;
   }
-  const limite = parseFloat(limEl.value) || 0;
+  const limite = parseMoneyInputValue(limEl.value);
   const period = getSelectValue("sel-periodo");
   const grid = document.getElementById("categorias-grid");
   grid.appendChild(buildItemEl(name, 0, limite > 0 ? limite : 1, period, ""));
 
   nameEl.value = "";
-  limEl.value = "0";
+  setMoneyInputValue(limEl, 0);
   resetSelect("sel-pres-cat", "Categoría");
   resetSelect("sel-periodo", "Elige el período");
   closeModal("modal-presupuesto");
