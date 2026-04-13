@@ -3,55 +3,122 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <title>Presupuestos - ClanLedger</title>
-    <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png">
     <link rel="stylesheet" href="../css/presupuestos.css" />
   </head>
   <body>
     <div class="layout">
-      <!-- ══ SIDEBAR ══ -->
-        <aside class="sidebar">
-          <div class="sidebar-logo">
-            <img src="../assets/imagenes/Logo.png" alt="logo" />
-          </div>
-          <a class="nav-item" href="../html/dashboard.html"><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a>
-          <a class="nav-item " href="../html/transacciones.html"><img src="../assets/imagenes/transacciones.png" alt="" /> Transacciones</a>
-          <a class="nav-item active" href="../html/presupuestos.html"><img src="../assets/imagenes/presupuestosfill.png" alt="" /> Presupuestos</a>
-          <a class="nav-item" href="../html/reportes.html"><img src="../assets/imagenes/reports.png" alt="" /> Reportes</a>
-          <a class="nav-item" href="../html/ajustes.html"><img src="../assets/imagenes/ajustes.png" alt="" /> Ajustes</a>
-        </aside>
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <img src="../assets/imagenes/Logo.png" alt="logo" />
+        </div>
+        <a class="nav-item" href="../html/dashboard.html"
+          ><img src="../assets/imagenes/dashboard.png" alt="" /> Dashboard</a
+        >
+        <a class="nav-item" href="../html/transacciones.html"
+          ><img src="../assets/imagenes/transacciones.png" alt="" />
+          Transacciones</a
+        >
+        <a class="nav-item active" href="../html/presupuestos.html"
+          ><img src="../assets/imagenes/presupuestosfill.png" alt="" />
+          Presupuestos</a
+        >
+        <a class="nav-item" href="../html/reportes.html"
+          ><img src="../assets/imagenes/reports.png" alt="" /> Reportes</a
+        >
+        <a class="nav-item" href="../html/ajustes.html"
+          ><img src="../assets/imagenes/ajustes.png" alt="" /> Ajustes</a
+        >
+      </aside>
+
       <main class="main-content">
         <!-- ===== PAGE HEADER ===== -->
         <div class="page-header">
           <h1 class="page-title">Presupuestos</h1>
           <div class="user-toggle">
-            <input type="radio" name="view-mode" id="view-person" class="view-radio" />
-            <input type="radio" name="view-mode" id="view-family" class="view-radio" checked/>
+            <input
+              type="radio"
+              name="view-mode"
+              id="view-person"
+              class="view-radio"
+              checked
+            />
+            <input
+              type="radio"
+              name="view-mode"
+              id="view-family"
+              class="view-radio"
+            />
             <div class="toggle-circle"></div>
-            <label class="toggle-btn" id="btn-person" for="view-person">
-              <img class="toggle-icon toggle-icon-person-default" src="../assets/imagenes/person_2.png" alt="Personal" />
-              <img class="toggle-icon toggle-icon-person-active"  src="../assets/imagenes/person_1.png" alt="Personal activo" />
+            <label
+              class="toggle-btn"
+              id="btn-person"
+              for="view-person"
+              title="Vista personal"
+            >
+              <img
+                class="toggle-icon toggle-icon-person-default"
+                src="../assets/imagenes/person_2.png"
+                alt="Personal"
+              />
+              <img
+                class="toggle-icon toggle-icon-person-active"
+                src="../assets/imagenes/person_1.png"
+                alt="Personal activo"
+              />
             </label>
-            <label class="toggle-btn" id="btn-family" for="view-family">
-              <img class="toggle-icon toggle-icon-family-default" src="../assets/imagenes/family_group_1.png" alt="Familiar" />
-              <img class="toggle-icon toggle-icon-family-active"  src="../assets/imagenes/family_group_2.png" alt="Familiar activo" />
+            <label
+              class="toggle-btn"
+              id="btn-family"
+              for="view-family"
+              title="Vista familiar"
+            >
+              <img
+                class="toggle-icon toggle-icon-family-default"
+                src="../assets/imagenes/family_group_1.png"
+                alt="Familiar"
+              />
+              <img
+                class="toggle-icon toggle-icon-family-active"
+                src="../assets/imagenes/family_group_2.png"
+                alt="Familiar activo"
+              />
             </label>
-      </div>
+          </div>
+        </div>
+
+        <div class="budget-setup-card">
+          <p class="budget-setup-message">Coloca tu presupuesto</p>
+          <div class="budget-setup-controls">
+            <div class="input-suffix-wrap budget-total-input-wrap">
+              <input
+                type="number"
+                id="budget-total-input"
+                min="0"
+                placeholder="0"
+              />
+              <span class="input-suffix">$</span>
+            </div>
+            <button class="btn-primary" onclick="saveBudgetTotal()">
+              Guardar presupuesto
+            </button>
+          </div>
         </div>
 
         <!-- ===== SUMMARY CARDS ===== -->
         <div class="summary-cards">
           <div class="card">
             <span class="card-label">Presupuesto Total</span>
-            <span class="card-value">$5.500.000</span>
+            <span class="card-value" id="sum-presupuesto-total">$0</span>
           </div>
           <div class="card">
             <span class="card-label">Total Gastos</span>
-            <span class="card-value">$4.240.000</span>
+            <span class="card-value" id="sum-total-gastos">$0</span>
           </div>
           <div class="card">
             <span class="card-label">Presupuestos Excedidos</span>
-            <span class="card-value">1 de 3</span>
+            <span class="card-value" id="sum-excedidos">0 de 0</span>
           </div>
         </div>
 
@@ -59,21 +126,54 @@
         <section class="section">
           <div class="section-header">
             <h2 class="section-title">Objetivos</h2>
-            <a class="btn-primary" href="#modal-objetivo">
+            <button class="btn-primary" onclick="openModal('modal-objetivo')">
               <img src="../assets/imagenes/add.png" alt="+" class="btn-icon" />
               Nuevo Objetivo
-            </a>
+            </button>
           </div>
           <div class="section-card">
             <div class="filter-row">
-              <button class="filter-btn">
-                Este mes
-                <img
-                  src="../assets/imagenes/keyboard_arrow_down_gris.png"
-                  alt="v"
-                  class="filter-arrow"
-                />
-              </button>
+              <div
+                class="custom-select month-filter-custom"
+                id="sel-objetivo-mes-filtro"
+              >
+                <div
+                  class="select-header"
+                  onclick="
+                    toggleDropdown(
+                      'drop-objetivo-mes-filtro',
+                      'sel-objetivo-mes-filtro',
+                    )
+                  "
+                >
+                  <span class="select-display">Año</span>
+                  <img
+                    src="../assets/imagenes/keyboard_arrow_down_gris.png"
+                    alt=""
+                    class="select-arrow"
+                  />
+                </div>
+                <div class="select-dropdown" id="drop-objetivo-mes-filtro">
+                  <div
+                    class="select-option"
+                    onclick="selectYearFilter('2026', this)"
+                  >
+                    <span>2026</span>
+                  </div>
+                  <div
+                    class="select-option"
+                    onclick="selectYearFilter('2027', this)"
+                  >
+                    <span>2027</span>
+                  </div>
+                  <div
+                    class="select-option"
+                    onclick="selectYearFilter('2028', this)"
+                  >
+                    <span>2028</span>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="items-grid" id="objetivos-grid">
               <div
@@ -81,18 +181,19 @@
                 data-name="Fondo de Emergencia Familiar"
                 data-current="4440000"
                 data-total="5000000"
+                data-year="2026"
               >
                 <div class="item-header">
                   <span class="item-name">Fondo de Emergencia Familiar</span>
                   <div class="item-header-right">
                     <span class="item-percent">60%</span>
-                    <a
+                    <button
                       class="item-edit-btn"
-                      href="#modal-editar-item"
+                      onclick="openEditItem(this.closest('.budget-item'))"
                       title="Editar"
                     >
                       &#9998;
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div class="progress-bar">
@@ -101,24 +202,26 @@
                 <div class="item-amounts">
                   <span>$4.440.000</span><span>$5.000.000</span>
                 </div>
+                <span class="item-period">Anual 2026</span>
               </div>
               <div
                 class="budget-item"
                 data-name="Vacaciones"
                 data-current="19200000"
                 data-total="25000000"
+                data-year="2026"
               >
                 <div class="item-header">
                   <span class="item-name">Vacaciones</span>
                   <div class="item-header-right">
                     <span class="item-percent">60%</span>
-                    <a
+                    <button
                       class="item-edit-btn"
-                      href="#modal-editar-item"
+                      onclick="openEditItem(this.closest('.budget-item'))"
                       title="Editar"
                     >
                       &#9998;
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div class="progress-bar">
@@ -127,6 +230,7 @@
                 <div class="item-amounts">
                   <span>$19.200.000</span><span>$25.000.000</span>
                 </div>
+                <span class="item-period">Anual 2026</span>
               </div>
             </div>
           </div>
@@ -136,10 +240,13 @@
         <section class="section">
           <div class="section-header">
             <h2 class="section-title">Categorías</h2>
-            <a class="btn-primary" href="#modal-presupuesto">
+            <button
+              class="btn-primary"
+              onclick="openModal('modal-presupuesto')"
+            >
               <img src="../assets/imagenes/add.png" alt="+" class="btn-icon" />
               Nuevo Presupuesto
-            </a>
+            </button>
           </div>
           <div class="section-card">
             <div class="items-grid" id="categorias-grid">
@@ -154,13 +261,13 @@
                   <span class="item-name">Alimentación</span>
                   <div class="item-header-right">
                     <span class="item-percent">60%</span>
-                    <a
+                    <button
                       class="item-edit-btn"
-                      href="#modal-editar-item"
+                      onclick="openEditItem(this.closest('.budget-item'))"
                       title="Editar"
                     >
                       &#9998;
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div class="progress-bar">
@@ -182,13 +289,13 @@
                   <span class="item-name">Transportes</span>
                   <div class="item-header-right">
                     <span class="item-percent">40%</span>
-                    <a
+                    <button
                       class="item-edit-btn"
-                      href="#modal-editar-item"
+                      onclick="openEditItem(this.closest('.budget-item'))"
                       title="Editar"
                     >
                       &#9998;
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div class="progress-bar">
@@ -210,13 +317,13 @@
                   <span class="item-name">Vivienda</span>
                   <div class="item-header-right">
                     <span class="item-percent">100%</span>
-                    <a
+                    <button
                       class="item-edit-btn"
-                      href="#modal-editar-item"
+                      onclick="openEditItem(this.closest('.budget-item'))"
                       title="Editar"
                     >
                       &#9998;
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div class="progress-bar">
@@ -232,8 +339,6 @@
         </section>
 
         <!-- ===== FOOTER ===== -->
-      
-        <!-- Footer -->
         <footer>
           <div class="footer" id="foot">
             <hr class="divisor" />
@@ -250,6 +355,12 @@
     </div>
 
     <!-- ===== MODAL OVERLAY ===== -->
+    <div
+      class="modal-overlay"
+      id="modal-overlay"
+      onclick="closeAllModals()"
+    ></div>
+
     <!-- ===== MODAL: NUEVO OBJETIVO ===== -->
     <div class="modal" id="modal-objetivo">
       <div class="modal-header">
@@ -259,9 +370,9 @@
             Establece un objetivo a alcanzar y asígnale una categoría
           </p>
         </div>
-        <a class="modal-close" href="#" aria-label="Cerrar">
+        <button class="modal-close" onclick="closeModal('modal-objetivo')">
           <img src="../assets/imagenes/x_icon.png" alt="Cerrar" />
-        </a>
+        </button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -281,17 +392,98 @@
         </div>
         <div class="form-group">
           <label>Categoría</label>
-          <select class="native-select" id="sel-obj-cat">
-            <option value="">Categoría</option>
-            <option>Salario</option>
-            <option>Alimentación</option>
-            <option>Ocio</option>
-            <option>Extras</option>
-          </select>
+          <div class="custom-select" id="sel-obj-cat">
+            <div
+              class="select-header"
+              onclick="toggleDropdown('drop-obj-cat', 'sel-obj-cat')"
+            >
+              <span class="select-display">Categoría</span>
+              <img
+                src="../assets/imagenes/keyboard_arrow_down_gris.png"
+                alt=""
+                class="select-arrow"
+              />
+            </div>
+            <div class="select-dropdown" id="drop-obj-cat">
+              <div
+                class="select-option"
+                onclick="selectOption('sel-obj-cat', 'Salario', this)"
+              >
+                <span>Salario</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-obj-cat', 'Alimentación', this)"
+              >
+                <span>Alimentación</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-obj-cat', 'Ocio', this)"
+              >
+                <span>Ocio</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-obj-cat', 'Extras', this)"
+              >
+                <span>Extras</span>
+              </div>
+              <div
+                class="select-option new-cat-opt"
+                onclick="createNewCategory('sel-obj-cat', 'drop-obj-cat')"
+              >
+                <img
+                  src="../assets/imagenes/add blue.png"
+                  alt="+"
+                  class="new-cat-icon"
+                />
+                Crear nueva categoría
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Año del Objetivo</label>
+          <div class="custom-select" id="sel-obj-year">
+            <div
+              class="select-header"
+              onclick="toggleDropdown('drop-obj-year', 'sel-obj-year')"
+            >
+              <span class="select-display">Elige el año</span>
+              <img
+                src="../assets/imagenes/keyboard_arrow_down_gris.png"
+                alt=""
+                class="select-arrow"
+              />
+            </div>
+            <div class="select-dropdown" id="drop-obj-year">
+              <div
+                class="select-option"
+                onclick="selectOption('sel-obj-year', '2026', this)"
+              >
+                <span>2026</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-obj-year', '2027', this)"
+              >
+                <span>2027</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-obj-year', '2028', this)"
+              >
+                <span>2028</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
-        <a class="btn-primary full-width" href="#"> Agregar Objetivo </a>
+        <button class="btn-primary full-width" onclick="addObjetivo()">
+          Agregar Objetivo
+        </button>
       </div>
     </div>
 
@@ -304,9 +496,9 @@
             Establece un límite de gasto para una categoría
           </p>
         </div>
-        <a class="modal-close" href="#" aria-label="Cerrar">
+        <button class="modal-close" onclick="closeModal('modal-presupuesto')">
           <img src="../assets/imagenes/x_icon.png" alt="Cerrar" />
-        </a>
+        </button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -319,13 +511,56 @@
         </div>
         <div class="form-group">
           <label>Categoría</label>
-          <select class="native-select" id="sel-pres-cat">
-            <option value="">Categoría</option>
-            <option>Salario</option>
-            <option>Alimentación</option>
-            <option>Ocio</option>
-            <option>Extras</option>
-          </select>
+          <div class="custom-select" id="sel-pres-cat">
+            <div
+              class="select-header"
+              onclick="toggleDropdown('drop-pres-cat', 'sel-pres-cat')"
+            >
+              <span class="select-display">Categoría</span>
+              <img
+                src="../assets/imagenes/keyboard_arrow_down_gris.png"
+                alt=""
+                class="select-arrow"
+              />
+            </div>
+            <div class="select-dropdown" id="drop-pres-cat">
+              <div
+                class="select-option"
+                onclick="selectOption('sel-pres-cat', 'Salario', this)"
+              >
+                <span>Salario</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-pres-cat', 'Alimentación', this)"
+              >
+                <span>Alimentación</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-pres-cat', 'Ocio', this)"
+              >
+                <span>Ocio</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-pres-cat', 'Extras', this)"
+              >
+                <span>Extras</span>
+              </div>
+              <div
+                class="select-option new-cat-opt"
+                onclick="createNewCategory('sel-pres-cat', 'drop-pres-cat')"
+              >
+                <img
+                  src="../assets/imagenes/add blue.png"
+                  alt="+"
+                  class="new-cat-icon"
+                />
+                Crear nueva categoría
+              </div>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Límite de Gasto</label>
@@ -342,15 +577,39 @@
         </div>
         <div class="form-group">
           <label>Periodo</label>
-          <select class="native-select" id="sel-periodo">
-            <option value="">Elige el período</option>
-            <option>Mensual</option>
-            <option>Anual</option>
-          </select>
+          <div class="custom-select" id="sel-periodo">
+            <div
+              class="select-header"
+              onclick="toggleDropdown('drop-periodo', 'sel-periodo')"
+            >
+              <span class="select-display">Elige el período</span>
+              <img
+                src="../assets/imagenes/keyboard_arrow_down_gris.png"
+                alt=""
+                class="select-arrow"
+              />
+            </div>
+            <div class="select-dropdown" id="drop-periodo">
+              <div
+                class="select-option"
+                onclick="selectOption('sel-periodo', 'Mensual', this)"
+              >
+                <span>Mensual</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-periodo', 'Anual', this)"
+              >
+                <span>Anual</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
-        <a class="btn-primary full-width" href="#"> Agregar Presupuesto </a>
+        <button class="btn-primary full-width" onclick="addPresupuesto()">
+          Agregar Presupuesto
+        </button>
       </div>
     </div>
 
@@ -360,12 +619,12 @@
         <div>
           <h3 class="modal-title" id="edit-item-title">Editar</h3>
           <p class="modal-subtitle">
-            Modifica el valor actual, el total o el porcentaje
+            Modifica el valor actual y la meta o límite
           </p>
         </div>
-        <a class="modal-close" href="#" aria-label="Cerrar">
+        <button class="modal-close" onclick="closeModal('modal-editar-item')">
           <img src="../assets/imagenes/x_icon.png" alt="Cerrar" />
-        </a>
+        </button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -375,45 +634,66 @@
         <div class="form-group">
           <label>Valor Actual ($)</label>
           <div class="input-suffix-wrap">
-            <input type="number" id="edit-current" min="0" />
+            <input
+              type="number"
+              id="edit-current"
+              min="0"
+              oninput="syncEditFromAmount()"
+            />
             <span class="input-suffix">$</span>
           </div>
         </div>
         <div class="form-group">
           <label>Meta / Límite ($)</label>
           <div class="input-suffix-wrap">
-            <input type="number" id="edit-total" min="1" />
-            <span class="input-suffix">$</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Porcentaje (%)</label>
-          <div class="input-suffix-wrap">
             <input
               type="number"
-              id="edit-percent"
-              min="0"
-              max="100"
-              step="0.1"
+              id="edit-total"
+              min="1"
+              oninput="syncEditFromAmount()"
             />
-            <span class="input-suffix">%</span>
+            <span class="input-suffix">$</span>
           </div>
         </div>
         <div class="form-group" id="edit-period-group">
           <label>Período</label>
-          <select class="native-select" id="sel-edit-periodo">
-            <option>Sin período</option>
-            <option>Mensual</option>
-            <option>Anual</option>
-          </select>
+          <div class="custom-select" id="sel-edit-periodo">
+            <div
+              class="select-header"
+              onclick="toggleDropdown('drop-edit-periodo', 'sel-edit-periodo')"
+            >
+              <span class="select-display">Sin período</span>
+              <img
+                src="../assets/imagenes/keyboard_arrow_down_gris.png"
+                alt=""
+                class="select-arrow"
+              />
+            </div>
+            <div class="select-dropdown" id="drop-edit-periodo">
+              <div
+                class="select-option"
+                onclick="selectOption('sel-edit-periodo', 'Mensual', this)"
+              >
+                <span>Mensual</span>
+              </div>
+              <div
+                class="select-option"
+                onclick="selectOption('sel-edit-periodo', 'Anual', this)"
+              >
+                <span>Anual</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer modal-footer-row">
-        <a class="btn-danger" href="#" title="Eliminar">
+        <button class="btn-danger" onclick="deleteEditItem()" title="Eliminar">
           <img src="../assets/imagenes/x_icon.png" alt="" class="btn-icon-sm" />
           Eliminar
-        </a>
-        <a class="btn-primary" href="#"> Guardar Cambios </a>
+        </button>
+        <button class="btn-primary" onclick="saveEditItem()">
+          Guardar Cambios
+        </button>
       </div>
     </div>
 
@@ -424,9 +704,9 @@
           <h3 class="modal-title">Nueva Categoría</h3>
           <p class="modal-subtitle">Escribe el nombre de la nueva categoría</p>
         </div>
-        <a class="modal-close" href="#" aria-label="Cerrar">
+        <button class="modal-close" onclick="cancelNewCategory()">
           <img src="../assets/imagenes/x_icon.png" alt="Cerrar" />
-        </a>
+        </button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -435,15 +715,12 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="btn-primary full-width" href="#"> Crear Categoría </a>
+        <button class="btn-primary full-width" onclick="confirmNewCategory()">
+          Crear Categoría
+        </button>
       </div>
     </div>
 
-    <a
-      href="#"
-      class="modal-overlay"
-      id="modal-overlay"
-      aria-label="Cerrar"
-    ></a>>
+    <script src="../js/presupuestos.js"></script>
   </body>
 </html>

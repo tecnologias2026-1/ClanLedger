@@ -14,7 +14,6 @@
   --subtitlesecondary: #657185;
   --primary: #1a2744;
   --background: #dee1e6;
-
 }
 
 body {
@@ -52,10 +51,9 @@ body {
   padding: 30px 0px 50px;
 }
 
-.sidebar-logo img { 
-  width: 250px; 
-  object-fit: contain; 
-
+.sidebar-logo img {
+  width: 250px;
+  object-fit: contain;
 }
 
 .nav-item {
@@ -135,7 +133,13 @@ body {
   pointer-events: none;
 }
 
-#view-family:checked ~ .toggle-circle { left: 65px; }
+.toggle-circle.active-family {
+  left: 65px;
+}
+
+#view-family:checked ~ .toggle-circle {
+  left: 65px;
+}
 
 .toggle-btn {
   position: relative;
@@ -156,20 +160,35 @@ body {
 }
 
 .toggle-icon-person-active,
-.toggle-icon-family-active { 
-  display: none; 
+.toggle-icon-family-active {
+  display: none;
 }
 
-#view-person:checked ~ label#btn-person .toggle-icon-person-default { display: block; }
-#view-person:checked ~ label#btn-person .toggle-icon-person-active  { display: none;  }
-#view-person:checked ~ label#btn-family .toggle-icon-family-default { display: block; }
-#view-person:checked ~ label#btn-family .toggle-icon-family-active  { display: none;  }
+#view-person:checked ~ label#btn-person .toggle-icon-person-default {
+  display: block;
+}
+#view-person:checked ~ label#btn-person .toggle-icon-person-active {
+  display: none;
+}
+#view-person:checked ~ label#btn-family .toggle-icon-family-default {
+  display: block;
+}
+#view-person:checked ~ label#btn-family .toggle-icon-family-active {
+  display: none;
+}
 
-#view-family:checked ~ label#btn-person .toggle-icon-person-default { display: none;  }
-#view-family:checked ~ label#btn-person .toggle-icon-person-active  { display: block; }
-#view-family:checked ~ label#btn-family .toggle-icon-family-default { display: none;  }
-#view-family:checked ~ label#btn-family .toggle-icon-family-active  { display: block; }
-
+#view-family:checked ~ label#btn-person .toggle-icon-person-default {
+  display: none;
+}
+#view-family:checked ~ label#btn-person .toggle-icon-person-active {
+  display: block;
+}
+#view-family:checked ~ label#btn-family .toggle-icon-family-default {
+  display: none;
+}
+#view-family:checked ~ label#btn-family .toggle-icon-family-active {
+  display: block;
+}
 
 /* =============================================
    SUMMARY CARDS
@@ -201,6 +220,31 @@ body {
   font-weight: 800;
   color: #1a2744;
   letter-spacing: -0.5px;
+}
+
+.budget-setup-card {
+  background: var(--background);
+  border: 1px solid #e0e3ec;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.budget-setup-message {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a2744;
+  margin-bottom: 12px;
+}
+
+.budget-setup-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.budget-total-input-wrap {
+  width: 260px;
 }
 
 /* =============================================
@@ -306,6 +350,21 @@ body {
 .filter-arrow {
   width: 14px;
   height: 14px;
+}
+
+.month-filter-custom {
+  width: 230px;
+}
+
+.month-filter-custom .select-header {
+  background: #edf0f5;
+  border-color: #c8cfde;
+}
+
+.month-filter-custom .select-display {
+  font-size: 20px;
+  font-weight: 600;
+  color: #374151;
 }
 
 /* =============================================
@@ -490,7 +549,8 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(6px);  z-index: 100;
+  backdrop-filter: blur(6px);
+  z-index: 100;
   opacity: 0;
   visibility: hidden;
   transition:
@@ -499,6 +559,7 @@ body {
   pointer-events: none;
 }
 
+.modal-overlay.active,
 body:has(.modal:target) .modal-overlay {
   opacity: 1;
   visibility: visible;
@@ -527,6 +588,7 @@ body:has(.modal:target) .modal-overlay {
     visibility 0.25s ease;
 }
 
+.modal.active,
 .modal:target {
   opacity: 1;
   visibility: visible;
