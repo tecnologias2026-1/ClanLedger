@@ -3,7 +3,7 @@ Aplicación web enfocada en la administración de finanzas personales y familiar
 
 👥 Integrantes
 
-Juan Dvid Alvarado Rocha – 1202673
+Juan David Alvarado Rocha – 1202673
 Stefany Latorre Oyola – 1202615
 Esteban Ahumedo Marchena - 
 
@@ -66,7 +66,7 @@ Usuario -- clic en “Nueva Cuenta” -- sistema abre modal -- usuario llena dat
 
 🎨 5. URL del Prototipo
 
-[https://figma.com/xxxxx](https://www.figma.com/design/m4D9usRLkRsEvhctAsS9bN/Mockup-Web-y-App?node-id=155-864&t=6mUXTtTOaD7sSM2F-1) 
+(https://www.figma.com/design/m4D9usRLkRsEvhctAsS9bN/Mockup-Web-y-App?node-id=155-864&t=6mUXTtTOaD7sSM2F-1) 
 
 
 🗄️ 6. Diseño de Base de Datos
