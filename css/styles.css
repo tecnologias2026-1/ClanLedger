@@ -1,4 +1,13 @@
 /* ESTILOS GENERALES DE TODA LA PÁGINA */
+:root {
+  --background: #dee1e6;
+  --subtitlesecondary: #657185;
+  --titleprimary: #222b4d;
+  --titlesecondary: #dee2e7;
+  --cardbg: #f6f7f8;
+  --green: #249a40;
+  --red: #be3232;
+}
 body{
 font-family: Arial, sans-serif; /* tipo de letra de toda la página */
 margin:0; /* elimina el margen que los navegadores ponen por defecto */
