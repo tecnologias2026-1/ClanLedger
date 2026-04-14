@@ -194,6 +194,8 @@ function updateBudgetSourceControls() {
   const hint = document.getElementById("budget-source-hint");
   const usingAccounts = budgetSourceMode === "accounts";
 
+  document.body.dataset.budgetSourceMode = budgetSourceMode;
+
   if (controls) controls.classList.toggle("readonly", usingAccounts);
   if (budgetInput) budgetInput.disabled = usingAccounts;
   if (saveBtn) saveBtn.disabled = usingAccounts;

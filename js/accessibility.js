@@ -165,9 +165,7 @@
   function validateForm(form) {
     if (!form) return true;
 
-    const fields = Array.from(
-      form.querySelectorAll("input, select, textarea"),
-    );
+    const fields = Array.from(form.querySelectorAll("input, select, textarea"));
 
     fields.forEach((field) => updateFieldValidationMessage(field));
 
@@ -344,24 +342,28 @@
       }
     });
 
-    document.addEventListener("blur", (event) => {
-      const field = event.target;
-      const authForm = field?.closest?.("#loginForm, #registroForm");
-      if (authForm) return;
-      if (
-        !(
-          field instanceof HTMLInputElement ||
-          field instanceof HTMLSelectElement ||
-          field instanceof HTMLTextAreaElement
-        )
-      ) {
-        return;
-      }
-      updateFieldValidationMessage(field);
-      if (field.checkValidity()) {
-        clearFieldError(field);
-      }
-    }, true);
+    document.addEventListener(
+      "blur",
+      (event) => {
+        const field = event.target;
+        const authForm = field?.closest?.("#loginForm, #registroForm");
+        if (authForm) return;
+        if (
+          !(
+            field instanceof HTMLInputElement ||
+            field instanceof HTMLSelectElement ||
+            field instanceof HTMLTextAreaElement
+          )
+        ) {
+          return;
+        }
+        updateFieldValidationMessage(field);
+        if (field.checkValidity()) {
+          clearFieldError(field);
+        }
+      },
+      true,
+    );
   }
 
   function trapFocus(container, event) {

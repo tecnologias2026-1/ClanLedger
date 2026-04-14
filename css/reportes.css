@@ -597,6 +597,15 @@ body {
   font-weight: 700;
 }
 
+.x-axis-labels,
+.x-axis-track,
+.x-axis-track span {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
+}
+
 .x-axis-labels-line {
   left: 56px;
   right: 18px;
@@ -612,6 +621,10 @@ body {
   justify-content: space-between;
   padding: 0 24px;
   gap: 18px;
+}
+
+.x-axis-track span {
+  flex: 0 0 auto;
 }
 
 .x-axis-labels-line.single-point .x-axis-track {
