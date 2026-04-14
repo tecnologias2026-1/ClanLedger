@@ -1563,6 +1563,175 @@ body.mobile-nav-open .mobile-nav-overlay {
     border-radius: 12px;
   }
 
+  /* Presupuestos <=600px: layout en una sola columna y números compactos */
+  .page-presupuestos .page-header {
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .page-presupuestos .page-title {
+    font-size: clamp(28px, 8vw, 34px);
+    line-height: 1.08;
+    margin-top: 0;
+  }
+
+  .page-presupuestos .summary-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .page-presupuestos .summary-cards .card {
+    padding: 14px 14px 16px;
+    border-radius: 14px;
+  }
+
+  .page-presupuestos .card-label {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .page-presupuestos .card-value {
+    font-size: clamp(24px, 7vw, 30px);
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+  }
+
+  .page-presupuestos .budget-setup-card {
+    padding: 14px 12px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+  }
+
+  .page-presupuestos .budget-setup-message,
+  .page-presupuestos .budget-source-intro,
+  .page-presupuestos .budget-source-hint {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .page-presupuestos .budget-setup-controls {
+    gap: 10px;
+  }
+
+  .page-presupuestos .budget-total-input-wrap {
+    width: 100%;
+  }
+
+  .page-presupuestos #budget-total-input {
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+
+  .page-presupuestos #budget-save-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+
+  .page-presupuestos .section {
+    margin-bottom: 24px;
+  }
+
+  .page-presupuestos .section-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .page-presupuestos .section-title {
+    font-size: clamp(24px, 7vw, 30px);
+    line-height: 1.1;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .page-presupuestos .section-header .btn-primary {
+    flex-shrink: 0;
+    width: auto;
+    max-width: 52%;
+    padding: 10px 14px;
+    font-size: 14px;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .page-presupuestos .section-header .btn-primary .btn-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .page-presupuestos .section-card {
+    padding: 12px 10px;
+    border-radius: 14px;
+  }
+
+  .page-presupuestos .filter-row {
+    margin-bottom: 12px;
+  }
+
+  .page-presupuestos .month-filter-custom {
+    width: 100%;
+  }
+
+  .page-presupuestos .items-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .page-presupuestos .budget-item {
+    gap: 6px;
+    padding: 12px 12px 10px;
+    border-radius: 12px;
+    background: #f4f6fa;
+  }
+
+  .page-presupuestos .item-name,
+  .page-presupuestos .item-percent {
+    font-size: clamp(14px, 4vw, 17px);
+    line-height: 1.15;
+  }
+
+  .page-presupuestos .item-header-right {
+    gap: 6px;
+  }
+
+  .page-presupuestos .item-edit-btn {
+    opacity: 1;
+    transform: none;
+    font-size: 14px;
+    padding: 2px 4px;
+  }
+
+  .page-presupuestos .item-amounts {
+    font-size: 11px;
+    gap: 8px;
+  }
+
+  .page-presupuestos .item-amounts span {
+    font-size: 11px;
+  }
+
+  .page-presupuestos .item-period {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .page-presupuestos .progress-bar {
+    height: 2px;
+    margin: 3px 0;
+  }
+
+  .page-presupuestos .footer,
+  .page-presupuestos .textosvert,
+  .page-presupuestos .textofoot {
+    align-items: flex-start;
+    text-align: left;
+  }
+
   .page-registro .form-box h2 {
     font-size: clamp(28px, 8vw, 36px);
     margin-bottom: 12px;
