@@ -142,6 +142,201 @@ body.mobile-nav-open .mobile-nav-overlay {
   }
 }
 
+@media (max-width: 1360px) and (min-width: 901px) {
+  /* Dashboard: improve chart readability in mid-width desktop */
+  .page-dashboard .kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .page-dashboard .kpi-card {
+    min-width: 0;
+    min-height: clamp(132px, 13vw, 156px);
+    padding: 12px 12px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .page-dashboard .kpi-label {
+    font-size: clamp(10px, 0.92vw, 12px);
+    line-height: 1.2;
+  }
+
+  .page-dashboard .kpi-value {
+    font-size: clamp(15px, 1.95vw, 22px);
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
+    letter-spacing: -0.2px;
+  }
+
+  .page-dashboard .kpi-note {
+    font-size: clamp(9px, 0.86vw, 11px);
+    line-height: 1.25;
+  }
+
+  .page-dashboard #dashboard-category-chart .bars-wrap,
+  .page-dashboard #dashboard-personal-category-chart .bars-wrap {
+    left: 12%;
+    right: 12%;
+    gap: 14px;
+    bottom: -8px;
+  }
+
+  .page-dashboard #dashboard-category-chart .bar-group,
+  .page-dashboard #dashboard-personal-category-chart .bar-group {
+    padding-bottom: 52px;
+  }
+
+  .page-dashboard #dashboard-category-chart .bar-label,
+  .page-dashboard #dashboard-personal-category-chart .bar-label {
+    font-size: clamp(7px, 0.82vw, 10px);
+    line-height: 1.15;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  .page-dashboard #dashboard-category-chart .bar-label.is-multiline,
+  .page-dashboard #dashboard-personal-category-chart .bar-label.is-multiline {
+    bottom: -10px;
+  }
+
+  .page-dashboard .trend-x-axis,
+  .page-dashboard .trend-legend,
+  .page-dashboard .trend-legend span,
+  .page-dashboard .trend-x-axis span {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1020px) and (min-width: 901px) {
+  .page-dashboard .charts-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .page-dashboard .trend-x-axis {
+    font-size: 12px;
+  }
+
+  .page-dashboard .trend-legend {
+    font-size: 12px;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 1320px) and (min-width: 901px) {
+  /* Transacciones: compactar filtros/cards para evitar cortes desde 901px */
+  .page-transacciones .busqueda {
+    grid-template-columns: minmax(150px, 1.6fr) repeat(4, minmax(95px, 1fr));
+    gap: 10px;
+    padding: 14px 16px;
+  }
+
+  .page-transacciones .grupo-filtro {
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .page-transacciones .grupo-filtro label {
+    font-size: clamp(14px, 1.05vw, 17px);
+    line-height: 1.15;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
+  }
+
+  .page-transacciones .grupo-filtro input,
+  .page-transacciones .grupo-filtro select,
+  .page-transacciones .trans-custom-select-header {
+    font-size: clamp(12px, 0.95vw, 15px);
+    padding: 8px 10px;
+  }
+
+  .page-transacciones .card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 14px;
+  }
+
+  .page-transacciones .card > div:first-child {
+    min-width: 0;
+  }
+
+  .page-transacciones .card-title h4 {
+    font-size: clamp(24px, 1.85vw, 30px);
+    line-height: 1.1;
+  }
+
+  .page-transacciones .card-meta {
+    font-size: clamp(14px, 1.05vw, 18px);
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .page-transacciones .card-meta span {
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
+  }
+
+  .page-transacciones .cardright {
+    font-size: clamp(22px, 2.3vw, 30px);
+    line-height: 1.05;
+    white-space: nowrap;
+    text-align: right;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
+  }
+
+  /* Ajustes: mantener margen lateral en seccion de miembros */
+  .page-ajustes .main {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .page-ajustes .section {
+    margin-top: 16px;
+  }
+
+  .page-ajustes .card-box {
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .page-ajustes .card-box.members {
+    scroll-padding-left: 16px;
+    scroll-padding-right: 16px;
+  }
+
+  .page-ajustes .members,
+  .page-ajustes .accounts {
+    gap: 14px;
+  }
+
+  .page-ajustes .member,
+  .page-ajustes .account {
+    padding: 16px;
+  }
+
+  .page-ajustes .member {
+    flex: 0 0 clamp(220px, 23vw, 250px);
+    min-width: clamp(220px, 23vw, 250px);
+  }
+}
+
 @media (max-width: 900px) {
   body {
     height: auto;
@@ -239,6 +434,172 @@ body.mobile-nav-open .mobile-nav-overlay {
     width: 100%;
     justify-content: flex-end;
     flex-wrap: wrap;
+  }
+
+  /* Ajustes mobile: layout vertical y sin desbordes */
+  .page-ajustes .main {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 24px 18px 20px;
+    overflow-x: clip;
+  }
+
+  .page-ajustes .header-top {
+    margin-bottom: 8px;
+  }
+
+  .page-ajustes .header-actions {
+    width: auto;
+    max-width: 100%;
+    margin-left: auto;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .page-ajustes .user-toggle {
+    flex-shrink: 0;
+  }
+
+  .page-ajustes .user-menu {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  .page-ajustes .user-menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page-ajustes .user-menu-trigger img {
+    width: 46px;
+    height: 46px;
+  }
+
+  .page-ajustes .section {
+    margin-top: 16px;
+    max-width: 100%;
+  }
+
+  .page-ajustes .section h3 {
+    font-size: clamp(24px, 7vw, 34px);
+    line-height: 1.12;
+  }
+
+  .page-ajustes .section-header {
+    gap: 10px;
+    align-items: center;
+  }
+
+  .page-ajustes .section-header .btn {
+    width: auto;
+    max-width: none;
+    flex: 0 0 auto;
+    margin-left: 10px;
+    padding: 8px 14px;
+    font-size: 12px;
+    border-radius: 14px;
+    white-space: nowrap;
+  }
+
+  .page-ajustes .card-box {
+    width: min(100%, 98%);
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .page-ajustes .members {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
+    padding-bottom: 12px;
+    scroll-snap-type: none;
+  }
+
+  .page-ajustes .member {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 14px;
+    gap: 12px;
+    justify-content: flex-start;
+  }
+
+  .page-ajustes .member-main {
+    gap: 12px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .page-ajustes .member-avatar {
+    width: 42px;
+    height: 42px;
+    font-size: 24px;
+  }
+
+  .page-ajustes .name {
+    font-size: 15px;
+    line-height: 1.15;
+  }
+
+  .page-ajustes .member span {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .page-ajustes .accounts {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .page-ajustes .account {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 12px;
+  }
+
+  .page-ajustes .account-main {
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .page-ajustes .title {
+    font-size: 13px;
+  }
+
+  .page-ajustes .account span {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .page-ajustes .account .account-edit-btn,
+  .page-ajustes .member .member-edit-btn {
+    justify-self: end;
+    white-space: nowrap;
+    padding: 6px 9px;
+    font-size: 11px;
   }
 
   .user-toggle {
@@ -377,6 +738,95 @@ body.mobile-nav-open .mobile-nav-overlay {
     font-size: 18px;
     margin-top: 10px;
     margin-bottom: 14px;
+  }
+
+  /* Registro: conservar distribucion en rejilla como diseno de referencia */
+  .page-registro .container {
+    align-items: flex-start;
+    padding: 20px 18px 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .page-registro {
+    scrollbar-gutter: stable both-edges;
+  }
+
+  .page-registro .header {
+    padding: 16px 18px;
+  }
+
+  .page-registro .logo-img {
+    height: clamp(40px, 8vw, 50px);
+  }
+
+  .page-registro .subtitle {
+    font-size: clamp(16px, 3.4vw, 26px);
+    line-height: 1.2;
+    margin-top: 6px;
+    overflow-wrap: anywhere;
+  }
+
+  .page-registro .form-box {
+    width: min(100%, 760px);
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px 20px;
+    border-radius: 14px;
+  }
+
+  .page-registro .form-box h2 {
+    margin-bottom: 14px;
+    font-size: clamp(34px, 5.8vw, 44px);
+  }
+
+  .page-registro #registroForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .page-registro #registroForm > .row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .page-registro .label-container .row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .page-registro .gender {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 6px 0 0;
+  }
+
+  .page-registro #registroForm > .row > *,
+  .page-registro .label-container .row > *,
+  .page-registro .gender > * {
+    min-width: 0;
+  }
+
+  .page-registro input,
+  .page-registro .gender label {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .page-registro .gender label {
+    padding: 9px 6px;
+    font-size: 12px;
+  }
+
+  .page-registro .register {
+    margin-top: 10px;
+    min-width: 220px;
   }
 
   .card {
@@ -518,6 +968,115 @@ body.mobile-nav-open .mobile-nav-overlay {
   .stat-value {
     font-size: 28px;
   }
+
+  /* Reportes: mantener KPIs en 2x2 en mobile */
+  .page-reportes .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-reportes .kpi-card {
+    border-right: 1px solid #c5ccd9;
+    border-bottom: 1px solid #c5ccd9;
+  }
+
+  .page-reportes .kpi-card:nth-child(2n) {
+    border-right: none;
+  }
+
+  .page-reportes .kpi-card:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+
+  .page-reportes #chart-distribucion .chart-surface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 360px;
+    min-height: 360px;
+    padding: 20px 12px;
+    gap: 14px;
+  }
+
+  .page-reportes #chart-distribucion .pie-wrap {
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+
+  .page-reportes #chart-distribucion .pie-chart {
+    width: clamp(180px, 34vw, 240px);
+    height: clamp(180px, 34vw, 240px);
+  }
+
+  .page-reportes #chart-distribucion .pie-legend {
+    margin: 10px 0 0;
+    width: min(100%, 520px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    row-gap: 10px;
+  }
+
+  /* Budget items grid - reduce columns */
+  .items-grid {
+    grid-template-columns: 1fr;
+    gap: 12px 18px;
+  }
+
+  .section-card {
+    padding: 16px 14px;
+  }
+
+  .budget-item {
+    gap: 6px;
+  }
+
+  .item-name,
+  .item-percent {
+    font-size: clamp(16px, 4.2vw, 20px);
+  }
+
+  .item-amounts {
+    font-size: clamp(13px, 3.2vw, 15px);
+  }
+
+  .item-period {
+    font-size: clamp(11px, 2.8vw, 13px);
+  }
+
+  .progress-bar {
+    height: 2px;
+  }
+}
+
+@media (max-width: 875px) {
+  .page-registro .container {
+    padding: 18px 14px 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .page-registro .form-box {
+    width: min(100%, 92vw);
+    max-width: 92vw;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 20px 16px;
+  }
+
+  .page-registro .form-box h2 {
+    font-size: clamp(32px, 5.4vw, 40px);
+  }
+
+  .page-registro #registroForm > .row,
+  .page-registro .label-container .row,
+  .page-registro .gender {
+    gap: 9px;
+  }
+
+  .page-registro .register {
+    min-width: 190px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -525,6 +1084,15 @@ body.mobile-nav-open .mobile-nav-overlay {
   .main,
   .container {
     padding: 24px 12px 18px;
+  }
+
+  .page-ajustes .main {
+    padding: 22px 16px 18px;
+  }
+
+  .page-ajustes .card-box {
+    width: 100%;
+    padding: 12px;
   }
 
   .mobile-page-brand {
@@ -885,5 +1453,179 @@ body.mobile-nav-open .mobile-nav-overlay {
 
   input {
     font-size: 14px;
+  }
+
+  .page-reportes .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-reportes .kpi-card {
+    border-right: 1px solid #c5ccd9;
+    border-bottom: 1px solid #c5ccd9;
+  }
+
+  .page-reportes .kpi-card:nth-child(2n) {
+    border-right: none;
+  }
+
+  .page-reportes .kpi-card:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+
+  .page-reportes #chart-distribucion .chart-surface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    min-height: 300px;
+    padding: 14px 10px;
+    gap: 12px;
+  }
+
+  .page-reportes #chart-distribucion .pie-wrap {
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 8px;
+  }
+
+  .page-reportes #chart-distribucion .pie-chart {
+    width: clamp(130px, 40vw, 170px);
+    height: clamp(130px, 40vw, 170px);
+  }
+
+  .page-reportes #chart-distribucion .pie-legend {
+    margin: 8px 0 0;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    row-gap: 8px;
+  }
+
+  /* Budget items grid - more compact in 600px */
+  .items-grid {
+    grid-template-columns: 1fr;
+    gap: 10px 16px;
+  }
+
+  .section-card {
+    padding: 12px 10px;
+  }
+
+  .budget-item {
+    gap: 5px;
+  }
+
+  .item-name,
+  .item-percent {
+    font-size: clamp(14px, 3.8vw, 18px);
+  }
+
+  .item-amounts {
+    font-size: clamp(11px, 2.8vw, 13px);
+  }
+
+  .item-period {
+    font-size: clamp(10px, 2.4vw, 12px);
+  }
+
+  .progress-bar {
+    height: 2px;
+    margin: 4px 0;
+  }
+
+  .month-filter-custom {
+    width: 100%;
+  }
+
+  /* Registro <=600: mantener proporcion del layout en dos/tres columnas */
+  .page-registro .container {
+    padding: 16px 12px 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .page-registro .header {
+    padding: 14px 12px;
+  }
+
+  .page-registro .logo-img {
+    height: clamp(34px, 10vw, 44px);
+  }
+
+  .page-registro .subtitle {
+    font-size: clamp(14px, 4.3vw, 18px);
+    line-height: 1.2;
+  }
+
+  .page-registro .form-box {
+    padding: 18px 14px;
+    border-radius: 12px;
+  }
+
+  .page-registro .form-box h2 {
+    font-size: clamp(28px, 8vw, 36px);
+    margin-bottom: 12px;
+  }
+
+  .page-registro #registroForm > .row,
+  .page-registro .label-container .row,
+  .page-registro .gender {
+    gap: 8px;
+  }
+
+  .page-registro input {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  .page-registro .gender label {
+    padding: 8px 5px;
+    font-size: 11px;
+  }
+
+  .page-registro .register {
+    min-width: 170px;
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .page-registro .footer {
+    padding: 10px 12px 16px;
+  }
+}
+
+@media (max-width: 430px) {
+  .page-registro .container {
+    padding: 14px 10px 8px;
+  }
+
+  .page-registro .form-box {
+    padding: 14px 10px;
+  }
+
+  .page-registro #registroForm > .row,
+  .page-registro .label-container .row,
+  .page-registro .gender {
+    gap: 6px;
+  }
+
+  .page-registro input {
+    padding: 8px 8px;
+    font-size: 11px;
+  }
+
+  .page-registro .label-container label {
+    font-size: 13px;
+  }
+
+  .page-registro .gender label {
+    padding: 7px 4px;
+    font-size: 10px;
+  }
+
+  .page-registro .register {
+    min-width: 152px;
+    font-size: 12px;
   }
 }

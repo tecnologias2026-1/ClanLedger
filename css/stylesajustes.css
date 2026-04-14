@@ -1,7 +1,4 @@
-﻿/* ARCHIVO: stylesajustes.css */
-/* DESCRIPCION: Estilos, layout y componentes visuales de esta vista. */
-
-/* COLORES  */
+﻿/* COLORES  */
 :root {
   --background: #edf0f5;
   --primary: #1b264f;
@@ -27,7 +24,7 @@ body {
   min-height: 100vh;
 }
 
-/* â”€â”€ Sidebar â”€â”€ */
+/* ── Sidebar ── */
 .sidebar {
   width: 350px;
   background: var(--titlesecondary);
@@ -621,7 +618,7 @@ h1 {
   border-radius: 14px;
 }
 
-/* MODALES e INTERACCIÃ“N */
+/* MODALES e INTERACCIÓN */
 .modal {
   position: fixed;
   top: 0;
@@ -870,4 +867,3 @@ h1 {
   border-color: #1b264f;
   background: #e7edf9;
 }
-

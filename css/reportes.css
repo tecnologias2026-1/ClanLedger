@@ -884,5 +884,123 @@ body {
   .filters-panel {
     grid-template-columns: 1fr;
   }
+
+  /* KPI block in mobile: 2x2 cards like reference */
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  .kpi-card {
+    min-height: 160px;
+    padding: 18px 18px 14px;
+    border-right: 1px solid #c5ccd9;
+    border-bottom: 1px solid #c5ccd9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .kpi-card:nth-child(2n) {
+    border-right: none;
+  }
+
+  .kpi-card:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+
+  .kpi-label {
+    font-size: clamp(21px, 4.3vw, 34px);
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-size: clamp(28px, 5.4vw, 48px);
+    margin-top: 0;
+    margin-bottom: 2px;
+    line-height: 1.05;
+  }
+
+  .kpi-note {
+    font-size: clamp(12px, 2.2vw, 18px);
+    line-height: 1.25;
+  }
+
+  /* Distribution chart in mobile: center pie and keep legend balanced */
+  #chart-distribucion .chart-surface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 20px 12px;
+  }
+
+  #chart-distribucion .pie-wrap {
+    width: 100%;
+    padding-top: 0;
+    justify-content: center;
+  }
+
+  #chart-distribucion .pie-chart {
+    width: clamp(190px, 32vw, 240px);
+    height: clamp(190px, 32vw, 240px);
+  }
+
+  #chart-distribucion .pie-legend {
+    margin: 0;
+    width: min(100%, 520px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 16px;
+  }
+
+  #chart-distribucion .pie-legend span {
+    text-align: center;
+    font-size: clamp(14px, 2vw, 18px);
+    line-height: 1.25;
+  }
 }
 
+@media (max-width: 600px) {
+  .kpi-grid {
+    border-radius: 16px;
+  }
+
+  .kpi-card {
+    min-height: 118px;
+    padding: 12px 10px 10px;
+  }
+
+  .kpi-label {
+    font-size: clamp(14px, 4vw, 18px);
+  }
+
+  .kpi-value {
+    font-size: clamp(20px, 7.2vw, 34px);
+  }
+
+  .kpi-note {
+    font-size: clamp(10px, 3.2vw, 13px);
+  }
+
+  #chart-distribucion .chart-surface {
+    gap: 14px;
+    padding: 14px 10px;
+  }
+
+  #chart-distribucion .pie-chart {
+    width: clamp(130px, 42vw, 170px);
+    height: clamp(130px, 42vw, 170px);
+  }
+
+  #chart-distribucion .pie-legend {
+    width: 100%;
+    gap: 8px 12px;
+  }
+
+  #chart-distribucion .pie-legend span {
+    font-size: clamp(11px, 3.1vw, 13px);
+  }
+}
