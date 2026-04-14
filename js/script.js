@@ -779,13 +779,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnConfirmDelete) {
     btnConfirmDelete.addEventListener("click", () => {
-      const adapter = window.ClanLedgerStorageAdapter;
-      if (adapter && typeof adapter.clearState === "function") {
-        adapter.clearState();
-      }
+      store.setState((s) => {
+        s.transactions = [];
+        s.accounts = [];
+        s.budgets.monthlyBudgetByMonth = {};
+        s.budgets.objectives = [];
+        s.budgets.categories = [];
+        s.budgets.objectiveAreas = [];
+        s.settings = s.settings || {};
+        s.settings.skipTransactionSeeding = true;
+        return s;
+      });
 
       closeModal(modalDelete);
-      window.location.reload();
+      renderAjustes();
     });
   }
 

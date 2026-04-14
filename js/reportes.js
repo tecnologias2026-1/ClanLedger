@@ -437,6 +437,15 @@ function renderReportesPage() {
       wrap.appendChild(row);
     });
 
+    requestAnimationFrame(() => {
+      wrap.querySelectorAll(".bar-label").forEach((label) => {
+        const style = window.getComputedStyle(label);
+        const lineHeight = parseFloat(style.lineHeight) || 14;
+        const lines = Math.round(label.scrollHeight / lineHeight);
+        label.classList.toggle("is-multiline", lines > 1);
+      });
+    });
+
     setBarChartYAxis(chartId, max);
   }
 
@@ -721,6 +730,12 @@ function renderReportesPage() {
       windowMonths.map((slot) => monthKey(slot.year, slot.monthIndex)),
     );
     const mode = window.ClanLedgerModeManager?.getMode?.() || "familiar";
+    const memberChartArticle = document
+      .querySelector("#chart-miembros")
+      ?.closest("article");
+    if (memberChartArticle) {
+      memberChartArticle.style.display = mode === "personal" ? "none" : "";
+    }
     const member =
       mode === "personal"
         ? "Todos"
@@ -830,17 +845,20 @@ function renderReportesPage() {
       .slice(0, 4);
     renderBarsChart("#chart-top-categorias", topCategories);
 
-    const gastosAllMembers = state.transactions.filter(
-      (item) => item.tipo === "gasto",
-    );
-    const byMember = {};
-    gastosAllMembers.forEach((g) => {
-      byMember[g.miembro] = (byMember[g.miembro] || 0) + (Number(g.monto) || 0);
-    });
-    const topMembers = Object.entries(byMember)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 4);
-    renderBarsChart("#chart-miembros", topMembers);
+    if (mode !== "personal") {
+      const gastosAllMembers = state.transactions.filter(
+        (item) => item.tipo === "gasto",
+      );
+      const byMember = {};
+      gastosAllMembers.forEach((g) => {
+        byMember[g.miembro] =
+          (byMember[g.miembro] || 0) + (Number(g.monto) || 0);
+      });
+      const topMembers = Object.entries(byMember)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 4);
+      renderBarsChart("#chart-miembros", topMembers);
+    }
 
     renderPieChart(gastos);
   }

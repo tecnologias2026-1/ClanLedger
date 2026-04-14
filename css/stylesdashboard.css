@@ -612,6 +612,10 @@ body {
   padding: 0 2px;
 }
 
+#dashboard-category-chart .bar-label.is-multiline {
+  bottom: -6px;
+}
+
 .legend-dot {
   display: inline-block;
   width: 8px;

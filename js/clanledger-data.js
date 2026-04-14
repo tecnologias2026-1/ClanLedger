@@ -115,6 +115,7 @@
           miembro: "Fernando",
           metodo: "Checking",
           fecha: "25/02/26",
+          predeterminada: true,
         },
         {
           id: 2,
@@ -125,6 +126,7 @@
           miembro: "Ana",
           metodo: "Checking",
           fecha: "24/02/26",
+          predeterminada: true,
         },
         {
           id: 3,
@@ -135,6 +137,7 @@
           miembro: "Alejandro",
           metodo: "Cash",
           fecha: "23/02/26",
+          predeterminada: true,
         },
         {
           id: 4,
@@ -145,6 +148,29 @@
           miembro: "Familia",
           metodo: "Ahorro",
           fecha: "22/02/26",
+          predeterminada: true,
+        },
+        {
+          id: 5,
+          nombre: "Colegio",
+          tipo: "gasto",
+          monto: 780000,
+          categoria: "Educación",
+          miembro: "Familia",
+          metodo: "Checking",
+          fecha: "12/04/26",
+          predeterminada: true,
+        },
+        {
+          id: 6,
+          nombre: "Bono anual",
+          tipo: "ingreso",
+          monto: 1300000,
+          categoria: "Extras",
+          miembro: "Fernando",
+          metodo: "Ahorro",
+          fecha: "09/05/26",
+          predeterminada: true,
         },
       ],
       budgets: {
@@ -239,6 +265,7 @@
           miembro: "Usuario",
           metodo: "Cuenta Principal",
           fecha: "21/02/26",
+          predeterminada: true,
         },
         {
           id: 2,
@@ -249,6 +276,7 @@
           miembro: "Usuario",
           metodo: "Personal Cash",
           fecha: "20/02/26",
+          predeterminada: true,
         },
         {
           id: 3,
@@ -259,6 +287,7 @@
           miembro: "Usuario",
           metodo: "Personal Cash",
           fecha: "19/02/26",
+          predeterminada: true,
         },
         {
           id: 4,
@@ -269,6 +298,29 @@
           miembro: "Usuario",
           metodo: "Ahorro Personal",
           fecha: "18/02/26",
+          predeterminada: true,
+        },
+        {
+          id: 5,
+          nombre: "Gym",
+          tipo: "gasto",
+          monto: 140000,
+          categoria: "Bienestar",
+          miembro: "Usuario",
+          metodo: "Personal Cash",
+          fecha: "15/04/26",
+          predeterminada: true,
+        },
+        {
+          id: 6,
+          nombre: "Ingreso freelance",
+          tipo: "ingreso",
+          monto: 820000,
+          categoria: "Extras",
+          miembro: "Usuario",
+          metodo: "Cuenta Principal",
+          fecha: "07/05/26",
+          predeterminada: true,
         },
       ],
       budgets: {
@@ -366,22 +418,12 @@
         includesName(categories, "Bienestar") ||
         includesName(categories, "Movilidad diaria") ||
         includesName(categories, "Meta de ahorro");
-      const hasNoObjectives = objectives.length === 0;
-      const hasNoCategories = categories.length === 0;
-      const hasNoAreas =
-        !Array.isArray(nextState?.budgets?.objectiveAreas) ||
-        nextState.budgets.objectiveAreas.length === 0;
 
-      if (hasLeakedPersonalObjectives || hasNoObjectives) {
+      if (hasLeakedPersonalObjectives) {
         nextState.budgets.objectives = deepClone(defaults.budgets.objectives);
       }
-      if (hasLeakedPersonalCategories || hasNoCategories) {
+      if (hasLeakedPersonalCategories) {
         nextState.budgets.categories = deepClone(defaults.budgets.categories);
-      }
-      if (hasNoAreas) {
-        nextState.budgets.objectiveAreas = deepClone(
-          defaults.budgets.objectiveAreas,
-        );
       }
     }
 

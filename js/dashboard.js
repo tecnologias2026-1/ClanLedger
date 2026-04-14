@@ -18,12 +18,21 @@ function renderDashboardPage() {
   ];
 
   const state = store.getState();
+  const currentMode = window.ClanLedgerModeManager?.getMode?.() || "familiar";
   const monthName = store.getCurrentMonthName();
   const monthIndex = MONTHS.indexOf(monthName);
   const currentYear = new Date().getFullYear();
   const f = store.computeFinancials({ monthName });
   const expenseTx = state.transactions.filter((t) => t.tipo === "gasto");
   const memberPeriodSwitch = document.getElementById("member-period-switch");
+  const memberPieTitle = document.querySelector(
+    "#member-period-switch",
+  )?.previousElementSibling;
+
+  if (memberPieTitle) {
+    memberPieTitle.textContent =
+      currentMode === "personal" ? "Gastos" : "Gastos por miembro";
+  }
 
   const fechaActual = document.getElementById("fecha-actual");
   if (fechaActual) {
@@ -122,6 +131,15 @@ function renderDashboardPage() {
         <span class="bar-label">${name}</span>
       `;
       wrap.appendChild(group);
+    });
+
+    requestAnimationFrame(() => {
+      wrap.querySelectorAll(".bar-label").forEach((label) => {
+        const style = window.getComputedStyle(label);
+        const lineHeight = parseFloat(style.lineHeight) || 14;
+        const lines = Math.round(label.scrollHeight / lineHeight);
+        label.classList.toggle("is-multiline", lines > 1);
+      });
     });
 
     const top = getNiceMax(max);
@@ -488,18 +506,26 @@ function renderDashboardPage() {
 
   renderMemberPie("mes");
 
-  if (memberPeriodSwitch && !memberPeriodSwitch.dataset.bound) {
-    memberPeriodSwitch.addEventListener("click", (e) => {
-      const btn = e.target.closest(".period-btn");
-      if (!btn) return;
-      const period = btn.dataset.period || "mes";
-      memberPeriodSwitch
-        .querySelectorAll(".period-btn")
-        .forEach((el) => el.classList.remove("active"));
-      btn.classList.add("active");
-      renderMemberPie(period);
-    });
-    memberPeriodSwitch.dataset.bound = "1";
+  if (memberPeriodSwitch) {
+    memberPeriodSwitch.__renderMemberPie = renderMemberPie;
+
+    if (!memberPeriodSwitch.dataset.bound) {
+      memberPeriodSwitch.addEventListener("click", (e) => {
+        const btn = e.target.closest(".period-btn");
+        if (!btn) return;
+        const period = btn.dataset.period || "mes";
+        memberPeriodSwitch
+          .querySelectorAll(".period-btn")
+          .forEach((el) => el.classList.remove("active"));
+        btn.classList.add("active");
+
+        const renderer = memberPeriodSwitch.__renderMemberPie;
+        if (typeof renderer === "function") {
+          renderer(period);
+        }
+      });
+      memberPeriodSwitch.dataset.bound = "1";
+    }
   }
 }
 

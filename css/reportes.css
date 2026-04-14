@@ -716,6 +716,10 @@ body {
   padding: 0 2px;
 }
 
+.bar-label.is-multiline {
+  bottom: -16px;
+}
+
 .bar.red {
   background: #c33b56;
 }

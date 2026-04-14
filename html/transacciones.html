@@ -276,6 +276,7 @@
             miembro: "Alejandro",
             metodo: "Efectivo",
             fecha: "21/02/26",
+            predeterminada: true,
           },
           {
             id: 2,
@@ -286,6 +287,7 @@
             miembro: "Sofia",
             metodo: "Checking",
             fecha: "20/02/26",
+            predeterminada: true,
           },
           {
             id: 3,
@@ -296,6 +298,7 @@
             miembro: "Ana",
             metodo: "Checking",
             fecha: "19/02/26",
+            predeterminada: true,
           },
           {
             id: 4,
@@ -306,6 +309,7 @@
             miembro: "Alejandro",
             metodo: "Ahorros",
             fecha: "19/02/26",
+            predeterminada: true,
           },
           {
             id: 5,
@@ -316,6 +320,29 @@
             miembro: "Familia",
             metodo: "Checking",
             fecha: "18/02/26",
+            predeterminada: true,
+          },
+          {
+            id: 6,
+            nombre: "Colegio",
+            tipo: "gasto",
+            monto: 780000,
+            categoria: "Educación",
+            miembro: "Familia",
+            metodo: "Checking",
+            fecha: "12/04/26",
+            predeterminada: true,
+          },
+          {
+            id: 7,
+            nombre: "Bono anual",
+            tipo: "ingreso",
+            monto: 1300000,
+            categoria: "Extras",
+            miembro: "Fernando",
+            metodo: "Ahorro",
+            fecha: "09/05/26",
+            predeterminada: true,
           },
         ],
         personal: [
@@ -328,6 +355,7 @@
             miembro: "Usuario",
             metodo: "Cuenta Principal",
             fecha: "21/02/26",
+            predeterminada: true,
           },
           {
             id: 2,
@@ -338,6 +366,7 @@
             miembro: "Usuario",
             metodo: "Personal Cash",
             fecha: "20/02/26",
+            predeterminada: true,
           },
           {
             id: 3,
@@ -348,6 +377,29 @@
             miembro: "Usuario",
             metodo: "Ahorro Personal",
             fecha: "19/02/26",
+            predeterminada: true,
+          },
+          {
+            id: 4,
+            nombre: "Gym",
+            tipo: "gasto",
+            monto: 140000,
+            categoria: "Bienestar",
+            miembro: "Usuario",
+            metodo: "Personal Cash",
+            fecha: "15/04/26",
+            predeterminada: true,
+          },
+          {
+            id: 5,
+            nombre: "Ingreso freelance",
+            tipo: "ingreso",
+            monto: 820000,
+            categoria: "Extras",
+            miembro: "Usuario",
+            metodo: "Cuenta Principal",
+            fecha: "07/05/26",
+            predeterminada: true,
           },
         ],
       };
@@ -362,6 +414,7 @@
           miembro: "Alejandro",
           metodo: "Efectivo",
           fecha: "21/02/26",
+          predeterminada: true,
         },
         {
           id: 2,
@@ -372,6 +425,7 @@
           miembro: "Sofia",
           metodo: "Checking",
           fecha: "20/02/26",
+          predeterminada: true,
         },
         {
           id: 3,
@@ -382,6 +436,7 @@
           miembro: "Ana",
           metodo: "Checking",
           fecha: "19/02/26",
+          predeterminada: true,
         },
         {
           id: 4,
@@ -392,6 +447,7 @@
           miembro: "Alejandro",
           metodo: "Ahorros",
           fecha: "19/02/26",
+          predeterminada: true,
         },
         {
           id: 5,
@@ -402,6 +458,29 @@
           miembro: "Familia",
           metodo: "Checking",
           fecha: "18/02/26",
+          predeterminada: true,
+        },
+        {
+          id: 6,
+          nombre: "Colegio",
+          tipo: "gasto",
+          monto: 780000,
+          categoria: "Educación",
+          miembro: "Familia",
+          metodo: "Checking",
+          fecha: "12/04/26",
+          predeterminada: true,
+        },
+        {
+          id: 7,
+          nombre: "Bono anual",
+          tipo: "ingreso",
+          monto: 1300000,
+          categoria: "Extras",
+          miembro: "Fernando",
+          metodo: "Ahorro",
+          fecha: "09/05/26",
+          predeterminada: true,
         },
       ];
 
@@ -423,6 +502,7 @@
         }
 
         const state = store.getState();
+        const skipSeeding = !!state?.settings?.skipTransactionSeeding;
         if (
           Array.isArray(state.transactions) &&
           state.transactions.length > 0
@@ -432,7 +512,7 @@
           return;
         }
 
-        if (!seedIfEmpty) {
+        if (!seedIfEmpty || skipSeeding) {
           transacciones = [];
           nextId = 1;
           return;
