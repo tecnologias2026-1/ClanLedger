@@ -128,7 +128,7 @@
           nombre: "Mercado quincenal",
           tipo: "gasto",
           monto: 690000,
-          categoria: "AlimentaciÃ³n",
+          categoria: "Alimentación",
           miembro: "Ana",
           metodo: "Checking",
           fecha: "24/02/26",
@@ -161,7 +161,7 @@
           nombre: "Colegio",
           tipo: "gasto",
           monto: 780000,
-          categoria: "EducaciÃ³n",
+          categoria: "Educación",
           miembro: "Familia",
           metodo: "Checking",
           fecha: "12/04/26",
@@ -203,11 +203,11 @@
             },
           },
         ],
-        objectiveAreas: ["Hogar", "EducaciÃ³n", "Viajes", "Salud"],
+        objectiveAreas: ["Hogar", "Educación", "Viajes", "Salud"],
         categories: [
           {
             id: 1,
-            name: "AlimentaciÃ³n",
+            name: "Alimentación",
             current: 690000,
             total: 1300000,
             period: "Mensual",
@@ -348,12 +348,7 @@
             savings: { Abril: 1250000 },
           },
         ],
-        objectiveAreas: [
-          "Desarrollo personal",
-          "Hogar",
-          "Viajes",
-          "EducaciÃ³n",
-        ],
+        objectiveAreas: ["Desarrollo personal", "Hogar", "Viajes", "Educación"],
         categories: [
           {
             id: 1,
@@ -467,6 +462,55 @@
     return JSON.parse(JSON.stringify(obj));
   }
 
+  // FUNCION: normalizeMojibakeText - repara texto corrido por errores de codificacion comunes.
+  function normalizeMojibakeText(value) {
+    if (typeof value !== "string") return value;
+
+    const replacements = [
+      ["AlimentaciÃ³n", "Alimentación"],
+      ["EducaciÃ³n", "Educación"],
+      ["TransacciÃ³n", "Transacción"],
+      ["DescripciÃ³n", "Descripción"],
+      ["CrÃ©dito", "Crédito"],
+      ["CategorÃ­a", "Categoría"],
+      ["categorÃ­a", "categoría"],
+      ["Ãrea", "Área"],
+      ["Ã¡rea", "área"],
+      ["perÃ­odo", "período"],
+      ["automÃ¡ticamente", "automáticamente"],
+      ["Â©", "©"],
+      ["â€¢", "•"],
+      ["âœ“", "✓"],
+      ["â€”", "—"],
+      ["Ãš", "Ú"],
+      ["Ã", "Ú"],
+    ];
+
+    let text = value;
+    replacements.forEach(([bad, good]) => {
+      text = text.split(bad).join(good);
+    });
+
+    return text;
+  }
+
+  // FUNCION: normalizeMojibakeData - recorre objetos/arrays y repara textos corruptos.
+  function normalizeMojibakeData(value) {
+    if (Array.isArray(value)) {
+      return value.map((item) => normalizeMojibakeData(item));
+    }
+
+    if (value && typeof value === "object") {
+      const output = {};
+      Object.keys(value).forEach((key) => {
+        output[key] = normalizeMojibakeData(value[key]);
+      });
+      return output;
+    }
+
+    return normalizeMojibakeText(value);
+  }
+
   // FUNCION: mergeDefaults - completa el estado guardado con campos nuevos de los defaults.
   function mergeDefaults(target, defaults) {
     Object.keys(defaults).forEach((key) => {
@@ -534,7 +578,11 @@
       const defaults = getDefaultStateForMode(currentMode);
       const parsed = storageAdapter.getState(defaults);
       const merged = mergeDefaults(parsed, deepClone(defaults));
-      return normalizeModeBudgetState(merged, currentMode, defaults);
+      return normalizeModeBudgetState(
+        normalizeMojibakeData(merged),
+        currentMode,
+        defaults,
+      );
     } catch {
       return deepClone(DEFAULT_STATE);
     }
@@ -548,7 +596,11 @@
     const defaults = getDefaultStateForMode(currentMode);
     const merged = mergeDefaults(nextState, deepClone(defaults));
     state = applyDerivedData(
-      normalizeModeBudgetState(merged, currentMode, defaults),
+      normalizeModeBudgetState(
+        normalizeMojibakeData(merged),
+        currentMode,
+        defaults,
+      ),
     );
     storageAdapter.saveState(state);
     return state;
@@ -624,7 +676,7 @@
 
   // FUNCION: addCategoryIfMissing - agrega una categoria solo si aun no existe en el modo actual.
   function addCategoryIfMissing(name) {
-    const clean = String(name || "").trim();
+    const clean = normalizeMojibakeText(String(name || "").trim());
     if (!clean) return false;
 
     let added = false;

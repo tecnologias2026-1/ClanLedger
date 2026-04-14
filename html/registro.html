@@ -10,8 +10,10 @@
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/accessibility.css" />
     <link rel="stylesheet" href="../css/button-hover.css" />
     <script defer src="../js/page-transition.js"></script>
+    <script defer src="../js/accessibility.js"></script>
   </head>
 
   <body class="page-registro">
@@ -30,18 +32,41 @@
       <div class="form-box">
         <h2>Crear una cuenta</h2>
 
-        <form id="registroForm">
+        <form id="registroForm" novalidate>
           <div class="row">
-            <input type="text" placeholder="Nombre" />
-            <input type="text" placeholder="Apellido" />
+            <label class="visually-hidden" for="reg-nombre">Nombre</label>
+            <input id="reg-nombre" type="text" placeholder="Nombre" />
+
+            <label class="visually-hidden" for="reg-apellido">Apellido</label>
+            <input id="reg-apellido" type="text" placeholder="Apellido" />
           </div>
 
           <div class="label-container">
-            <label>Fecha de nacimiento</label>
+            <label id="reg-fecha-label">Fecha de nacimiento</label>
             <div class="row">
-              <input type="number" placeholder="Día" />
-              <input type="number" placeholder="Mes" />
-              <input type="number" placeholder="Año" />
+              <label class="visually-hidden" for="reg-dia">Dia</label>
+              <input
+                id="reg-dia"
+                type="number"
+                placeholder="Día"
+                aria-labelledby="reg-fecha-label"
+              />
+
+              <label class="visually-hidden" for="reg-mes">Mes</label>
+              <input
+                id="reg-mes"
+                type="number"
+                placeholder="Mes"
+                aria-labelledby="reg-fecha-label"
+              />
+
+              <label class="visually-hidden" for="reg-anio">Año</label>
+              <input
+                id="reg-anio"
+                type="number"
+                placeholder="Año"
+                aria-labelledby="reg-fecha-label"
+              />
             </div>
           </div>
 
@@ -60,8 +85,17 @@
           </div>
 
           <div class="row">
-            <input type="email" placeholder="Correo electrónico" />
-            <input type="password" placeholder="Contraseña" />
+            <label class="visually-hidden" for="reg-email"
+              >Correo electrónico</label
+            >
+            <input
+              id="reg-email"
+              type="email"
+              placeholder="Correo electrónico"
+            />
+
+            <label class="visually-hidden" for="reg-password">Contraseña</label>
+            <input id="reg-password" type="password" placeholder="Contraseña" />
           </div>
 
           <button type="submit" class="register">Crear Cuenta</button>

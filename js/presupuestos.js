@@ -199,7 +199,7 @@ function updateBudgetSourceControls() {
   if (saveBtn) saveBtn.disabled = usingAccounts;
   if (hint) {
     hint.textContent = usingAccounts
-      ? "Se utiliza automÃ¡ticamente la suma del balance de todas las cuentas en Ajustes."
+      ? "Se utiliza automáticamente la suma del balance de todas las cuentas en Ajustes."
       : "Define manualmente el presupuesto final del mes.";
   }
 }
@@ -300,7 +300,7 @@ function selectOption(selectId, value, optionEl) {
   optionEl.classList.add("selected");
   const chkImg = document.createElement("img");
   chkImg.src = "../assets/imagenes/Done.png";
-  chkImg.alt = "âœ“";
+  chkImg.alt = "✓";
   chkImg.className = "check-icon";
   optionEl.appendChild(chkImg);
 
@@ -366,7 +366,7 @@ function syncCategoryDropdownsFromStore() {
   };
   action.innerHTML = `
     <img src="../assets/imagenes/add blue.png" alt="+" class="new-cat-icon" />
-    Crear nueva categorÃ­a
+    Crear nueva categoría
   `;
   dropdown.appendChild(action);
 }
@@ -392,7 +392,7 @@ function syncObjectiveAreaDropdownsFromStore() {
     };
     action.innerHTML = `
       <img src="../assets/imagenes/add blue.png" alt="+" class="new-cat-icon" />
-      Crear nueva Ã¡rea
+      Crear nueva área
     `;
     objectiveDrop.appendChild(action);
   }
@@ -418,16 +418,16 @@ function createNewCategory(selectId, dropId) {
   const btn = document.getElementById("new-item-modal-btn");
   const isArea = pendingCreateType === "area";
 
-  if (title) title.textContent = isArea ? "Nueva Ãrea" : "Nueva CategorÃ­a";
+  if (title) title.textContent = isArea ? "Nueva Área" : "Nueva Categoría";
   if (subtitle) {
     subtitle.textContent = isArea
-      ? "Escribe el nombre de la nueva Ã¡rea"
-      : "Escribe el nombre de la nueva categorÃ­a";
+      ? "Escribe el nombre de la nueva área"
+      : "Escribe el nombre de la nueva categoría";
   }
   if (label) {
-    label.textContent = isArea ? "Nombre del Ãrea" : "Nombre de la CategorÃ­a";
+    label.textContent = isArea ? "Nombre del Área" : "Nombre de la Categoría";
   }
-  if (btn) btn.textContent = isArea ? "Crear Ãrea" : "Crear CategorÃ­a";
+  if (btn) btn.textContent = isArea ? "Crear Área" : "Crear Categoría";
 
   // Open the new-category sub-modal (overlay stays active)
   document.getElementById("modal-nueva-cat").classList.add("active");
@@ -891,7 +891,7 @@ function preselectDropdown(selectId, value) {
       display.textContent = value;
       const chkImg = document.createElement("img");
       chkImg.src = "../assets/imagenes/Done.png";
-      chkImg.alt = "âœ“";
+      chkImg.alt = "✓";
       chkImg.className = "check-icon";
       opt.appendChild(chkImg);
     }
@@ -912,7 +912,7 @@ function openEditItem(itemEl) {
   const period = itemEl.dataset.period || "";
   const area = itemEl.dataset.area || "General";
 
-  document.getElementById("edit-item-title").textContent = "Editar â€” " + name;
+  document.getElementById("edit-item-title").textContent = "Editar — " + name;
   document.getElementById("edit-name").value = name;
   setMoneyInputValue(document.getElementById("edit-current"), current);
   setMoneyInputValue(document.getElementById("edit-total"), total);
@@ -924,14 +924,14 @@ function openEditItem(itemEl) {
   );
   if (!isObjective && period) {
     periodGroup.style.display = "";
-    resetSelect("sel-edit-periodo", "Sin perÃ­odo");
+    resetSelect("sel-edit-periodo", "Sin período");
     preselectDropdown("sel-edit-periodo", period);
     if (objectiveAreaGroup) objectiveAreaGroup.style.display = "none";
   } else {
     periodGroup.style.display = "none";
     if (objectiveAreaGroup) {
       objectiveAreaGroup.style.display = "";
-      resetSelect("sel-edit-obj-area", "Ãrea");
+      resetSelect("sel-edit-obj-area", "Área");
       preselectDropdown("sel-edit-obj-area", area);
     }
   }
@@ -960,7 +960,7 @@ function saveEditItem() {
     currentEditItem.dataset.name = newName;
     currentEditItem.querySelector(".item-name").textContent = newName;
     document.getElementById("edit-item-title").textContent =
-      "Editar â€” " + newName;
+      "Editar — " + newName;
   }
 
   // Update data attributes
@@ -1107,7 +1107,7 @@ function addObjetivo() {
 
   nameEl.value = "";
   metaEl.value = "";
-  resetSelect("sel-obj-area", "Ãrea");
+  resetSelect("sel-obj-area", "Área");
   preselectDropdown("sel-obj-year", currentYear);
   closeModal("modal-objetivo");
   refreshAllProgress();
@@ -1131,9 +1131,8 @@ function addPresupuesto() {
 
   nameEl.value = "";
   setMoneyInputValue(limEl, 0);
-  resetSelect("sel-pres-cat", "CategorÃ­a");
-  resetSelect("sel-periodo", "Elige el perÃ­odo");
+  resetSelect("sel-pres-cat", "Categoría");
+  resetSelect("sel-periodo", "Elige el período");
   closeModal("modal-presupuesto");
   refreshAllProgress();
 }
-

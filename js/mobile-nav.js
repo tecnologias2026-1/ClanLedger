@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleButton.setAttribute("aria-expanded", "false");
   toggleButton.innerHTML = "<span></span><span></span><span></span>";
 
+  if (!sidebar.id) {
+    sidebar.id = "main-sidebar";
+  }
+  toggleButton.setAttribute("aria-controls", sidebar.id);
+  sidebar.setAttribute("aria-hidden", "true");
+
   const sidebarLogo = sidebar.querySelector(".sidebar-logo img");
   const logoSrc = sidebarLogo ? sidebarLogo.getAttribute("src") : "";
 
@@ -39,11 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeDrawer() {
     document.body.classList.remove("mobile-nav-open");
     toggleButton.setAttribute("aria-expanded", "false");
+    sidebar.setAttribute("aria-hidden", "true");
   }
 
   function openDrawer() {
     document.body.classList.add("mobile-nav-open");
     toggleButton.setAttribute("aria-expanded", "true");
+    sidebar.setAttribute("aria-hidden", "false");
   }
 
   function toggleDrawer() {

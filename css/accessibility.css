@@ -1,0 +1,473 @@
+/* ARCHIVO: accessibility.css */
+/* DESCRIPCION: Capa global de accesibilidad AA para foco, contraste y panel de configuracion. */
+
+:root {
+  --a11y-focus-color: #0b5fff;
+  --a11y-focus-shadow: rgba(11, 95, 255, 0.28);
+  --a11y-overlay-z: 1200;
+}
+
+body {
+  --a11y-font-scale: 1;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  z-index: calc(var(--a11y-overlay-z) + 20);
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-decoration: none;
+  font-weight: 700;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--a11y-focus-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--a11y-focus-shadow);
+}
+
+/* Escalado tipografico global sin romper layout */
+body.texto-pequeno {
+  --a11y-font-scale: 0.92;
+}
+
+body.texto-grande {
+  --a11y-font-scale: 1.12;
+}
+
+body.texto-pequeno h1,
+body.texto-pequeno h2,
+body.texto-pequeno h3,
+body.texto-pequeno h4,
+body.texto-pequeno p,
+body.texto-pequeno span,
+body.texto-pequeno label,
+body.texto-pequeno a,
+body.texto-pequeno button,
+body.texto-pequeno input,
+body.texto-pequeno select,
+body.texto-pequeno textarea,
+body.texto-grande h1,
+body.texto-grande h2,
+body.texto-grande h3,
+body.texto-grande h4,
+body.texto-grande p,
+body.texto-grande span,
+body.texto-grande label,
+body.texto-grande a,
+body.texto-grande button,
+body.texto-grande input,
+body.texto-grande select,
+body.texto-grande textarea {
+  font-size: calc(1em * var(--a11y-font-scale));
+}
+
+body.fuente-legible,
+body.fuente-legible button,
+body.fuente-legible input,
+body.fuente-legible select,
+body.fuente-legible textarea {
+  font-family: Verdana, Tahoma, Arial, sans-serif !important;
+  letter-spacing: 0.02em;
+}
+
+body.daltonismo {
+  filter: saturate(0.78) contrast(1.08);
+}
+
+body.reducir-animaciones *,
+body.reducir-animaciones *::before,
+body.reducir-animaciones *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body.alto-contraste {
+  background: #ffffff !important;
+  color: #0a0a0a !important;
+  --background: #ffffff;
+  --accent: #ffffff;
+  --cardbg: #ffffff;
+  --titlesecondary: #ffffff;
+  --secondary: #111111;
+  --subtitlesecondary: #111111;
+  --light: #111111;
+  --primary: #111111;
+  --titleprimary: #111111;
+  --green: #0b6b2f;
+  --red: #8f1010;
+  --sidebar: #ffffff;
+}
+
+body.alto-contraste a {
+  color: #0b5fff !important;
+  text-decoration: underline !important;
+  text-underline-offset: 0.15em;
+}
+
+body.alto-contraste .sidebar,
+body.alto-contraste .header,
+body.alto-contraste .footer,
+body.alto-contraste .main-content,
+body.alto-contraste .main,
+body.alto-contraste .container,
+body.alto-contraste .layout {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+body.alto-contraste .nav-item,
+body.alto-contraste .nav-item.active,
+body.alto-contraste .sidebar-logo,
+body.alto-contraste .mobile-page-brand,
+body.alto-contraste .page-header,
+body.alto-contraste .header-top,
+body.alto-contraste .section-header,
+body.alto-contraste .section h3,
+body.alto-contraste .mobile-nav-toggle,
+body.alto-contraste .user-toggle,
+body.alto-contraste .user-menu-dropdown,
+body.alto-contraste .dropdown,
+body.alto-contraste .modal-content,
+body.alto-contraste .modal,
+body.alto-contraste .chart-surface,
+body.alto-contraste .trend-surface,
+body.alto-contraste .category-surface,
+body.alto-contraste .pie-chart,
+body.alto-contraste .pie-wrap {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+body.alto-contraste .nav-item,
+body.alto-contraste .mobile-nav-toggle,
+body.alto-contraste .user-menu-trigger,
+body.alto-contraste .a11y-fab,
+body.alto-contraste .a11y-close,
+body.alto-contraste .btn,
+body.alto-contraste .register,
+body.alto-contraste .btn-danger,
+body.alto-contraste .btn-primary,
+body.alto-contraste .btn-nueva,
+body.alto-contraste .period-btn {
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+body.alto-contraste .nav-item {
+  color: #111111 !important;
+}
+
+body.alto-contraste .nav-item.active,
+body.alto-contraste .btn,
+body.alto-contraste .register,
+body.alto-contraste .btn-danger,
+body.alto-contraste .btn-primary,
+body.alto-contraste .btn-nueva,
+body.alto-contraste .period-btn,
+body.alto-contraste .mobile-nav-toggle,
+body.alto-contraste .a11y-fab,
+body.alto-contraste .a11y-close {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+body.alto-contraste .subtitle,
+body.alto-contraste .sub,
+body.alto-contraste .textosvert h4,
+body.alto-contraste .account span,
+body.alto-contraste .member span,
+body.alto-contraste .danger-text,
+body.alto-contraste .filter-label,
+body.alto-contraste .grupo-filtro label,
+body.alto-contraste .kpi-note,
+body.alto-contraste .stat-note,
+body.alto-contraste .page-subtitle {
+  color: #111111 !important;
+}
+
+body.alto-contraste .sidebar,
+body.alto-contraste .card,
+body.alto-contraste .card-box,
+body.alto-contraste .chart-box,
+body.alto-contraste .chart-card,
+body.alto-contraste .form-box,
+body.alto-contraste .account,
+body.alto-contraste .member,
+body.alto-contraste .kpi-card,
+body.alto-contraste .section,
+body.alto-contraste .danger,
+body.alto-contraste .budget-setup-card,
+body.alto-contraste .section-card {
+  border: 2px solid #111111 !important;
+  border-radius: 12px;
+}
+
+body.alto-contraste .user-menu-dropdown,
+body.alto-contraste .a11y-panel,
+body.alto-contraste .modal-content {
+  border: 2px solid #111111 !important;
+}
+
+body.alto-contraste .mobile-nav-overlay,
+body.alto-contraste .a11y-panel-backdrop {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+body.alto-contraste .chart-box,
+body.alto-contraste .chart-card,
+body.alto-contraste .budget-setup-card,
+body.alto-contraste .filters-panel,
+body.alto-contraste .kpi-grid,
+body.alto-contraste .trend-surface,
+body.alto-contraste .category-surface,
+body.alto-contraste .chart-surface,
+body.alto-contraste .pie-legend,
+body.alto-contraste .summary-cards {
+  background: #ffffff !important;
+}
+
+body.alto-contraste .kpi-label,
+body.alto-contraste .kpi-note,
+body.alto-contraste .filter-label,
+body.alto-contraste .grupo-filtro label,
+body.alto-contraste .chart-title,
+body.alto-contraste .page-title,
+body.alto-contraste .page-subtitle,
+body.alto-contraste .sub,
+body.alto-contraste .card-label,
+body.alto-contraste .budget-source-intro,
+body.alto-contraste .budget-source-hint,
+body.alto-contraste .budget-setup-message,
+body.alto-contraste .danger-text,
+body.alto-contraste .textosvert h4,
+body.alto-contraste .member-period-switch,
+body.alto-contraste .period-btn,
+body.alto-contraste .kpi-value,
+body.alto-contraste .stat-value,
+body.alto-contraste .stat-label {
+  color: #111111 !important;
+}
+
+body.alto-contraste .kpi-card,
+body.alto-contraste .summary-cards,
+body.alto-contraste .filters-panel,
+body.alto-contraste .section-card {
+  border-color: #111111 !important;
+}
+
+body.alto-contraste .card,
+body.alto-contraste .card-box,
+body.alto-contraste .chart-box,
+body.alto-contraste .chart-card,
+body.alto-contraste .form-box,
+body.alto-contraste .account,
+body.alto-contraste .member,
+body.alto-contraste .kpi-card,
+body.alto-contraste .section,
+body.alto-contraste .danger {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+}
+
+body.alto-contraste a,
+body.alto-contraste button,
+body.alto-contraste .btn,
+body.alto-contraste .register,
+body.alto-contraste .btn-danger {
+  color: #ffffff !important;
+  background: #111111 !important;
+  border: 2px solid #ffffff !important;
+}
+
+body.alto-contraste input,
+body.alto-contraste select,
+body.alto-contraste textarea,
+body.alto-contraste .gender label {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+}
+
+body.alto-contraste input::placeholder,
+body.alto-contraste textarea::placeholder {
+  color: #505050 !important;
+}
+
+body.alto-contraste h1,
+body.alto-contraste h2,
+body.alto-contraste h3,
+body.alto-contraste h4,
+body.alto-contraste p,
+body.alto-contraste span,
+body.alto-contraste label {
+  color: #111111 !important;
+}
+
+.a11y-fab {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: var(--a11y-overlay-z);
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  border: 2px solid #ffffff;
+  background: #1b264f;
+  color: #ffffff;
+  font-size: 26px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(18, 33, 74, 0.3);
+}
+
+.a11y-fab:hover {
+  transform: translateY(-1px);
+}
+
+.a11y-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--a11y-overlay-z) - 1);
+  background: rgba(7, 12, 24, 0.46);
+}
+
+.a11y-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 80px;
+  width: min(92vw, 340px);
+  z-index: calc(var(--a11y-overlay-z) + 1);
+  background: #f8fafc;
+  color: #1f2937;
+  border: 1px solid #ced5e2;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(18, 33, 74, 0.3);
+  padding: 14px;
+}
+
+.a11y-panel[hidden],
+.a11y-panel-backdrop[hidden] {
+  display: none;
+}
+
+.a11y-panel h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #1b264f;
+}
+
+.a11y-option-group {
+  margin-bottom: 12px;
+  border-top: 1px solid #d7deea;
+  padding-top: 10px;
+}
+
+.a11y-option-group legend {
+  font-weight: 700;
+  color: #1b264f;
+  margin-bottom: 8px;
+}
+
+.a11y-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.a11y-option input[type="radio"],
+.a11y-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.a11y-close {
+  border: none;
+  border-radius: 8px;
+  background: #e6ebf7;
+  color: #1b264f;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.a11y-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.form-error-text {
+  display: block;
+  margin-top: 4px;
+  color: #a21b1b;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .a11y-fab {
+    right: 12px;
+    bottom: 12px;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+
+  .a11y-panel {
+    right: 12px;
+    bottom: 70px;
+  }
+}
