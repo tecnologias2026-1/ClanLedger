@@ -5,12 +5,14 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/stylestransacciones.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
     <title>ClanLedger</title>
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <link rel="stylesheet" href="../css/button-hover.css" />
     <script defer src="../js/page-transition.js"></script>
+    <script defer src="../js/mobile-nav.js"></script>
   </head>
   <body>
     <div class="layout">
@@ -88,10 +90,10 @@
           </div>
         </div>
 
-        <!-- BotÃ³n nueva transacciÃ³n -->
+        <!-- Boton nueva transaccion -->
         <button class="btn-nueva" onclick="abrirModal()">
           <img src="../assets/imagenes/add.png" alt="icono agregar" />
-          Nueva TransacciÃ³n
+          Nueva Transaccion
         </button>
         <!-- Filtros -->
         <div class="busqueda">
@@ -100,7 +102,7 @@
             <input
               type="text"
               id="filtro-buscar"
-              placeholder="BÃºsqueda"
+              placeholder="Busqueda"
               oninput="filtrarCards()"
             />
           </div>
@@ -113,11 +115,11 @@
             </select>
           </div>
           <div class="grupo-filtro">
-            <label>CategorÃ­a</label>
+            <label>Categoria</label>
             <select id="filtro-categoria" onchange="filtrarCards()">
               <option value="">Todas</option>
               <option value="Salario">Salario</option>
-              <option value="AlimentaciÃ³n">AlimentaciÃ³n</option>
+              <option value="Alimentacion">Alimentacion</option>
               <option value="Ocio">Ocio</option>
               <option value="Extras">Extras</option>
             </select>
@@ -156,20 +158,20 @@
             </div>
             <div class="textosvert" id="ftxt">
               <h4>Tu ecosistema financiero todo en uno.</h4>
-              <h4>Â© 2026. The ClanLedger Team</h4>
+              <h4>&copy; 2026. The ClanLedger Team</h4>
             </div>
           </div>
         </footer>
       </main>
     </div>
 
-    <!-- Nueva TransacciÃ³n â•â• -->
+    <!-- Nueva Transaccion -->
     <div class="modal-overlay" id="modal">
       <div class="modal">
         <!-- X para cerrar -->
         <button class="modal-close" onclick="cerrarModal()">&#x2715;</button>
 
-        <h3>Nueva TransacciÃ³n</h3>
+        <h3>Nueva Transaccion</h3>
         <p class="modal-subtitle">Registra un nuevo ingreso o gasto</p>
 
         <!-- Formulario con borde azul -->
@@ -177,7 +179,7 @@
           <div class="campo">
             <label>Tipo</label>
             <select id="input-tipo">
-              <option value="" disabled selected>Elige la opciÃ³n</option>
+              <option value="" disabled selected>Elige la opcion</option>
               <option value="ingreso">Ingreso</option>
               <option value="gasto">Gasto</option>
             </select>
@@ -189,7 +191,7 @@
           </div>
 
           <div class="campo">
-            <label>DescripciÃ³n</label>
+            <label>Descripcion</label>
             <input
               type="text"
               id="input-nombre"
@@ -203,11 +205,11 @@
           </div>
 
           <div class="campo">
-            <label>CategorÃ­a</label>
+            <label>Categoria</label>
             <select id="input-categoria">
               <option value="" disabled selected>Categoria</option>
               <option value="Salario">Salario</option>
-              <option value="AlimentaciÃ³n">AlimentaciÃ³n</option>
+              <option value="Alimentacion">Alimentacion</option>
               <option value="Ocio">Ocio</option>
               <option value="Extras">Extras</option>
             </select>
@@ -237,7 +239,7 @@
         </div>
 
         <button class="btn-agregar" onclick="guardarTransaccion()">
-          Agregar TransacciÃ³n
+          Agregar Transaccion
         </button>
       </div>
     </div>
@@ -247,17 +249,17 @@
         <button class="modal-close" onclick="closeNewCategoryModal()">
           &#x2715;
         </button>
-        <h3>Nueva CategorÃ­a</h3>
-        <p class="modal-subtitle">Escribe el nombre de la nueva categorÃ­a</p>
+        <h3>Nueva Categoria</h3>
+        <p class="modal-subtitle">Escribe el nombre de la nueva categoria</p>
         <div class="campo">
-          <label>Nombre de la CategorÃ­a</label>
+          <label>Nombre de la Categoria</label>
           <input type="text" id="new-cat-input-trans" placeholder="Ej: Salud" />
         </div>
         <button
           class="btn-presupuesto-primary"
           onclick="confirmNewCategoryFromTransactions()"
         >
-          Crear CategorÃ­a
+          Crear Categoria
         </button>
       </div>
     </div>
@@ -286,7 +288,7 @@
             nombre: "Supermercado",
             tipo: "gasto",
             monto: 600000,
-            categoria: "AlimentaciÃ³n",
+            categoria: "Alimentacion",
             miembro: "Sofia",
             metodo: "Checking",
             fecha: "20/02/26",
@@ -319,7 +321,7 @@
             nombre: "Cena",
             tipo: "gasto",
             monto: 150000,
-            categoria: "AlimentaciÃ³n",
+            categoria: "Alimentacion",
             miembro: "Familia",
             metodo: "Checking",
             fecha: "18/02/26",
@@ -330,7 +332,7 @@
             nombre: "Colegio",
             tipo: "gasto",
             monto: 780000,
-            categoria: "EducaciÃ³n",
+            categoria: "Educacion",
             miembro: "Familia",
             metodo: "Checking",
             fecha: "12/04/26",
@@ -424,7 +426,7 @@
           nombre: "Supermercado",
           tipo: "gasto",
           monto: 600000,
-          categoria: "AlimentaciÃ³n",
+          categoria: "Alimentacion",
           miembro: "Sofia",
           metodo: "Checking",
           fecha: "20/02/26",
@@ -457,7 +459,7 @@
           nombre: "Cena",
           tipo: "gasto",
           monto: 150000,
-          categoria: "AlimentaciÃ³n",
+          categoria: "Alimentacion",
           miembro: "Familia",
           metodo: "Checking",
           fecha: "18/02/26",
@@ -468,7 +470,7 @@
           nombre: "Colegio",
           tipo: "gasto",
           monto: 780000,
-          categoria: "EducaciÃ³n",
+          categoria: "Educacion",
           miembro: "Familia",
           metodo: "Checking",
           fecha: "12/04/26",
@@ -498,6 +500,42 @@
         );
       }
 
+      const MOJIBAKE_MAP = {
+        "AlimentaciÃ³n": "Alimentacion",
+        "EducaciÃ³n": "Educacion",
+        "CategorÃ­a": "Categoria",
+        "categorÃ­a": "categoria",
+        "TransacciÃ³n": "Transaccion",
+        "DescripciÃ³n": "Descripcion",
+        BÃºsqueda: "Busqueda",
+        "opciÃ³n": "opcion",
+        "CrÃ©dito": "Credito",
+        "Â©": "©",
+        "â€¢": "•",
+        "âœ“": "✓",
+      };
+
+      function normalizeMojibakeText(value) {
+        if (typeof value !== "string") return value;
+        let normalized = value;
+        Object.entries(MOJIBAKE_MAP).forEach(([bad, good]) => {
+          normalized = normalized.split(bad).join(good);
+        });
+        return normalized;
+      }
+
+      function normalizeTransaction(tx) {
+        if (!tx || typeof tx !== "object") return tx;
+        return {
+          ...tx,
+          nombre: normalizeMojibakeText(tx.nombre),
+          categoria: normalizeMojibakeText(tx.categoria),
+          miembro: normalizeMojibakeText(tx.miembro),
+          metodo: normalizeMojibakeText(tx.metodo),
+          fecha: normalizeMojibakeText(tx.fecha),
+        };
+      }
+
       function syncTransactionsFromStore(seedIfEmpty) {
         if (!store) {
           nextId = recalculateNextId();
@@ -510,7 +548,10 @@
           Array.isArray(state.transactions) &&
           state.transactions.length > 0
         ) {
-          transacciones = state.transactions.map((t) => ({ ...t }));
+          transacciones = state.transactions.map((t) =>
+            normalizeTransaction(t),
+          );
+          persistTransactions();
           nextId = recalculateNextId();
           return;
         }
@@ -547,7 +588,7 @@
       function persistTransactions() {
         if (!store) return;
         store.setState((s) => {
-          s.transactions = transacciones.map((t) => ({ ...t }));
+          s.transactions = transacciones.map((t) => normalizeTransaction(t));
           return s;
         });
       }
@@ -664,7 +705,7 @@
           const optEl = document.createElement("div");
           optEl.className = "trans-custom-select-option";
           optEl.dataset.value = opt.value;
-          optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">âœ“</span>`;
+          optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">&#10003;</span>`;
 
           if (opt.disabled) optEl.classList.add("disabled");
           if (opt.selected) optEl.classList.add("selected");
@@ -710,7 +751,7 @@
         if (!select) return;
         const first = allLabel
           ? `<option value="">${allLabel}</option>`
-          : '<option value="" disabled selected>Elige la opciÃ³n</option>';
+          : '<option value="" disabled selected>Elige la opcion</option>';
         select.innerHTML =
           first +
           values.map((v) => `<option value="${v}">${v}</option>`).join("");
@@ -723,7 +764,7 @@
         select.innerHTML =
           '<option value="" disabled selected>Categoria</option>' +
           values.map((v) => `<option value="${v}">${v}</option>`).join("") +
-          '<option value="__new__">+ Crear nueva categorÃ­a</option>';
+          '<option value="__new__">+ Crear nueva categoria</option>';
         refreshCustomSelect("input-categoria");
       }
 
@@ -768,7 +809,7 @@
         } else {
           replaceCategoryInputOptions([
             "Salario",
-            "AlimentaciÃ³n",
+            "Alimentacion",
             "Ocio",
             "Extras",
           ]);
@@ -941,7 +982,7 @@
         <div class="cardright ${esIngreso ? "pos" : "neg"}">${monto}</div>
       `;
 
-          // El listener va directo al botÃ³n, sin pasar por el <img>
+          // El listener va directo al botón, sin pasar por el <img>
           card
             .querySelector(".del-btn")
             .addEventListener("click", () => eliminar(t.id));
@@ -1143,4 +1184,3 @@
     </script>
   </body>
 </html>
-

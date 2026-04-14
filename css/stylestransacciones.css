@@ -407,7 +407,7 @@ body {
 }
 
 .card-meta span::after {
-  content: "  â€¢  ";
+  content: " \2022 ";
 }
 .card-meta span:last-child::after {
   content: "";
@@ -616,4 +616,3 @@ body {
   color: var(--subtitlesecondary);
   font-weight: lighter;
 }
-

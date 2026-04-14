@@ -5,12 +5,14 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <link rel="stylesheet" href="../css/stylesdashboard.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
     <title>ClanLedger</title>
     <link rel="stylesheet" href="../css/button-hover.css" />
     <script defer src="../js/page-transition.js"></script>
+    <script defer src="../js/mobile-nav.js"></script>
   </head>
   <body>
     <div class="layout">
@@ -102,7 +104,7 @@
             <span class="kpi-note">+2.5% vs mes anterior</span>
           </div>
           <div class="kpi-card">
-            <span class="kpi-label">SubtÃ­tulo 2</span>
+            <span class="kpi-label">Subtítulo 2</span>
             <span class="kpi-value red">$7.420.000</span>
             <span class="kpi-note">+6% vs mes anterior</span>
           </div>
@@ -156,9 +158,9 @@
             </div>
           </div>
 
-          <!-- Gastos por categorÃ­a (barras) -->
+          <!-- Gastos por categoría (barras) -->
           <div class="chart-box">
-            <h3 class="chart-title">Gastos por categorÃ­a</h3>
+            <h3 class="chart-title">Gastos por categoría</h3>
             <div class="category-surface" id="dashboard-category-chart">
               <div class="category-y-axis">
                 <span>5M</span>
@@ -190,7 +192,7 @@
                 3 meses
               </button>
               <button type="button" class="period-btn" data-period="anio">
-                AÃ±o
+                Año
               </button>
             </div>
           </div>
@@ -262,7 +264,7 @@
             <div class="pie-legend right">
               <div class="pie-legend-item right">
                 <span class="pie-legend-name" style="color: #3b82f6"
-                  >SofÃ­a (27%)</span
+                  >Sofía (27%)</span
                 >
                 <span class="pie-legend-value">$945.000</span>
               </div>
@@ -359,9 +361,9 @@
 
         <!-- â•â• FILA INFERIOR: Ãšltimas transacciones + Estado de presupuestos â•â• -->
         <div class="charts-row">
-          <!-- Ãšltimas transacciones -->
+          <!-- Últimas transacciones -->
           <div class="chart-box">
-            <h3 class="chart-title">Ãšltimas transacciones</h3>
+            <h3 class="chart-title">Últimas transacciones</h3>
             <div class="transacciones-list">
               <div class="tx-item">
                 <div class="tx-info">
@@ -374,7 +376,7 @@
               <div class="tx-item">
                 <div class="tx-info">
                   <span class="tx-nombre">Supermercado</span>
-                  <span class="tx-meta">Ana - AlimentaciÃ³n</span>
+                  <span class="tx-meta">Ana - Alimentación</span>
                 </div>
                 <span class="tx-monto neg">-$400.000</span>
               </div>
@@ -398,7 +400,7 @@
               <div class="tx-item">
                 <div class="tx-info">
                   <span class="tx-nombre">Freelance</span>
-                  <span class="tx-meta">SofÃ­a - Salario</span>
+                  <span class="tx-meta">Sofía - Salario</span>
                 </div>
                 <span class="tx-monto pos">+$600.000</span>
               </div>
@@ -411,7 +413,7 @@
             <div class="presupuestos-list">
               <div class="pres-item">
                 <div class="pres-header">
-                  <span class="pres-nombre">AlimentaciÃ³n</span>
+                  <span class="pres-nombre">Alimentación</span>
                   <span class="pres-pct">60%</span>
                 </div>
                 <div class="progress-bar">
@@ -473,7 +475,7 @@
             </div>
             <div class="textosvert" id="ftxt">
               <h4>Tu ecosistema financiero todo en uno.</h4>
-              <h4>Â© 2026. The ClanLedger Team</h4>
+              <h4>© 2026. The ClanLedger Team</h4>
             </div>
           </div>
         </footer>
@@ -486,4 +488,3 @@
     <script src="../js/dashboard.js"></script>
   </body>
 </html>
-

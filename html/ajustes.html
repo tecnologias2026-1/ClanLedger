@@ -9,8 +9,10 @@
     <title>ClanLedger</title>
     <link rel="icon" type="image/png" href="../assets/imagenes/favicon.png" />
     <link rel="stylesheet" href="../css/stylesajustes.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
     <link rel="stylesheet" href="../css/button-hover.css" />
     <script defer src="../js/page-transition.js"></script>
+    <script defer src="../js/mobile-nav.js"></script>
   </head>
 
   <body class="dashboard-body">
@@ -128,7 +130,7 @@
             <div class="member">
               <img src="../assets/imagenes/mujer2.png" />
               <div>
-                <p class="name">SofÃ­a</p>
+                <p class="name">Sofía</p>
                 <span>Hermana</span>
               </div>
             </div>
@@ -145,7 +147,7 @@
               <img src="../assets/imagenes/hombre2.png" />
               <div>
                 <p class="name">Alejandro</p>
-                <span>TÃº - Admin</span>
+                <span>Tú - Admin</span>
               </div>
             </div>
           </div>
@@ -178,8 +180,8 @@
             <div class="account">
               <img src="../assets/imagenes/credito.png" />
               <div>
-                <p class="title">CrÃ©dito</p>
-                <span>Tarjeta de CrÃ©dito - Bancolombia</span>
+                <p class="title">Crédito</p>
+                <span>Tarjeta de Crédito - Bancolombia</span>
               </div>
             </div>
 
@@ -195,7 +197,7 @@
 
         <!-- ADMIN -->
         <section class="section">
-          <h3>AdministraciÃ³n de Datos</h3>
+          <h3>Administración de Datos</h3>
 
           <div class="card-box">
             <div class="danger-actions">
@@ -219,7 +221,7 @@
 
                 <p class="danger-text">
                   Elimina definitivamente esta cuenta, sus datos locales y
-                  cierra sesiÃ³n
+                  cierra sesión
                 </p>
 
                 <div class="danger-btn">
@@ -234,11 +236,11 @@
 
         <!-- INFO -->
         <section class="section">
-          <h3>InformaciÃ³n de la app</h3>
+          <h3>Información de la app</h3>
 
           <div class="card-box">
             <div class="inner-card">
-              <p>VersiÃ³n 0.2.3</p>
+              <p>Versión 0.2.3</p>
               <p>Total de transacciones: 13</p>
               <p>Miembros registrados: 4</p>
               <p>Cuentas registradas: 4</p>
@@ -271,14 +273,14 @@
             </div>
             <div class="textosvert" id="ftxt">
               <h4>Tu ecosistema financiero todo en uno.</h4>
-              <h4>Â© 2026. The ClanLedger Team</h4>
+              <h4>© 2026. The ClanLedger Team</h4>
             </div>
           </div>
         </footer>
       </main>
     </div>
 
-    <!-- interacciÃ³n -->
+    <!-- interacción -->
     <div class="modal" id="modalMiembro">
       <div class="modal-content">
         <span class="close" id="cerrarModal">&times;</span>
@@ -429,7 +431,7 @@
         </div>
       </div>
     </div>
-    <!-- interacciÃ³n nueva cuenta-->
+    <!-- interacción nueva cuenta-->
     <!-- MODAL CUENTA -->
     <div class="modal" id="modalCuenta">
       <div class="modal-content">
@@ -466,19 +468,19 @@
           </button>
           <div class="account-type-dropdown">
             <div class="account-type-option selected" data-value="">
-              <span>Tipo cuenta</span><span class="check">âœ“</span>
+              <span>Tipo cuenta</span><span class="check">✓</span>
             </div>
             <div class="account-type-option" data-value="Cuenta de Ahorros">
-              <span>Ahorro</span><span class="check">âœ“</span>
+              <span>Ahorro</span><span class="check">✓</span>
             </div>
             <div class="account-type-option" data-value="Cuenta Corriente">
-              <span>Corriente</span><span class="check">âœ“</span>
+              <span>Corriente</span><span class="check">✓</span>
             </div>
             <div class="account-type-option" data-value="Tarjeta de Credito">
-              <span>Credito</span><span class="check">âœ“</span>
+              <span>Credito</span><span class="check">✓</span>
             </div>
             <div class="account-type-option" data-value="Efectivo">
-              <span>Efectivo</span><span class="check">âœ“</span>
+              <span>Efectivo</span><span class="check">✓</span>
             </div>
           </div>
         </div>
@@ -529,12 +531,12 @@
     <div class="modal" id="modalEliminar">
       <div class="modal-content">
         <h2 style="text-align: center; margin-bottom: 25px">
-          Â¿Seguro que deseas borrar los datos actuales?
+          ¿Seguro que deseas borrar los datos actuales?
         </h2>
 
         <div style="display: flex; justify-content: space-between; gap: 15px">
           <button class="btn" id="confirmarEliminar" style="flex: 1">
-            SÃ­, borrar datos
+            Sí, borrar datos
           </button>
 
           <button class="btn-danger" id="cancelarEliminar" style="flex: 1">
@@ -547,12 +549,12 @@
     <div class="modal" id="modalEliminarCuenta">
       <div class="modal-content">
         <h2 style="text-align: center; margin-bottom: 25px">
-          Â¿Eliminar cuenta y cerrar sesiÃ³n?
+          ¿Eliminar cuenta y cerrar sesión?
         </h2>
 
         <div style="display: flex; justify-content: space-between; gap: 15px">
           <button class="btn" id="confirmarEliminarCuenta" style="flex: 1">
-            SÃ­, eliminar cuenta
+            Sí, eliminar cuenta
           </button>
 
           <button
@@ -573,4 +575,3 @@
     <script src="../js/script.js"></script>
   </body>
 </html>
-
