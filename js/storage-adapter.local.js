@@ -1,3 +1,6 @@
+﻿// ARCHIVO: storage-adapter.local.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
 (function () {
   // TEMP ADAPTER (LOCAL ONLY)
   // Replace this file with SQL/Firebase implementation later.
@@ -11,10 +14,12 @@
   const MODE_KEY = "clanledger_current_mode_v1";
   const SESSION_USER_KEY = "clanledger_current_user_v1";
 
+  // FUNCION: deepClone - explica su proposito, entradas y salida.
   function deepClone(obj) {
     return JSON.parse(JSON.stringify(obj));
   }
 
+  // FUNCION: normalizeSessionId - explica su proposito, entradas y salida.
   function normalizeSessionId(value) {
     return String(value || "")
       .trim()
@@ -23,6 +28,7 @@
       .replace(/^_+|_+$/g, "");
   }
 
+  // FUNCION: getSessionPayload - explica su proposito, entradas y salida.
   function getSessionPayload() {
     try {
       const raw = localStorage.getItem(SESSION_USER_KEY);
@@ -32,6 +38,7 @@
     }
   }
 
+  // FUNCION: getSessionId - explica su proposito, entradas y salida.
   function getSessionId() {
     const session = getSessionPayload();
     const base =
@@ -39,6 +46,7 @@
     return normalizeSessionId(base) || "guest";
   }
 
+  // FUNCION: getMode - explica su proposito, entradas y salida.
   function getMode() {
     try {
       const mode = localStorage.getItem(MODE_KEY);
@@ -48,6 +56,7 @@
     }
   }
 
+  // FUNCION: getStorageKey - explica su proposito, entradas y salida.
   function getStorageKey() {
     const sessionId = getSessionId();
     const mode = getMode();
@@ -57,6 +66,7 @@
     return `${STORAGE_PREFIX}__${sessionId}`;
   }
 
+  // FUNCION: getState - explica su proposito, entradas y salida.
   function getState(defaultState) {
     try {
       const raw = localStorage.getItem(getStorageKey());
@@ -67,11 +77,13 @@
     }
   }
 
+  // FUNCION: saveState - explica su proposito, entradas y salida.
   function saveState(nextState) {
     localStorage.setItem(getStorageKey(), JSON.stringify(nextState));
     return nextState;
   }
 
+  // FUNCION: clearState - explica su proposito, entradas y salida.
   function clearState() {
     localStorage.removeItem(getStorageKey());
   }
@@ -84,3 +96,4 @@
     clearState,
   };
 })();
+

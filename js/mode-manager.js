@@ -1,13 +1,18 @@
+﻿// ARCHIVO: mode-manager.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
 (function () {
   const MODE_KEY = "clanledger_current_mode_v1";
   const VALID_MODES = ["familiar", "personal"];
 
+  // FUNCION: normalizeMode - explica su proposito, entradas y salida.
   function normalizeMode(value) {
     return VALID_MODES.includes(String(value || "").toLowerCase())
       ? String(value).toLowerCase()
       : "familiar";
   }
 
+  // FUNCION: getMode - explica su proposito, entradas y salida.
   function getMode() {
     try {
       return normalizeMode(localStorage.getItem(MODE_KEY));
@@ -16,12 +21,14 @@
     }
   }
 
+  // FUNCION: applyBodyClasses - explica su proposito, entradas y salida.
   function applyBodyClasses(mode) {
     if (!document.body) return;
     document.body.classList.toggle("modo-personal", mode === "personal");
     document.body.classList.toggle("modo-familiar", mode === "familiar");
   }
 
+  // FUNCION: syncToggleUI - explica su proposito, entradas y salida.
   function syncToggleUI(mode) {
     const isPersonal = mode === "personal";
     const personRadio = document.getElementById("view-person");
@@ -31,6 +38,7 @@
     if (familyRadio) familyRadio.checked = !isPersonal;
   }
 
+  // FUNCION: emitModeChange - explica su proposito, entradas y salida.
   function emitModeChange(previousMode, mode) {
     window.dispatchEvent(
       new CustomEvent("clanledger:mode-change", {
@@ -42,6 +50,7 @@
     );
   }
 
+  // FUNCION: setMode - explica su proposito, entradas y salida.
   function setMode(nextMode) {
     const mode = normalizeMode(nextMode);
     const previousMode = getMode();
@@ -71,6 +80,7 @@
     return mode;
   }
 
+  // FUNCION: bindToggleControls - explica su proposito, entradas y salida.
   function bindToggleControls() {
     const personRadio = document.getElementById("view-person");
     const familyRadio = document.getElementById("view-family");
@@ -107,3 +117,4 @@
     bindToggleControls,
   };
 })();
+

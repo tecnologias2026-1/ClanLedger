@@ -1,8 +1,12 @@
+﻿// ARCHIVO: presupuestos.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
 /* =============================================
    TOGGLE: PERSONA / FAMILIAR
    ============================================= */
 let currentView = "person";
 
+// FUNCION: switchView - explica su proposito, entradas y salida.
 function switchView(view) {
   if (view === currentView) return;
   currentView = view;
@@ -48,10 +52,12 @@ let selectedObjectiveMonth = MONTHS[new Date().getMonth()];
 const currentYear = String(new Date().getFullYear());
 let selectedObjectiveYear = currentYear;
 
+// FUNCION: getStore - explica su proposito, entradas y salida.
 function getStore() {
   return window.ClanLedgerStore || null;
 }
 
+// FUNCION: collectObjectivesFromDom - explica su proposito, entradas y salida.
 function collectObjectivesFromDom() {
   return Array.from(
     document.querySelectorAll("#objetivos-grid .budget-item"),
@@ -65,6 +71,7 @@ function collectObjectivesFromDom() {
   }));
 }
 
+// FUNCION: getDropdownDataValues - explica su proposito, entradas y salida.
 function getDropdownDataValues(dropId) {
   const dropdown = document.getElementById(dropId);
   if (!dropdown) return [];
@@ -77,6 +84,7 @@ function getDropdownDataValues(dropId) {
     .filter(Boolean);
 }
 
+// FUNCION: getObjectiveAreasFromState - explica su proposito, entradas y salida.
 function getObjectiveAreasFromState(state) {
   const budgetAreas = Array.isArray(state?.budgets?.objectiveAreas)
     ? state.budgets.objectiveAreas
@@ -88,6 +96,7 @@ function getObjectiveAreasFromState(state) {
   return Array.from(new Set(merged));
 }
 
+// FUNCION: collectCategoriesFromDom - explica su proposito, entradas y salida.
 function collectCategoriesFromDom() {
   return Array.from(
     document.querySelectorAll("#categorias-grid .budget-item"),
@@ -100,6 +109,7 @@ function collectCategoriesFromDom() {
   }));
 }
 
+// FUNCION: renderBudgetDataFromStore - explica su proposito, entradas y salida.
 function renderBudgetDataFromStore() {
   const store = getStore();
   if (!store) return;
@@ -149,6 +159,7 @@ function renderBudgetDataFromStore() {
   }
 }
 
+// FUNCION: getAccountsBudgetTotal - explica su proposito, entradas y salida.
 function getAccountsBudgetTotal() {
   const store = getStore();
   if (!store) return 0;
@@ -159,6 +170,7 @@ function getAccountsBudgetTotal() {
   );
 }
 
+// FUNCION: selectBudgetSource - explica su proposito, entradas y salida.
 function selectBudgetSource(mode, optionEl) {
   const safeMode = mode === "accounts" ? "accounts" : "manual";
   const label =
@@ -167,12 +179,14 @@ function selectBudgetSource(mode, optionEl) {
   onBudgetSourceChange(safeMode);
 }
 
+// FUNCION: onBudgetSourceChange - explica su proposito, entradas y salida.
 function onBudgetSourceChange(mode) {
   budgetSourceMode = mode === "accounts" ? "accounts" : "manual";
   updateBudgetSourceControls();
   updateSummaryCards();
 }
 
+// FUNCION: updateBudgetSourceControls - explica su proposito, entradas y salida.
 function updateBudgetSourceControls() {
   const controls = document.querySelector(".budget-setup-controls");
   const budgetInput = document.getElementById("budget-total-input");
@@ -185,11 +199,12 @@ function updateBudgetSourceControls() {
   if (saveBtn) saveBtn.disabled = usingAccounts;
   if (hint) {
     hint.textContent = usingAccounts
-      ? "Se utiliza automáticamente la suma del balance de todas las cuentas en Ajustes."
+      ? "Se utiliza automÃ¡ticamente la suma del balance de todas las cuentas en Ajustes."
       : "Define manualmente el presupuesto final del mes.";
   }
 }
 
+// FUNCION: persistBudgetDataToStore - explica su proposito, entradas y salida.
 function persistBudgetDataToStore() {
   const store = getStore();
   if (!store) return;
@@ -207,11 +222,13 @@ function persistBudgetDataToStore() {
   });
 }
 
+// FUNCION: openModal - explica su proposito, entradas y salida.
 function openModal(id) {
   document.getElementById("modal-overlay").classList.add("active");
   document.getElementById(id).classList.add("active");
 }
 
+// FUNCION: closeModal - explica su proposito, entradas y salida.
 function closeModal(id) {
   document.getElementById(id).classList.remove("active");
   // Hide overlay only if no other modal is open
@@ -221,6 +238,7 @@ function closeModal(id) {
   }
 }
 
+// FUNCION: closeAllModals - explica su proposito, entradas y salida.
 function closeAllModals() {
   document
     .querySelectorAll(".modal.active")
@@ -231,6 +249,7 @@ function closeAllModals() {
 /* =============================================
    CUSTOM SELECT / DROPDOWN
    ============================================= */
+// FUNCION: toggleDropdown - explica su proposito, entradas y salida.
 function toggleDropdown(dropId, selectId) {
   const dropdown = document.getElementById(dropId);
   const select = document.getElementById(selectId);
@@ -248,6 +267,7 @@ function toggleDropdown(dropId, selectId) {
   }
 }
 
+// FUNCION: closeAllDropdowns - explica su proposito, entradas y salida.
 function closeAllDropdowns() {
   document
     .querySelectorAll(".select-dropdown.open")
@@ -260,6 +280,7 @@ function closeAllDropdowns() {
     .forEach((a) => a.classList.remove("rotated"));
 }
 
+// FUNCION: selectOption - explica su proposito, entradas y salida.
 function selectOption(selectId, value, optionEl) {
   const select = document.getElementById(selectId);
   const display = select.querySelector(".select-display");
@@ -279,7 +300,7 @@ function selectOption(selectId, value, optionEl) {
   optionEl.classList.add("selected");
   const chkImg = document.createElement("img");
   chkImg.src = "../assets/imagenes/Done.png";
-  chkImg.alt = "✓";
+  chkImg.alt = "âœ“";
   chkImg.className = "check-icon";
   optionEl.appendChild(chkImg);
 
@@ -287,6 +308,7 @@ function selectOption(selectId, value, optionEl) {
   closeAllDropdowns();
 }
 
+// FUNCION: ensureCategoryOption - explica su proposito, entradas y salida.
 function ensureCategoryOption(dropId, name) {
   const dropdown = document.getElementById(dropId);
   if (!dropdown) return;
@@ -322,6 +344,7 @@ function ensureCategoryOption(dropId, name) {
   dropdown.insertBefore(option, newCatBtn || null);
 }
 
+// FUNCION: syncCategoryDropdownsFromStore - explica su proposito, entradas y salida.
 function syncCategoryDropdownsFromStore() {
   const dropdown = document.getElementById("drop-pres-cat");
   if (!dropdown) return;
@@ -343,11 +366,12 @@ function syncCategoryDropdownsFromStore() {
   };
   action.innerHTML = `
     <img src="../assets/imagenes/add blue.png" alt="+" class="new-cat-icon" />
-    Crear nueva categoría
+    Crear nueva categorÃ­a
   `;
   dropdown.appendChild(action);
 }
 
+// FUNCION: syncObjectiveAreaDropdownsFromStore - explica su proposito, entradas y salida.
 function syncObjectiveAreaDropdownsFromStore() {
   const store = getStore();
   if (!store) return;
@@ -368,7 +392,7 @@ function syncObjectiveAreaDropdownsFromStore() {
     };
     action.innerHTML = `
       <img src="../assets/imagenes/add blue.png" alt="+" class="new-cat-icon" />
-      Crear nueva área
+      Crear nueva Ã¡rea
     `;
     objectiveDrop.appendChild(action);
   }
@@ -382,6 +406,7 @@ function syncObjectiveAreaDropdownsFromStore() {
 /* =============================================
    CREATE NEW CATEGORY (inline modal)
    ============================================= */
+// FUNCION: createNewCategory - explica su proposito, entradas y salida.
 function createNewCategory(selectId, dropId) {
   pendingCatSelectId = selectId;
   pendingCatDropId = dropId;
@@ -393,16 +418,16 @@ function createNewCategory(selectId, dropId) {
   const btn = document.getElementById("new-item-modal-btn");
   const isArea = pendingCreateType === "area";
 
-  if (title) title.textContent = isArea ? "Nueva Área" : "Nueva Categoría";
+  if (title) title.textContent = isArea ? "Nueva Ãrea" : "Nueva CategorÃ­a";
   if (subtitle) {
     subtitle.textContent = isArea
-      ? "Escribe el nombre de la nueva área"
-      : "Escribe el nombre de la nueva categoría";
+      ? "Escribe el nombre de la nueva Ã¡rea"
+      : "Escribe el nombre de la nueva categorÃ­a";
   }
   if (label) {
-    label.textContent = isArea ? "Nombre del Área" : "Nombre de la Categoría";
+    label.textContent = isArea ? "Nombre del Ãrea" : "Nombre de la CategorÃ­a";
   }
-  if (btn) btn.textContent = isArea ? "Crear Área" : "Crear Categoría";
+  if (btn) btn.textContent = isArea ? "Crear Ãrea" : "Crear CategorÃ­a";
 
   // Open the new-category sub-modal (overlay stays active)
   document.getElementById("modal-nueva-cat").classList.add("active");
@@ -410,6 +435,7 @@ function createNewCategory(selectId, dropId) {
   setTimeout(() => document.getElementById("new-cat-input").focus(), 80);
 }
 
+// FUNCION: cancelNewCategory - explica su proposito, entradas y salida.
 function cancelNewCategory() {
   document.getElementById("modal-nueva-cat").classList.remove("active");
   pendingCatSelectId = null;
@@ -417,6 +443,7 @@ function cancelNewCategory() {
   pendingCreateType = "category";
 }
 
+// FUNCION: confirmNewCategory - explica su proposito, entradas y salida.
 function confirmNewCategory() {
   const input = document.getElementById("new-cat-input");
   const name = input.value.trim();
@@ -481,6 +508,7 @@ function confirmNewCategory() {
 }
 
 /* Enter key on new category input */
+// FUNCION: renderPresupuestosPage - explica su proposito, entradas y salida.
 function renderPresupuestosPage() {
   if (!window.__clanledgerPresupuestosBound) {
     const newCatInput = document.getElementById("new-cat-input");
@@ -567,6 +595,7 @@ document.addEventListener("keydown", function (e) {
    ============================================= */
 let currentEditItem = null;
 
+// FUNCION: calcProgress - explica su proposito, entradas y salida.
 function calcProgress(current, total) {
   const safeCurrent = Math.max(0, Number(current) || 0);
   const safeTotal = Math.max(0, Number(total) || 0);
@@ -582,6 +611,7 @@ function calcProgress(current, total) {
   };
 }
 
+// FUNCION: getObjectiveSavings - explica su proposito, entradas y salida.
 function getObjectiveSavings(itemEl) {
   try {
     return JSON.parse(itemEl.dataset.savings || "{}");
@@ -590,14 +620,17 @@ function getObjectiveSavings(itemEl) {
   }
 }
 
+// FUNCION: setObjectiveSavings - explica su proposito, entradas y salida.
 function setObjectiveSavings(itemEl, savings) {
   itemEl.dataset.savings = JSON.stringify(savings);
 }
 
+// FUNCION: sumObjectiveSavings - explica su proposito, entradas y salida.
 function sumObjectiveSavings(savings) {
   return Object.values(savings).reduce((acc, v) => acc + (Number(v) || 0), 0);
 }
 
+// FUNCION: normalizeObjectiveData - explica su proposito, entradas y salida.
 function normalizeObjectiveData(itemEl) {
   if (!itemEl.dataset.year) {
     itemEl.dataset.year = currentYear;
@@ -614,6 +647,7 @@ function normalizeObjectiveData(itemEl) {
   itemEl.dataset.current = sumObjectiveSavings(getObjectiveSavings(itemEl));
 }
 
+// FUNCION: refreshItemProgress - explica su proposito, entradas y salida.
 function refreshItemProgress(itemEl) {
   if (!itemEl) return;
 
@@ -649,6 +683,7 @@ function refreshItemProgress(itemEl) {
   itemEl.classList.toggle("exceeded", isExceeded);
 }
 
+// FUNCION: refreshAllProgress - explica su proposito, entradas y salida.
 function refreshAllProgress() {
   document
     .querySelectorAll(
@@ -660,6 +695,7 @@ function refreshAllProgress() {
   updateSummaryCards();
 }
 
+// FUNCION: initializeObjectiveMonthState - explica su proposito, entradas y salida.
 function initializeObjectiveMonthState() {
   preselectDropdown("sel-objetivo-mes-filtro", selectedObjectiveYear);
 
@@ -672,11 +708,13 @@ function initializeObjectiveMonthState() {
   syncBudgetInputWithSelectedMonth();
 }
 
+// FUNCION: selectYearFilter - explica su proposito, entradas y salida.
 function selectYearFilter(year, optionEl) {
   selectOption("sel-objetivo-mes-filtro", year, optionEl);
   onYearFilterChange(year);
 }
 
+// FUNCION: onYearFilterChange - explica su proposito, entradas y salida.
 function onYearFilterChange(year) {
   selectedObjectiveYear = year || currentYear;
 
@@ -685,6 +723,7 @@ function onYearFilterChange(year) {
   updateSummaryCards();
 }
 
+// FUNCION: applyObjectiveMonthFilter - explica su proposito, entradas y salida.
 function applyObjectiveMonthFilter() {
   document.querySelectorAll("#objetivos-grid .budget-item").forEach((item) => {
     const itemYear = item.dataset.year || currentYear;
@@ -692,6 +731,7 @@ function applyObjectiveMonthFilter() {
   });
 }
 
+// FUNCION: sumObjectiveMonthlyContributions - explica su proposito, entradas y salida.
 function sumObjectiveMonthlyContributions(month) {
   return Array.from(
     document.querySelectorAll("#objetivos-grid .budget-item"),
@@ -703,6 +743,7 @@ function sumObjectiveMonthlyContributions(month) {
   }, 0);
 }
 
+// FUNCION: sumBy - explica su proposito, entradas y salida.
 function sumBy(selector, field, filterFn) {
   return Array.from(document.querySelectorAll(selector)).reduce((acc, item) => {
     if (filterFn && !filterFn(item)) return acc;
@@ -710,6 +751,7 @@ function sumBy(selector, field, filterFn) {
   }, 0);
 }
 
+// FUNCION: updateSummaryCards - explica su proposito, entradas y salida.
 function updateSummaryCards() {
   const objetivosSelector = "#objetivos-grid .budget-item";
   const categoriasSelector = "#categorias-grid .budget-item";
@@ -755,6 +797,7 @@ function updateSummaryCards() {
   persistBudgetDataToStore();
 }
 
+// FUNCION: syncBudgetInputWithSelectedMonth - explica su proposito, entradas y salida.
 function syncBudgetInputWithSelectedMonth() {
   const budgetInput = document.getElementById("budget-total-input");
   if (!budgetInput) return;
@@ -779,6 +822,7 @@ function syncBudgetInputWithSelectedMonth() {
   );
 }
 
+// FUNCION: saveBudgetTotal - explica su proposito, entradas y salida.
 function saveBudgetTotal() {
   if (budgetSourceMode === "accounts") {
     updateSummaryCards();
@@ -795,10 +839,12 @@ function saveBudgetTotal() {
   updateSummaryCards();
 }
 
+// FUNCION: formatCOP - explica su proposito, entradas y salida.
 function formatCOP(n) {
   return n.toLocaleString("es-CO");
 }
 
+// FUNCION: parseMoneyInputValue - explica su proposito, entradas y salida.
 function parseMoneyInputValue(raw) {
   if (window.ClanLedgerMoneyInput) {
     return window.ClanLedgerMoneyInput.parseValue(raw);
@@ -809,6 +855,7 @@ function parseMoneyInputValue(raw) {
   return Number.isFinite(numeric) ? numeric : 0;
 }
 
+// FUNCION: setMoneyInputValue - explica su proposito, entradas y salida.
 function setMoneyInputValue(inputEl, value) {
   if (!inputEl) return;
   const rounded = Math.round(Number(value) || 0);
@@ -820,6 +867,7 @@ function setMoneyInputValue(inputEl, value) {
 }
 
 // Read the currently selected value from a custom-select
+// FUNCION: getSelectValue - explica su proposito, entradas y salida.
 function getSelectValue(selectId) {
   const el = document.getElementById(selectId);
   if (!el) return "";
@@ -828,6 +876,7 @@ function getSelectValue(selectId) {
 }
 
 // Pre-select a value in a custom-select (used when opening edit modal)
+// FUNCION: preselectDropdown - explica su proposito, entradas y salida.
 function preselectDropdown(selectId, value) {
   const select = document.getElementById(selectId);
   if (!select || !value) return;
@@ -842,13 +891,14 @@ function preselectDropdown(selectId, value) {
       display.textContent = value;
       const chkImg = document.createElement("img");
       chkImg.src = "../assets/imagenes/Done.png";
-      chkImg.alt = "✓";
+      chkImg.alt = "âœ“";
       chkImg.className = "check-icon";
       opt.appendChild(chkImg);
     }
   });
 }
 
+// FUNCION: openEditItem - explica su proposito, entradas y salida.
 function openEditItem(itemEl) {
   currentEditItem = itemEl;
   const isObjective = !!itemEl.closest("#objetivos-grid");
@@ -862,7 +912,7 @@ function openEditItem(itemEl) {
   const period = itemEl.dataset.period || "";
   const area = itemEl.dataset.area || "General";
 
-  document.getElementById("edit-item-title").textContent = "Editar — " + name;
+  document.getElementById("edit-item-title").textContent = "Editar â€” " + name;
   document.getElementById("edit-name").value = name;
   setMoneyInputValue(document.getElementById("edit-current"), current);
   setMoneyInputValue(document.getElementById("edit-total"), total);
@@ -874,14 +924,14 @@ function openEditItem(itemEl) {
   );
   if (!isObjective && period) {
     periodGroup.style.display = "";
-    resetSelect("sel-edit-periodo", "Sin período");
+    resetSelect("sel-edit-periodo", "Sin perÃ­odo");
     preselectDropdown("sel-edit-periodo", period);
     if (objectiveAreaGroup) objectiveAreaGroup.style.display = "none";
   } else {
     periodGroup.style.display = "none";
     if (objectiveAreaGroup) {
       objectiveAreaGroup.style.display = "";
-      resetSelect("sel-edit-obj-area", "Área");
+      resetSelect("sel-edit-obj-area", "Ãrea");
       preselectDropdown("sel-edit-obj-area", area);
     }
   }
@@ -889,10 +939,12 @@ function openEditItem(itemEl) {
   openModal("modal-editar-item");
 }
 
+// FUNCION: syncEditFromAmount - explica su proposito, entradas y salida.
 function syncEditFromAmount() {
   // Allow empty inputs while editing. Empty is interpreted as 0 on save.
 }
 
+// FUNCION: saveEditItem - explica su proposito, entradas y salida.
 function saveEditItem() {
   if (!currentEditItem) return;
 
@@ -908,7 +960,7 @@ function saveEditItem() {
     currentEditItem.dataset.name = newName;
     currentEditItem.querySelector(".item-name").textContent = newName;
     document.getElementById("edit-item-title").textContent =
-      "Editar — " + newName;
+      "Editar â€” " + newName;
   }
 
   // Update data attributes
@@ -942,6 +994,7 @@ function saveEditItem() {
   updateSummaryCards();
 }
 
+// FUNCION: deleteEditItem - explica su proposito, entradas y salida.
 function deleteEditItem() {
   if (!currentEditItem) return;
   const el = currentEditItem;
@@ -959,6 +1012,7 @@ function deleteEditItem() {
 /* =============================================
    ADD NEW OBJECTIVE / CATEGORY CARD
    ============================================= */
+// FUNCION: escapeHtml - explica su proposito, entradas y salida.
 function escapeHtml(str) {
   return str
     .replace(/&/g, "&amp;")
@@ -967,6 +1021,7 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
+// FUNCION: upsertItemBadge - explica su proposito, entradas y salida.
 function upsertItemBadge(itemEl, labelText) {
   let badge = itemEl.querySelector(".item-period");
   if (!badge) {
@@ -977,6 +1032,7 @@ function upsertItemBadge(itemEl, labelText) {
   badge.textContent = labelText;
 }
 
+// FUNCION: buildItemEl - explica su proposito, entradas y salida.
 function buildItemEl(name, current, total, period, year, area) {
   const { pctInt, isExceeded, barPct } = calcProgress(current, total);
 
@@ -1020,6 +1076,7 @@ function buildItemEl(name, current, total, period, year, area) {
   return div;
 }
 
+// FUNCION: resetSelect - explica su proposito, entradas y salida.
 function resetSelect(selectId, placeholder) {
   const select = document.getElementById(selectId);
   if (!select) return;
@@ -1031,6 +1088,7 @@ function resetSelect(selectId, placeholder) {
   });
 }
 
+// FUNCION: addObjetivo - explica su proposito, entradas y salida.
 function addObjetivo() {
   const nameEl = document.getElementById("obj-nombre");
   const metaEl = document.getElementById("obj-meta");
@@ -1049,12 +1107,13 @@ function addObjetivo() {
 
   nameEl.value = "";
   metaEl.value = "";
-  resetSelect("sel-obj-area", "Área");
+  resetSelect("sel-obj-area", "Ãrea");
   preselectDropdown("sel-obj-year", currentYear);
   closeModal("modal-objetivo");
   refreshAllProgress();
 }
 
+// FUNCION: addPresupuesto - explica su proposito, entradas y salida.
 function addPresupuesto() {
   const nameEl = document.getElementById("pres-nombre");
   const limEl = document.getElementById("pres-limite");
@@ -1072,8 +1131,9 @@ function addPresupuesto() {
 
   nameEl.value = "";
   setMoneyInputValue(limEl, 0);
-  resetSelect("sel-pres-cat", "Categoría");
-  resetSelect("sel-periodo", "Elige el período");
+  resetSelect("sel-pres-cat", "CategorÃ­a");
+  resetSelect("sel-periodo", "Elige el perÃ­odo");
   closeModal("modal-presupuesto");
   refreshAllProgress();
 }
+

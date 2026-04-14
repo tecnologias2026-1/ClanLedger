@@ -1,3 +1,6 @@
+﻿/* ARCHIVO: stylesdashboard.css */
+/* DESCRIPCION: Estilos, layout y componentes visuales de esta vista. */
+
 :root {
   --background: #edf0f5;
   --subtitlesecondary: #657185;
@@ -28,7 +31,7 @@ body {
   min-height: 100vh;
 }
 
-/* ── Sidebar ── */
+/* â”€â”€ Sidebar â”€â”€ */
 .sidebar {
   width: 350px;
   background: var(--titlesecondary);
@@ -79,7 +82,7 @@ body {
   padding: 36px 52px 52px;
 }
 
-/* ── Header ── */
+/* â”€â”€ Header â”€â”€ */
 .header {
   display: flex;
   align-items: center;
@@ -98,7 +101,7 @@ body {
   color: var(--subtitlesecondary);
 }
 
-/* ── Toggle persona / familia ── */
+/* â”€â”€ Toggle persona / familia â”€â”€ */
 .user-toggle {
   position: relative;
   display: flex;
@@ -235,7 +238,7 @@ body {
   font-weight: 500;
 }
 
-/* El valor grande: neutro / verde / rojo según el tipo */
+/* El valor grande: neutro / verde / rojo segÃºn el tipo */
 .kpi-value {
   font-size: 24px;
   font-weight: 800;
@@ -255,9 +258,9 @@ body {
   color: var(--subtitlesecondary);
 }
 
-/* ══════════════════════════════
-   FILA DE GRÁFICAS (2 columnas)
-══════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   FILA DE GRÃFICAS (2 columnas)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .charts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -265,14 +268,14 @@ body {
   margin-bottom: 20px;
 }
 
-/* Caja de cada gráfica */
+/* Caja de cada grÃ¡fica */
 .chart-box {
   background: var(--accent);
   border-radius: 16px;
   padding: 20px;
 }
 
-/* Gráfica que ocupa todo el ancho */
+/* GrÃ¡fica que ocupa todo el ancho */
 .chart-box.full-width {
   grid-column: 1 / -1;
   margin-bottom: 20px;
@@ -323,10 +326,10 @@ body {
   color: #ffffff;
 }
 
-/* ══════════════════════════════
-   ÁREA DE GRÁFICA (línea y barras)
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   ÃREA DE GRÃFICA (lÃ­nea y barras)
    Estructura: y-labels | chart-plot
-══════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .chart-area {
   display: flex;
   gap: 8px;
@@ -344,14 +347,14 @@ body {
   padding-bottom: 20px; /* espacio para las etiquetas X */
 }
 
-/* Área donde va el SVG o las barras */
+/* Ãrea donde va el SVG o las barras */
 .chart-plot {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* ── Gráfica de líneas (SVG) ── */
+/* â”€â”€ GrÃ¡fica de lÃ­neas (SVG) â”€â”€ */
 .line-chart .chart-plot svg {
   flex: 1;
   width: 100%;
@@ -366,7 +369,7 @@ body {
   padding: 4px 0;
 }
 
-/* Leyenda de colores debajo de la gráfica */
+/* Leyenda de colores debajo de la grÃ¡fica */
 .chart-legend {
   display: flex;
   gap: 16px;
@@ -573,7 +576,25 @@ body {
   justify-items: center;
 }
 
-#dashboard-category-chart .bar-group {
+#dashboard-personal-category-section {
+  display: none;
+}
+
+#dashboard-personal-category-chart .bars-wrap {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 30px;
+  bottom: -4px;
+  display: grid;
+  grid-template-columns: repeat(var(--bar-count, 4), minmax(0, 1fr));
+  align-items: flex-end;
+  gap: 12px;
+  justify-items: center;
+}
+
+#dashboard-category-chart .bar-group,
+#dashboard-personal-category-chart .bar-group {
   position: relative;
   width: 100%;
   height: 100%;
@@ -584,7 +605,8 @@ body {
   justify-content: flex-end;
 }
 
-#dashboard-category-chart .bar-track {
+#dashboard-category-chart .bar-track,
+#dashboard-personal-category-chart .bar-track {
   width: 100%;
   flex: 1;
   display: flex;
@@ -593,13 +615,15 @@ body {
   height: auto;
 }
 
-#dashboard-category-chart .bar {
+#dashboard-category-chart .bar,
+#dashboard-personal-category-chart .bar {
   width: 100%;
   border-radius: 12px 12px 0 0;
   min-height: 6px;
 }
 
-#dashboard-category-chart .bar-label {
+#dashboard-category-chart .bar-label,
+#dashboard-personal-category-chart .bar-label {
   position: absolute;
   left: 0;
   bottom: 8px;
@@ -612,7 +636,8 @@ body {
   padding: 0 2px;
 }
 
-#dashboard-category-chart .bar-label.is-multiline {
+#dashboard-category-chart .bar-label.is-multiline,
+#dashboard-personal-category-chart .bar-label.is-multiline {
   bottom: -6px;
 }
 
@@ -631,7 +656,7 @@ body {
   background: var(--red);
 }
 
-/* ── Gráfica de barras ── */
+/* â”€â”€ GrÃ¡fica de barras â”€â”€ */
 .bars-wrap {
   flex: 1;
   display: flex;
@@ -687,14 +712,14 @@ body {
   text-align: center;
 }
 
-/* ══════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    PIE CHART (gastos por miembro)
-══════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .pie-section {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto minmax(180px, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 40px;
+  column-gap: 40px;
 }
 
 /* El SVG del pie */
@@ -702,6 +727,7 @@ body {
   width: 180px;
   height: 180px;
   flex-shrink: 0;
+  justify-self: center;
 }
 
 .pie-svg {
@@ -716,6 +742,15 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 180px;
+}
+
+.pie-legend.left {
+  justify-self: end;
+}
+
+.pie-legend.right {
+  justify-self: start;
 }
 
 .pie-legend-item {
@@ -737,16 +772,16 @@ body {
   color: var(--subtitlesecondary);
 }
 
-/* ══════════════════════════════
-   ÚLTIMAS TRANSACCIONES
-══════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   ÃšLTIMAS TRANSACCIONES
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .transacciones-list {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-/* Cada fila de transacción */
+/* Cada fila de transacciÃ³n */
 .tx-item {
   display: flex;
   justify-content: space-between;
@@ -785,9 +820,9 @@ body {
   color: var(--red);
 }
 
-/* ══════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    ESTADO DE PRESUPUESTOS
-══════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .presupuestos-list {
   display: flex;
   flex-direction: column;
@@ -838,10 +873,10 @@ body {
   color: var(--subtitlesecondary);
 }
 
-/* ══════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    FOOTER
-   (mismo patrón que landing y transacciones)
-══════════════════════════════ */
+   (mismo patrÃ³n que landing y transacciones)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 #foot {
   display: flex;
   flex-direction: column;
@@ -870,3 +905,4 @@ body {
   color: var(--subtitlesecondary);
   margin: 4px 0;
 }
+

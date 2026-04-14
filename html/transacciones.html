@@ -1,4 +1,7 @@
-<!doctype html>
+﻿<!doctype html>
+
+<!-- ARCHIVO: transacciones.html -->
+<!-- DESCRIPCION: Estructura y secciones de la vista. -->
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -11,7 +14,7 @@
   </head>
   <body>
     <div class="layout">
-      <!-- ══ SIDEBAR ══ -->
+      <!-- â•â• SIDEBAR â•â• -->
       <aside class="sidebar">
         <div class="sidebar-logo">
           <img src="../assets/imagenes/Logo.png" alt="logo" />
@@ -35,7 +38,7 @@
         >
       </aside>
 
-      <!-- ══ CONTENIDO PRINCIPAL ══ -->
+      <!-- â•â• CONTENIDO PRINCIPAL â•â• -->
       <main class="main-content">
         <!-- Header -->
         <div class="header">
@@ -85,10 +88,10 @@
           </div>
         </div>
 
-        <!-- Botón nueva transacción -->
+        <!-- BotÃ³n nueva transacciÃ³n -->
         <button class="btn-nueva" onclick="abrirModal()">
           <img src="../assets/imagenes/add.png" alt="icono agregar" />
-          Nueva Transacción
+          Nueva TransacciÃ³n
         </button>
         <!-- Filtros -->
         <div class="busqueda">
@@ -97,7 +100,7 @@
             <input
               type="text"
               id="filtro-buscar"
-              placeholder="Búsqueda"
+              placeholder="BÃºsqueda"
               oninput="filtrarCards()"
             />
           </div>
@@ -110,11 +113,11 @@
             </select>
           </div>
           <div class="grupo-filtro">
-            <label>Categoría</label>
+            <label>CategorÃ­a</label>
             <select id="filtro-categoria" onchange="filtrarCards()">
               <option value="">Todas</option>
               <option value="Salario">Salario</option>
-              <option value="Alimentación">Alimentación</option>
+              <option value="AlimentaciÃ³n">AlimentaciÃ³n</option>
               <option value="Ocio">Ocio</option>
               <option value="Extras">Extras</option>
             </select>
@@ -153,20 +156,20 @@
             </div>
             <div class="textosvert" id="ftxt">
               <h4>Tu ecosistema financiero todo en uno.</h4>
-              <h4>© 2026. The ClanLedger Team</h4>
+              <h4>Â© 2026. The ClanLedger Team</h4>
             </div>
           </div>
         </footer>
       </main>
     </div>
 
-    <!-- Nueva Transacción ══ -->
+    <!-- Nueva TransacciÃ³n â•â• -->
     <div class="modal-overlay" id="modal">
       <div class="modal">
         <!-- X para cerrar -->
         <button class="modal-close" onclick="cerrarModal()">&#x2715;</button>
 
-        <h3>Nueva Transacción</h3>
+        <h3>Nueva TransacciÃ³n</h3>
         <p class="modal-subtitle">Registra un nuevo ingreso o gasto</p>
 
         <!-- Formulario con borde azul -->
@@ -174,7 +177,7 @@
           <div class="campo">
             <label>Tipo</label>
             <select id="input-tipo">
-              <option value="" disabled selected>Elige la opción</option>
+              <option value="" disabled selected>Elige la opciÃ³n</option>
               <option value="ingreso">Ingreso</option>
               <option value="gasto">Gasto</option>
             </select>
@@ -186,7 +189,7 @@
           </div>
 
           <div class="campo">
-            <label>Descripción</label>
+            <label>DescripciÃ³n</label>
             <input
               type="text"
               id="input-nombre"
@@ -200,11 +203,11 @@
           </div>
 
           <div class="campo">
-            <label>Categoría</label>
+            <label>CategorÃ­a</label>
             <select id="input-categoria">
               <option value="" disabled selected>Categoria</option>
               <option value="Salario">Salario</option>
-              <option value="Alimentación">Alimentación</option>
+              <option value="AlimentaciÃ³n">AlimentaciÃ³n</option>
               <option value="Ocio">Ocio</option>
               <option value="Extras">Extras</option>
             </select>
@@ -234,7 +237,7 @@
         </div>
 
         <button class="btn-agregar" onclick="guardarTransaccion()">
-          Agregar Transacción
+          Agregar TransacciÃ³n
         </button>
       </div>
     </div>
@@ -244,17 +247,17 @@
         <button class="modal-close" onclick="closeNewCategoryModal()">
           &#x2715;
         </button>
-        <h3>Nueva Categoría</h3>
-        <p class="modal-subtitle">Escribe el nombre de la nueva categoría</p>
+        <h3>Nueva CategorÃ­a</h3>
+        <p class="modal-subtitle">Escribe el nombre de la nueva categorÃ­a</p>
         <div class="campo">
-          <label>Nombre de la Categoría</label>
+          <label>Nombre de la CategorÃ­a</label>
           <input type="text" id="new-cat-input-trans" placeholder="Ej: Salud" />
         </div>
         <button
           class="btn-presupuesto-primary"
           onclick="confirmNewCategoryFromTransactions()"
         >
-          Crear Categoría
+          Crear CategorÃ­a
         </button>
       </div>
     </div>
@@ -264,7 +267,7 @@
     <script src="../js/clanledger-data.js"></script>
     <script src="../js/money-input-format.js"></script>
     <script>
-      // ── Datos iniciales ──
+      // â”€â”€ Datos iniciales â”€â”€
       const SEEDED_TRANSACTIONS_BY_MODE = {
         familiar: [
           {
@@ -283,7 +286,7 @@
             nombre: "Supermercado",
             tipo: "gasto",
             monto: 600000,
-            categoria: "Alimentación",
+            categoria: "AlimentaciÃ³n",
             miembro: "Sofia",
             metodo: "Checking",
             fecha: "20/02/26",
@@ -316,7 +319,7 @@
             nombre: "Cena",
             tipo: "gasto",
             monto: 150000,
-            categoria: "Alimentación",
+            categoria: "AlimentaciÃ³n",
             miembro: "Familia",
             metodo: "Checking",
             fecha: "18/02/26",
@@ -327,7 +330,7 @@
             nombre: "Colegio",
             tipo: "gasto",
             monto: 780000,
-            categoria: "Educación",
+            categoria: "EducaciÃ³n",
             miembro: "Familia",
             metodo: "Checking",
             fecha: "12/04/26",
@@ -421,7 +424,7 @@
           nombre: "Supermercado",
           tipo: "gasto",
           monto: 600000,
-          categoria: "Alimentación",
+          categoria: "AlimentaciÃ³n",
           miembro: "Sofia",
           metodo: "Checking",
           fecha: "20/02/26",
@@ -454,7 +457,7 @@
           nombre: "Cena",
           tipo: "gasto",
           monto: 150000,
-          categoria: "Alimentación",
+          categoria: "AlimentaciÃ³n",
           miembro: "Familia",
           metodo: "Checking",
           fecha: "18/02/26",
@@ -465,7 +468,7 @@
           nombre: "Colegio",
           tipo: "gasto",
           monto: 780000,
-          categoria: "Educación",
+          categoria: "EducaciÃ³n",
           miembro: "Familia",
           metodo: "Checking",
           fecha: "12/04/26",
@@ -661,7 +664,7 @@
           const optEl = document.createElement("div");
           optEl.className = "trans-custom-select-option";
           optEl.dataset.value = opt.value;
-          optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">✓</span>`;
+          optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">âœ“</span>`;
 
           if (opt.disabled) optEl.classList.add("disabled");
           if (opt.selected) optEl.classList.add("selected");
@@ -707,7 +710,7 @@
         if (!select) return;
         const first = allLabel
           ? `<option value="">${allLabel}</option>`
-          : '<option value="" disabled selected>Elige la opción</option>';
+          : '<option value="" disabled selected>Elige la opciÃ³n</option>';
         select.innerHTML =
           first +
           values.map((v) => `<option value="${v}">${v}</option>`).join("");
@@ -720,7 +723,7 @@
         select.innerHTML =
           '<option value="" disabled selected>Categoria</option>' +
           values.map((v) => `<option value="${v}">${v}</option>`).join("") +
-          '<option value="__new__">+ Crear nueva categoría</option>';
+          '<option value="__new__">+ Crear nueva categorÃ­a</option>';
         refreshCustomSelect("input-categoria");
       }
 
@@ -765,7 +768,7 @@
         } else {
           replaceCategoryInputOptions([
             "Salario",
-            "Alimentación",
+            "AlimentaciÃ³n",
             "Ocio",
             "Extras",
           ]);
@@ -889,7 +892,7 @@
         );
       }
 
-      // ── Toggle personal / familiar ──
+      // â”€â”€ Toggle personal / familiar â”€â”€
       // Personal = solo transacciones de Alejandro | Familiar = todas
       document.querySelectorAll(".view-radio").forEach((radio) => {
         radio.addEventListener("change", () => filtrarCards());
@@ -901,7 +904,7 @@
           : "familiar";
       }
 
-      // ── Dibujar las cards en pantalla ──
+      // â”€â”€ Dibujar las cards en pantalla â”€â”€
       function renderCards(lista) {
         const contenedor = document.getElementById("lista-cards");
         contenedor.innerHTML = "";
@@ -938,7 +941,7 @@
         <div class="cardright ${esIngreso ? "pos" : "neg"}">${monto}</div>
       `;
 
-          // El listener va directo al botón, sin pasar por el <img>
+          // El listener va directo al botÃ³n, sin pasar por el <img>
           card
             .querySelector(".del-btn")
             .addEventListener("click", () => eliminar(t.id));
@@ -947,7 +950,7 @@
         });
       }
 
-      // ── Filtrar según los controles y el modo de vista ──
+      // â”€â”€ Filtrar segÃºn los controles y el modo de vista â”€â”€
       function filtrarCards() {
         const buscar = document
           .getElementById("filtro-buscar")
@@ -971,7 +974,7 @@
         renderCards(resultado);
       }
 
-      // ── Eliminar una transacción ──
+      // â”€â”€ Eliminar una transacciÃ³n â”€â”€
       function eliminar(id) {
         const txEliminada = transacciones.find((t) => t.id === id);
         transacciones = transacciones.filter((t) => t.id !== id);
@@ -996,7 +999,7 @@
         filtrarCards();
       }
 
-      // ── Abrir / cerrar modal ──
+      // â”€â”€ Abrir / cerrar modal â”€â”€
       function abrirModal() {
         document.getElementById("modal").classList.add("visible");
       }
@@ -1024,7 +1027,7 @@
           if (e.key === "Escape") closeNewCategoryModal();
         });
 
-      // ── Guardar nueva transacción ──
+      // â”€â”€ Guardar nueva transacciÃ³n â”€â”€
       function guardarTransaccion() {
         const nombre = document.getElementById("input-nombre").value.trim();
         const tipo = document.getElementById("input-tipo").value;
@@ -1110,7 +1113,7 @@
         filtrarCards();
       }
 
-      // ── Al cargar la página, mostrar las transacciones ──
+      // â”€â”€ Al cargar la pÃ¡gina, mostrar las transacciones â”€â”€
       if (window.ClanLedgerMoneyInput) {
         window.ClanLedgerMoneyInput.attach(
           document.getElementById("input-monto"),
@@ -1140,3 +1143,4 @@
     </script>
   </body>
 </html>
+

@@ -1,7 +1,10 @@
+﻿// ARCHIVO: dashboard.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
+// FUNCION: renderDashboardPage - arma la vista principal y la adapta al modo personal o familiar.
 function renderDashboardPage() {
   const store = window.ClanLedgerStore;
   if (!store) return;
-  let dashboardTrendHoverData = null;
   const MONTHS = store.MONTHS || [
     "Enero",
     "Febrero",
@@ -28,10 +31,30 @@ function renderDashboardPage() {
   const memberPieTitle = document.querySelector(
     "#member-period-switch",
   )?.previousElementSibling;
+  const memberPieSection = document.getElementById(
+    "dashboard-member-pie-section",
+  );
+  const personalCategorySection = document.getElementById(
+    "dashboard-personal-category-section",
+  );
+  const memberLegendItems = document.querySelectorAll(
+    "#dashboard-member-pie-section .pie-legend-item",
+  );
+  const pieSvg = document.querySelector(
+    "#dashboard-member-pie-section .pie-svg",
+  );
+  const personalCategoryLegendItems = document.querySelectorAll(
+    "#dashboard-personal-category-section .pie-legend-item",
+  );
+  const personalCategoryPieSvg = document.querySelector(
+    "#dashboard-personal-category-section .personal-category-pie-svg",
+  );
 
   if (memberPieTitle) {
     memberPieTitle.textContent =
-      currentMode === "personal" ? "Gastos" : "Gastos por miembro";
+      currentMode === "personal"
+        ? "Distribucion de gastos por categoria"
+        : "Gastos por miembro";
   }
 
   const fechaActual = document.getElementById("fecha-actual");
@@ -96,14 +119,15 @@ function renderDashboardPage() {
     });
   }
 
-  function renderCategoryChart(gastosTx) {
-    const wrap = document.querySelector("#dashboard-category-chart .bars-wrap");
-    const yAxis = document.querySelector(
-      "#dashboard-category-chart .category-y-axis",
-    );
+  // FUNCION: renderCategoryBars - agrupa gastos por categoria y pinta el top visual.
+  function renderCategoryBars(chartId, gastosTx, maxBars = 4) {
+    const root = document.getElementById(chartId);
+    const wrap = root ? root.querySelector(".bars-wrap") : null;
+    const yAxis = root ? root.querySelector(".category-y-axis") : null;
     if (!wrap || !yAxis) return;
 
     const byCategory = {};
+    // Acumula cada gasto en su categoria antes de ordenar el ranking.
     gastosTx.forEach((tx) => {
       const category = tx.categoria || "Sin categoria";
       byCategory[category] =
@@ -112,7 +136,7 @@ function renderDashboardPage() {
 
     const entries = Object.entries(byCategory)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 4);
+      .slice(0, maxBars);
     const safeEntries = entries.length ? entries : [["Sin datos", 0]];
     const max = safeEntries.reduce((acc, [, value]) => Math.max(acc, value), 0);
     const colors = ["red", "blue", "orange", "green"];
@@ -151,18 +175,21 @@ function renderDashboardPage() {
       .join("");
   }
 
-  renderCategoryChart(expenseTx);
+  renderCategoryBars("dashboard-category-chart", expenseTx, 4);
 
+  // FUNCION: monthKey - crea una clave YYYY-MM para agrupar por mes sin ambiguedades.
   function monthKey(year, month) {
     return `${year}-${String(month + 1).padStart(2, "0")}`;
   }
 
+  // FUNCION: mapValueToY - convierte montos a coordenadas verticales del grafico.
   function mapValueToY(value, maxValue) {
     const denom = Math.max(maxValue, 1);
     const y = 50 - (Math.max(0, value) / denom) * 48;
     return Math.max(2, Math.min(49, y));
   }
 
+  // FUNCION: toPoints - traduce una serie numérica a puntos de polyline SVG.
   function toPoints(values, maxValue) {
     if (!values.length) return "";
     return values
@@ -174,11 +201,13 @@ function renderDashboardPage() {
       .join(" ");
   }
 
+  // FUNCION: toSingleMonthLine - dibuja una linea estable cuando solo hay un mes visible.
   function toSingleMonthLine(value, maxValue) {
     const y = mapValueToY(value, maxValue).toFixed(2);
     return `0,${y} 98,${y}`;
   }
 
+  // FUNCION: getNiceMax - redondea el maximo para que las escalas sean faciles de leer.
   function getNiceMax(value) {
     if (value <= 0) return 1;
     const magnitude = 10 ** Math.floor(Math.log10(value));
@@ -190,6 +219,7 @@ function renderDashboardPage() {
     return nice * magnitude;
   }
 
+  // FUNCION: formatAxisValue - resume cantidades grandes en K/M para los ejes.
   function formatAxisValue(v) {
     if (v <= 0) return "0";
     if (v >= 1000000) {
@@ -203,6 +233,7 @@ function renderDashboardPage() {
     return String(Math.round(v));
   }
 
+  // FUNCION: computeDashboardTrend - consolida ingresos y egresos de los ultimos 6 meses.
   function computeDashboardTrend(tx) {
     const windowMonths = [-5, -4, -3, -2, -1, 0].map((offset) => {
       const d = new Date(currentYear, monthIndex + offset, 1);
@@ -219,6 +250,7 @@ function renderDashboardPage() {
       points.map((slot, idx) => [monthKey(slot.year, slot.monthIndex), idx]),
     );
 
+    // Solo contamos movimientos que caen dentro de la ventana visible.
     tx.forEach((item) => {
       const d = parseTxDate(item);
       if (!d) return;
@@ -236,6 +268,7 @@ function renderDashboardPage() {
     };
   }
 
+  // FUNCION: ensureDashboardTrendHover - sincroniza tooltip y puntos con la linea activa.
   function ensureDashboardTrendHover(lineSeries, svg) {
     let tooltip = document.getElementById("dashboard-trend-tooltip");
     if (!tooltip) {
@@ -261,13 +294,11 @@ function renderDashboardPage() {
 
     if (!svg.dataset.hoverBound) {
       svg.addEventListener("mousemove", (e) => {
-        if (
-          !dashboardTrendHoverData ||
-          dashboardTrendHoverData.months.length === 0
-        )
-          return;
+        const hoverData = svg.__dashboardTrendHoverData;
+        if (!hoverData || hoverData.months.length === 0) return;
 
         const rect = svg.getBoundingClientRect();
+        // Calcula el mes mas cercano al cursor usando la X relativa.
         const relX = Math.max(
           0,
           Math.min(100, ((e.clientX - rect.left) / rect.width) * 100),
@@ -275,7 +306,7 @@ function renderDashboardPage() {
 
         let idx = 0;
         let minDist = Number.POSITIVE_INFINITY;
-        dashboardTrendHoverData.xValues.forEach((x, i) => {
+        hoverData.xValues.forEach((x, i) => {
           const dist = Math.abs(relX - x);
           if (dist < minDist) {
             minDist = dist;
@@ -283,9 +314,9 @@ function renderDashboardPage() {
           }
         });
 
-        const cx = dashboardTrendHoverData.xValues[idx];
-        const cyIn = dashboardTrendHoverData.yIngresos[idx];
-        const cyOut = dashboardTrendHoverData.yEgresos[idx];
+        const cx = hoverData.xValues[idx];
+        const cyIn = hoverData.yIngresos[idx];
+        const cyOut = hoverData.yEgresos[idx];
         const xPx = (cx / 100) * lineSeries.clientWidth;
         const yInPx = (cyIn / 50) * lineSeries.clientHeight;
         const yOutPx = (cyOut / 50) * lineSeries.clientHeight;
@@ -298,9 +329,9 @@ function renderDashboardPage() {
         outDot.style.top = `${yOutPx}px`;
         outDot.style.display = "block";
 
-        const month = dashboardTrendHoverData.months[idx].monthName;
-        const inValue = dashboardTrendHoverData.ingresos[idx];
-        const outValue = dashboardTrendHoverData.egresos[idx];
+        const month = hoverData.months[idx].monthName;
+        const inValue = hoverData.ingresos[idx];
+        const outValue = hoverData.egresos[idx];
         tooltip.textContent = `${month} | Ingresos: $${store.formatCOP(inValue)} | Egresos: $${store.formatCOP(outValue)}`;
         tooltip.style.display = "block";
 
@@ -329,6 +360,7 @@ function renderDashboardPage() {
     }
   }
 
+  // FUNCION: renderDashboardTrend - pinta la serie temporal y deja listo el hover interactivo.
   function renderDashboardTrend(tx) {
     const root = document.getElementById("dashboard-trend");
     if (!root) return;
@@ -339,6 +371,7 @@ function renderDashboardPage() {
     if (!lineSeries || !svg || !yAxis || !xAxis) return;
 
     const { months, ingresos, egresos } = computeDashboardTrend(tx);
+    // Ajusta la escala al volumen actual para que la linea no quede aplastada.
     const maxValue = Math.max(...ingresos, ...egresos, 0);
     const chartMax = getNiceMax(Math.max(1, maxValue * 1.1));
 
@@ -347,7 +380,7 @@ function renderDashboardPage() {
     );
     const yIngresos = ingresos.map((v) => mapValueToY(v, chartMax));
     const yEgresos = egresos.map((v) => mapValueToY(v, chartMax));
-    dashboardTrendHoverData = {
+    svg.__dashboardTrendHoverData = {
       months,
       ingresos,
       egresos,
@@ -393,9 +426,7 @@ function renderDashboardPage() {
 
   renderDashboardTrend(state.transactions || []);
 
-  const memberLegendItems = document.querySelectorAll(".pie-legend-item");
-  const pieSvg = document.querySelector(".pie-svg");
-
+  // FUNCION: parseTxDate - interpreta fechas ISO o dd/mm/yy para filtrar por mes.
   function parseTxDate(tx) {
     if (tx.dateISO) {
       const d = new Date(tx.dateISO);
@@ -408,6 +439,7 @@ function renderDashboardPage() {
     return null;
   }
 
+  // FUNCION: getPeriodWindow - devuelve la ventana temporal segun el periodo elegido.
   function getPeriodWindow(periodKey) {
     if (periodKey === "anio") {
       return Array.from({ length: 12 }, (_, idx) => ({
@@ -424,35 +456,70 @@ function renderDashboardPage() {
     return [{ year: currentYear, monthIndex }];
   }
 
+  // FUNCION: getPeriodExpenseTransactions - limita el analisis a gastos dentro del rango activo.
+  function getPeriodExpenseTransactions(periodKey) {
+    const windowMonths = getPeriodWindow(periodKey);
+    const allowed = new Set(
+      windowMonths.map((w) => monthKey(w.year, w.monthIndex)),
+    );
+    return expenseTx.filter((tx) => {
+      const d = parseTxDate(tx);
+      if (!d) return false;
+      return allowed.has(monthKey(d.getFullYear(), d.getMonth()));
+    });
+  }
+
+  // FUNCION: normalizeLabel - quita acentos y espacios para comparar nombres de forma segura.
+  function normalizeLabel(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+  }
+
+  // FUNCION: getMemberColor - conserva un color estable para cada miembro en los graficos.
   function getMemberColor(memberName, idx) {
     const map = {
       Fernando: "#be3232",
       Ana: "#f59e0b",
       Sofia: "#3b82f6",
-      Sofía: "#3b82f6",
+      SofiaAlt: "#3b82f6",
       Alejandro: "#249a40",
       Familia: "#6d5ce7",
     };
     const fromState = (state.members || []).find((m) => m.name === memberName);
+    const normalizedName = normalizeLabel(memberName);
     return (
       fromState?.color ||
-      map[memberName] ||
+      map[normalizedName] ||
       ["#be3232", "#3b82f6", "#f59e0b", "#249a40"][idx % 4]
     );
   }
 
+  // FUNCION: getCategoryColor - asigna un color estable a cada categoria del pie personal.
+  function getCategoryColor(categoryName, idx) {
+    const map = {
+      Educacion: "#c33b56",
+      EducacionAlt: "#c33b56",
+      Alimentacion: "#395bd6",
+      AlimentacionAlt: "#395bd6",
+      Vivienda: "#e17b3c",
+      Transportes: "#1f8f49",
+      Transporte: "#1f8f49",
+    };
+    const normalizedName = normalizeLabel(categoryName);
+    return (
+      map[normalizedName] ||
+      ["#c33b56", "#395bd6", "#e17b3c", "#1f8f49"][idx % 4]
+    );
+  }
+
+  // FUNCION: renderMemberPie - transforma los gastos por miembro en un pie actualizado.
   function renderMemberPie(periodKey) {
     if (memberLegendItems.length < 4 || !pieSvg) return;
 
-    const windowMonths = getPeriodWindow(periodKey);
-    const allowed = new Set(
-      windowMonths.map((w) => monthKey(w.year, w.monthIndex)),
-    );
-    const filtered = expenseTx.filter((tx) => {
-      const d = parseTxDate(tx);
-      if (!d) return false;
-      return allowed.has(monthKey(d.getFullYear(), d.getMonth()));
-    });
+    const filtered = getPeriodExpenseTransactions(periodKey);
+    // Agrupa por miembro para calcular porcentaje y asignar color.
 
     const byMember = {};
     filtered.forEach((tx) => {
@@ -504,10 +571,89 @@ function renderDashboardPage() {
     });
   }
 
-  renderMemberPie("mes");
+  // FUNCION: renderPersonalCategoryPie - dibuja el pie de categorias cuando el modo es personal.
+  function renderPersonalCategoryPie(periodKey) {
+    if (personalCategoryLegendItems.length < 4 || !personalCategoryPieSvg)
+      return;
+
+    const filtered = getPeriodExpenseTransactions(periodKey);
+    // Agrupa por categoria para representar la distribucion de gastos del periodo.
+
+    const byCategory = {};
+    filtered.forEach((tx) => {
+      const category = tx.categoria || "Sin categoria";
+      byCategory[category] =
+        (byCategory[category] || 0) + (Number(tx.monto) || 0);
+    });
+
+    const entries = Object.entries(byCategory)
+      .filter(([, value]) => value > 0)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 4);
+    const total = entries.reduce((acc, [, value]) => acc + value, 0);
+
+    personalCategoryLegendItems.forEach((item, idx) => {
+      const data = entries[idx];
+      if (!data) {
+        item.style.display = "none";
+        return;
+      }
+
+      item.style.display = "";
+      const [name, value] = data;
+      const pct = total > 0 ? Math.round((value / total) * 100) : 0;
+      const color = getCategoryColor(name, idx);
+      const nameEl = item.querySelector(".pie-legend-name");
+      const valueEl = item.querySelector(".pie-legend-value");
+
+      if (nameEl) {
+        nameEl.style.color = color;
+        nameEl.textContent = `${name} (${pct}%)`;
+      }
+      if (valueEl) valueEl.textContent = `$${store.formatCOP(value)}`;
+    });
+
+    const circles = Array.from(
+      personalCategoryPieSvg.querySelectorAll("circle"),
+    );
+    let offset = 0;
+    circles.forEach((circle, idx) => {
+      const data = entries[idx];
+      if (!data || total <= 0) {
+        circle.setAttribute("stroke", "transparent");
+        circle.setAttribute("stroke-dasharray", "0 100");
+        circle.setAttribute("stroke-dashoffset", "0");
+        return;
+      }
+
+      const [name, value] = data;
+      const pct = (value / total) * 100;
+      circle.setAttribute("stroke", getCategoryColor(name, idx));
+      circle.setAttribute("stroke-dasharray", `${pct} ${100 - pct}`);
+      circle.setAttribute("stroke-dashoffset", `${-offset}`);
+      offset += pct;
+    });
+  }
+
+  // FUNCION: renderDistributionByMode - alterna entre pie por miembro y pie por categoria.
+  const renderDistributionByMode = (period) => {
+    if (currentMode === "personal") {
+      if (memberPieSection) memberPieSection.style.display = "none";
+      if (personalCategorySection)
+        personalCategorySection.style.display = "block";
+      renderPersonalCategoryPie(period);
+      return;
+    }
+
+    if (memberPieSection) memberPieSection.style.display = "grid";
+    if (personalCategorySection) personalCategorySection.style.display = "none";
+    renderMemberPie(period);
+  };
+
+  renderDistributionByMode("mes");
 
   if (memberPeriodSwitch) {
-    memberPeriodSwitch.__renderMemberPie = renderMemberPie;
+    memberPeriodSwitch.__renderByMode = renderDistributionByMode;
 
     if (!memberPeriodSwitch.dataset.bound) {
       memberPeriodSwitch.addEventListener("click", (e) => {
@@ -519,7 +665,7 @@ function renderDashboardPage() {
           .forEach((el) => el.classList.remove("active"));
         btn.classList.add("active");
 
-        const renderer = memberPeriodSwitch.__renderMemberPie;
+        const renderer = memberPeriodSwitch.__renderByMode;
         if (typeof renderer === "function") {
           renderer(period);
         }

@@ -1,4 +1,7 @@
-/* ESTILOS GENERALES DE TODA LA PÁGINA */
+﻿/* ARCHIVO: styles.css */
+/* DESCRIPCION: Estilos, layout y componentes visuales de esta vista. */
+
+/* ESTILOS GENERALES DE TODA LA PÃGINA */
 :root {
   --background: #dee1e6;
   --subtitlesecondary: #657185;
@@ -11,7 +14,7 @@
 body{
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Arial,
-    sans-serif; /* tipo de letra de toda la página */
+    sans-serif; /* tipo de letra de toda la pÃ¡gina */
 margin:0; /* elimina el margen que los navegadores ponen por defecto */
 background:#f5f5f5; /* color de fondo gris claro */
 
@@ -40,25 +43,25 @@ padding:20px 80px; /* espacio interno arriba/abajo y lados */
 display:flex; /* coloca el logo y el texto en una fila */
 align-items:center; /* alinea verticalmente el logo y el texto */
 gap:10px; /* espacio entre el logo y el texto */
-font-size:28px; /* tamaño del texto del logo */
-font-weight:bold; /* hace el texto más grueso */
+font-size:28px; /* tamaÃ±o del texto del logo */
+font-weight:bold; /* hace el texto mÃ¡s grueso */
 color:#1c2340; /* color del texto */
 }
 
 
-/* TAMAÑO DEL LOGO */
+/* TAMAÃ‘O DEL LOGO */
 .logo-img{
 height:50px; /* altura del logo */
 }
 
 
-/* CONTENEDOR PRINCIPAL DE LA PÁGINA (donde está el formulario) */
+/* CONTENEDOR PRINCIPAL DE LA PÃGINA (donde estÃ¡ el formulario) */
 .container{
 flex:1; /* ocupa todo el espacio disponible entre header y footer */
 display:flex; /* activa flexbox */
 justify-content:center; /* centra horizontalmente el formulario */
 align-items:center; /* centra verticalmente el formulario */
-padding:10px; /* pequeño espacio interno */
+padding:10px; /* pequeÃ±o espacio interno */
 }
 
 
@@ -71,10 +74,10 @@ width:100%;
 max-width:680px; /* ancho ajustado para que no force el scroll */
 
 
-/* SOMBRA MEJORADA MÁS SUAVE */
+/* SOMBRA MEJORADA MÃS SUAVE */
 box-shadow:0 8px 20px rgba(0,0,0,0.1); 
 
-/* ANIMACIÓ*/
+/* ANIMACIÃ“*/
 transition:0.2s ease;
 display: flex;
 flex-direction: column;
@@ -82,7 +85,7 @@ align-items: center; /* centra todo el contenido */
 
 }
 .login-box {
-    max-width: 400px; /* Esto hace que el Login sea más angosto que el Registro */
+    max-width: 400px; /* Esto hace que el Login sea mÃ¡s angosto que el Registro */
 }
 
 /* TITULO DEL FORMULARIO */
@@ -115,7 +118,7 @@ box-sizing: border-box; /* asegura que el padding no agrande el input */
 }
 
 
-/* BOTÓN DE REGISTRO / LOGIN */
+/* BOTÃ“N DE REGISTRO / LOGIN */
 .register{
 margin-top:15px; 
 width:auto;
@@ -129,21 +132,21 @@ font-size:14px;
 font-weight: bold;
 cursor:pointer; 
 transition:0.3s;
-display: block;    /* Permite que el botón acepte márgenes automáticos */
+display: block;    /* Permite que el botÃ³n acepte mÃ¡rgenes automÃ¡ticos */
 margin-left: auto;  /* Empuja desde la izquierda */
 margin-right: auto; /* Empuja desde la derecha */
     width: auto;        /* Para que no ocupe todo el ancho si no quieres */
-min-width: 180px;   /* Mantiene un tamaño elegante como en Figma */
+min-width: 180px;   /* Mantiene un tamaÃ±o elegante como en Figma */
 }
 
 
-/* FOOTER (parte inferior de la página) */
+/* FOOTER (parte inferior de la pÃ¡gina) */
 .footer{
 padding:10px 80px 20px 80px; /* reducido para evitar scroll */
 background: #f5f5f5;
 }
 
-/* LÍNEA DEL FOOTER: Simple y no tan larga */
+/* LÃNEA DEL FOOTER: Simple y no tan larga */
 .footer-line {
 border: 0;
 border-top: 1px solid #ccc;
@@ -180,7 +183,7 @@ color:#999;
 margin-top:2px;
 }
 
-/* GÉNERO (Para el registro) */
+/* GÃ‰NERO (Para el registro) */
 .gender{
 display:flex; 
 gap:8px; 

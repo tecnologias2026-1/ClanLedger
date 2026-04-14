@@ -1,3 +1,6 @@
+﻿// ARCHIVO: page-transition.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
 (function () {
   const ENTER_CLASS = "pt-ready";
   const LOADING_CLASS = "pt-loading";
@@ -7,10 +10,12 @@
   const root = document.documentElement;
   root.classList.add(LOADING_CLASS);
 
+  // FUNCION: isModifiedClick - explica su proposito, entradas y salida.
   function isModifiedClick(event) {
     return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
   }
 
+  // FUNCION: shouldHandleLink - explica su proposito, entradas y salida.
   function shouldHandleLink(link, event) {
     if (!link || event.defaultPrevented) return false;
     if (event.button !== 0 || isModifiedClick(event)) return false;
@@ -36,6 +41,7 @@
 
   let leaving = false;
 
+  // FUNCION: navigateWithFade - explica su proposito, entradas y salida.
   function navigateWithFade(url) {
     if (leaving) return;
     leaving = true;
@@ -68,3 +74,4 @@
     true,
   );
 })();
+

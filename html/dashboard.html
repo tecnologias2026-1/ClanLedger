@@ -1,4 +1,7 @@
-<!doctype html>
+﻿<!doctype html>
+
+<!-- ARCHIVO: dashboard.html -->
+<!-- DESCRIPCION: Estructura y secciones de la vista. -->
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -11,7 +14,7 @@
   </head>
   <body>
     <div class="layout">
-      <!-- ══ SIDEBAR ══ -->
+      <!-- â•â• SIDEBAR â•â• -->
       <aside class="sidebar">
         <div class="sidebar-logo">
           <img src="../assets/imagenes/Logo.png" alt="logo" />
@@ -36,9 +39,9 @@
         >
       </aside>
 
-      <!-- ══ CONTENIDO PRINCIPAL ══ -->
+      <!-- â•â• CONTENIDO PRINCIPAL â•â• -->
       <main class="main-content">
-        <!-- ══ HEADER ══ -->
+        <!-- â•â• HEADER â•â• -->
         <div class="header">
           <div>
             <h2>Dashboard</h2>
@@ -86,7 +89,7 @@
           </div>
         </div>
 
-        <!-- ══ TARJETAS KPI ══ -->
+        <!-- â•â• TARJETAS KPI â•â• -->
         <div class="kpi-grid">
           <div class="kpi-card">
             <span class="kpi-label">Ahorro Acumulado</span>
@@ -99,7 +102,7 @@
             <span class="kpi-note">+2.5% vs mes anterior</span>
           </div>
           <div class="kpi-card">
-            <span class="kpi-label">Subtítulo 2</span>
+            <span class="kpi-label">SubtÃ­tulo 2</span>
             <span class="kpi-value red">$7.420.000</span>
             <span class="kpi-note">+6% vs mes anterior</span>
           </div>
@@ -110,7 +113,7 @@
           </div>
         </div>
 
-        <!-- ══ FILA DE GRÁFICAS: Tendencia + Gastos por categoría ══ -->
+        <!-- â•â• FILA DE GRÃFICAS: Tendencia + Gastos por categorÃ­a â•â• -->
         <div class="charts-row">
           <!-- Tendencia mensual -->
           <div class="chart-box">
@@ -153,9 +156,9 @@
             </div>
           </div>
 
-          <!-- Gastos por categoría (barras) -->
+          <!-- Gastos por categorÃ­a (barras) -->
           <div class="chart-box">
-            <h3 class="chart-title">Gastos por categoría</h3>
+            <h3 class="chart-title">Gastos por categorÃ­a</h3>
             <div class="category-surface" id="dashboard-category-chart">
               <div class="category-y-axis">
                 <span>5M</span>
@@ -171,7 +174,7 @@
           </div>
         </div>
 
-        <!-- ══ GASTOS POR MIEMBRO (pie chart) ══ -->
+        <!-- â•â• GASTOS POR MIEMBRO (pie chart) â•â• -->
         <div class="chart-box full-width">
           <div class="chart-title-row">
             <h3 class="chart-title">Gastos por miembro</h3>
@@ -187,11 +190,11 @@
                 3 meses
               </button>
               <button type="button" class="period-btn" data-period="anio">
-                Año
+                AÃ±o
               </button>
             </div>
           </div>
-          <div class="pie-section">
+          <div class="pie-section" id="dashboard-member-pie-section">
             <!-- Leyenda izquierda -->
             <div class="pie-legend left">
               <div class="pie-legend-item">
@@ -259,7 +262,7 @@
             <div class="pie-legend right">
               <div class="pie-legend-item right">
                 <span class="pie-legend-name" style="color: #3b82f6"
-                  >Sofía (27%)</span
+                  >SofÃ­a (27%)</span
                 >
                 <span class="pie-legend-value">$945.000</span>
               </div>
@@ -271,13 +274,94 @@
               </div>
             </div>
           </div>
+          <div id="dashboard-personal-category-section">
+            <div class="pie-section">
+              <div class="pie-legend left">
+                <div class="pie-legend-item">
+                  <span class="pie-legend-name" style="color: #c33b56"
+                    >Educacion (0%)</span
+                  >
+                  <span class="pie-legend-value">$0</span>
+                </div>
+                <div class="pie-legend-item">
+                  <span class="pie-legend-name" style="color: #395bd6"
+                    >Alimentacion (0%)</span
+                  >
+                  <span class="pie-legend-value">$0</span>
+                </div>
+              </div>
+
+              <div class="pie-wrap">
+                <svg
+                  viewBox="0 0 32 32"
+                  class="pie-svg personal-category-pie-svg"
+                >
+                  <circle
+                    r="16"
+                    cx="16"
+                    cy="16"
+                    fill="transparent"
+                    stroke="#c33b56"
+                    stroke-width="32"
+                    stroke-dasharray="0 100"
+                    stroke-dashoffset="0"
+                  />
+                  <circle
+                    r="16"
+                    cx="16"
+                    cy="16"
+                    fill="transparent"
+                    stroke="#395bd6"
+                    stroke-width="32"
+                    stroke-dasharray="0 100"
+                    stroke-dashoffset="0"
+                  />
+                  <circle
+                    r="16"
+                    cx="16"
+                    cy="16"
+                    fill="transparent"
+                    stroke="#e17b3c"
+                    stroke-width="32"
+                    stroke-dasharray="0 100"
+                    stroke-dashoffset="0"
+                  />
+                  <circle
+                    r="16"
+                    cx="16"
+                    cy="16"
+                    fill="transparent"
+                    stroke="#1f8f49"
+                    stroke-width="32"
+                    stroke-dasharray="0 100"
+                    stroke-dashoffset="0"
+                  />
+                </svg>
+              </div>
+
+              <div class="pie-legend right">
+                <div class="pie-legend-item right">
+                  <span class="pie-legend-name" style="color: #e17b3c"
+                    >Vivienda (0%)</span
+                  >
+                  <span class="pie-legend-value">$0</span>
+                </div>
+                <div class="pie-legend-item right">
+                  <span class="pie-legend-name" style="color: #1f8f49"
+                    >Transportes (0%)</span
+                  >
+                  <span class="pie-legend-value">$0</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- ══ FILA INFERIOR: Últimas transacciones + Estado de presupuestos ══ -->
+        <!-- â•â• FILA INFERIOR: Ãšltimas transacciones + Estado de presupuestos â•â• -->
         <div class="charts-row">
-          <!-- Últimas transacciones -->
+          <!-- Ãšltimas transacciones -->
           <div class="chart-box">
-            <h3 class="chart-title">Últimas transacciones</h3>
+            <h3 class="chart-title">Ãšltimas transacciones</h3>
             <div class="transacciones-list">
               <div class="tx-item">
                 <div class="tx-info">
@@ -290,7 +374,7 @@
               <div class="tx-item">
                 <div class="tx-info">
                   <span class="tx-nombre">Supermercado</span>
-                  <span class="tx-meta">Ana - Alimentación</span>
+                  <span class="tx-meta">Ana - AlimentaciÃ³n</span>
                 </div>
                 <span class="tx-monto neg">-$400.000</span>
               </div>
@@ -314,7 +398,7 @@
               <div class="tx-item">
                 <div class="tx-info">
                   <span class="tx-nombre">Freelance</span>
-                  <span class="tx-meta">Sofía - Salario</span>
+                  <span class="tx-meta">SofÃ­a - Salario</span>
                 </div>
                 <span class="tx-monto pos">+$600.000</span>
               </div>
@@ -327,7 +411,7 @@
             <div class="presupuestos-list">
               <div class="pres-item">
                 <div class="pres-header">
-                  <span class="pres-nombre">Alimentación</span>
+                  <span class="pres-nombre">AlimentaciÃ³n</span>
                   <span class="pres-pct">60%</span>
                 </div>
                 <div class="progress-bar">
@@ -380,7 +464,7 @@
           </div>
         </div>
 
-        <!-- ══ FOOTER ══ -->
+        <!-- â•â• FOOTER â•â• -->
         <footer>
           <div class="footer" id="foot">
             <hr class="divisor" />
@@ -389,7 +473,7 @@
             </div>
             <div class="textosvert" id="ftxt">
               <h4>Tu ecosistema financiero todo en uno.</h4>
-              <h4>© 2026. The ClanLedger Team</h4>
+              <h4>Â© 2026. The ClanLedger Team</h4>
             </div>
           </div>
         </footer>
@@ -402,3 +486,4 @@
     <script src="../js/dashboard.js"></script>
   </body>
 </html>
+

@@ -1,7 +1,10 @@
+﻿// ARCHIVO: reportes.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
+// FUNCION: renderReportesPage - construye los reportes con filtros, tendencias y pies segun el modo.
 function renderReportesPage() {
   const store = window.ClanLedgerStore;
   if (!store) return;
-  let trendHoverData = null;
 
   const MONTHS = store.MONTHS || [
     "Enero",
@@ -47,12 +50,14 @@ function renderReportesPage() {
   const TREND_ZOOM_LEVELS = [1, 1.5, 2, 3, 4, 6, 8, 12, 16, 24];
   let trendZoomIndex = 0;
 
+  // FUNCION: closeAllCustomSelects - cierra cualquier selector visual abierto para evitar solapamientos.
   function closeAllCustomSelects() {
     document.querySelectorAll(".report-custom-select.open").forEach((el) => {
       el.classList.remove("open");
     });
   }
 
+  // FUNCION: refreshCustomSelect - convierte un <select> nativo en un dropdown visual consistente.
   function refreshCustomSelect(selectId) {
     const select = document.getElementById(selectId);
     if (!select) return;
@@ -99,7 +104,7 @@ function renderReportesPage() {
       const optEl = document.createElement("div");
       optEl.className = "report-custom-select-option";
       optEl.dataset.value = opt.value;
-      optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">✓</span>`;
+      optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">âœ“</span>`;
 
       if (opt.disabled) optEl.classList.add("disabled");
       if (opt.selected) optEl.classList.add("selected");
@@ -133,10 +138,12 @@ function renderReportesPage() {
     select.parentElement.appendChild(wrapper);
   }
 
+  // FUNCION: initializeCustomSelects - prepara los filtros visuales de periodo, mes y miembro.
   function initializeCustomSelects() {
     CUSTOM_FILTER_IDS.forEach((id) => refreshCustomSelect(id));
   }
 
+  // FUNCION: applyMemberFilterVisibility - oculta el filtro de miembro cuando el modo no lo necesita.
   function applyMemberFilterVisibility() {
     const mode = window.ClanLedgerModeManager?.getMode?.() || "familiar";
     const isPersonal = mode === "personal";
@@ -180,6 +187,7 @@ function renderReportesPage() {
     refreshCustomSelect("filter-mes-analisis");
   }
 
+  // FUNCION: normalizePeriodKey - convierte el texto visible del periodo en una clave interna.
   function normalizePeriodKey(value) {
     const raw = String(value || "")
       .toLowerCase()
@@ -190,6 +198,7 @@ function renderReportesPage() {
     return "este-mes";
   }
 
+  // FUNCION: getSelectedMonthIndex - toma el mes de analisis o usa el mes actual como respaldo.
   function getSelectedMonthIndex() {
     const fallback = new Date().getMonth();
     if (!monthAnalysisSelect) return fallback;
@@ -198,15 +207,18 @@ function renderReportesPage() {
     return value;
   }
 
+  // FUNCION: addMonthOffset - desplaza un mes hacia adelante o atras conservando el anio correcto.
   function addMonthOffset(year, monthIndex, offset) {
     const d = new Date(year, monthIndex + offset, 1);
     return { year: d.getFullYear(), monthIndex: d.getMonth() };
   }
 
+  // FUNCION: monthKey - genera una llave YYYY-MM para cruzar periodos y transacciones.
   function monthKey(year, monthIndex) {
     return `${year}-${String(monthIndex + 1).padStart(2, "0")}`;
   }
 
+  // FUNCION: getTrendWindow - define que meses entran a la grafica segun el periodo activo.
   function getTrendWindow(periodKey, selectedMonthIndex) {
     const currentYear = new Date().getFullYear();
 
@@ -226,6 +238,7 @@ function renderReportesPage() {
     return [{ year: currentYear, monthIndex: selectedMonthIndex }];
   }
 
+  // FUNCION: parseTxDate - interpreta la fecha de la transaccion para poder agrupar por mes.
   function parseTxDate(tx) {
     if (tx.dateISO) {
       const d = new Date(tx.dateISO);
@@ -238,6 +251,7 @@ function renderReportesPage() {
     return null;
   }
 
+  // FUNCION: computeMonthlyTrend - suma ingresos y egresos por mes para la linea de tendencia.
   function computeMonthlyTrend(tx, windowMonths, keepAllMonths) {
     const points = windowMonths.map((slot) => ({
       ...slot,
@@ -283,6 +297,7 @@ function renderReportesPage() {
     return { months, ingresos, egresos };
   }
 
+  // FUNCION: getMonthSummary - calcula ingresos, gastos y balance para un mes concreto.
   function getMonthSummary(tx, year, monthIndex) {
     let ingresos = 0;
     let gastos = 0;
@@ -297,6 +312,7 @@ function renderReportesPage() {
     return { ingresos, gastos, balance: ingresos - gastos };
   }
 
+  // FUNCION: getVariationText - muestra la variacion porcentual frente al mes previo.
   function getVariationText(currentValue, previousValue) {
     if (previousValue === 0) {
       if (currentValue === 0) return "0% vs mes anterior";
@@ -309,11 +325,13 @@ function renderReportesPage() {
     return `${sign}${rounded}% vs mes anterior`;
   }
 
+  // FUNCION: formatCurrency - formatea montos en COP con signo positivo o negativo.
   function formatCurrency(value) {
     const amount = Math.round(Math.abs(Number(value) || 0));
     return `${value < 0 ? "-$" : "$"}${store.formatCOP(amount)}`;
   }
 
+  // FUNCION: setKpiTone - pinta el KPI en verde, rojo o neutro segun el signo.
   function setKpiTone(valueEl, value) {
     if (!valueEl) return;
     valueEl.classList.remove("green", "red", "primary");
@@ -322,10 +340,12 @@ function renderReportesPage() {
     else valueEl.classList.add("primary");
   }
 
+  // FUNCION: getTrendZoom - retorna el nivel de zoom actualmente seleccionado.
   function getTrendZoom() {
     return TREND_ZOOM_LEVELS[trendZoomIndex];
   }
 
+  // FUNCION: updateZoomUI - sincroniza botones y etiqueta del zoom con el estado actual.
   function updateZoomUI() {
     const trendZoom = getTrendZoom();
     if (zoomValueLabel)
@@ -336,6 +356,7 @@ function renderReportesPage() {
     }
   }
 
+  // FUNCION: syncTrendScroll - mantiene alineados el area grafica y el eje X al desplazar.
   function syncTrendScroll(lineSeries, xAxis) {
     if (!lineSeries || !xAxis || lineSeries.dataset.scrollBound) return;
 
@@ -350,11 +371,13 @@ function renderReportesPage() {
     lineSeries.dataset.scrollBound = "1";
   }
 
+  // FUNCION: getTrendDotRadiusPx - ajusta el tamano del punto segun el zoom para que no estorbe.
   function getTrendDotRadiusPx() {
     const zoom = getTrendZoom();
     return Math.max(6, 8 - Math.log2(zoom + 1) * 0.45);
   }
 
+  // FUNCION: toPoints - convierte una serie de valores en puntos SVG para la linea.
   function toPoints(values, maxValue) {
     if (!values.length) return "";
     return values
@@ -366,17 +389,20 @@ function renderReportesPage() {
       .join(" ");
   }
 
+  // FUNCION: toSingleMonthLine - dibuja una linea plana cuando solo existe un dato.
   function toSingleMonthLine(value, maxValue) {
     const y = mapValueToY(value, maxValue).toFixed(2);
     return `0,${y} 98,${y}`;
   }
 
+  // FUNCION: mapValueToY - convierte un valor numérico a coordenada vertical del SVG.
   function mapValueToY(value, maxValue) {
     const denom = Math.max(maxValue, 1);
     const y = 50 - (Math.max(0, value) / denom) * 48;
     return Math.max(2, Math.min(49, y));
   }
 
+  // FUNCION: formatAxisValue - abrevia etiquetas grandes en K/M para lectura rapida.
   function formatAxisValue(v) {
     if (v <= 0) return "0";
     if (v >= 1000000) {
@@ -390,6 +416,7 @@ function renderReportesPage() {
     return String(Math.round(v));
   }
 
+  // FUNCION: getNiceMax - calcula una escala superior redondeada para los ejes.
   function getNiceMax(value) {
     if (value <= 0) return 1;
     const magnitude = 10 ** Math.floor(Math.log10(value));
@@ -401,6 +428,7 @@ function renderReportesPage() {
     return nice * magnitude;
   }
 
+  // FUNCION: setBarChartYAxis - dibuja las marcas del eje Y para graficas de barras.
   function setBarChartYAxis(chartId, maxValue) {
     const yAxis = document.querySelector(`${chartId} .y-axis-labels`);
     if (!yAxis) return;
@@ -413,6 +441,7 @@ function renderReportesPage() {
       .join("");
   }
 
+  // FUNCION: renderBarsChart - pinta rankings de barras y recalcula el eje Y.
   function renderBarsChart(chartId, entries) {
     const wrap = document.querySelector(`${chartId} .bars-wrap`);
     if (!wrap) return;
@@ -449,6 +478,7 @@ function renderReportesPage() {
     setBarChartYAxis(chartId, max);
   }
 
+  // FUNCION: getPieColorForCategory - asigna un color estable a cada categoria del pie.
   function getPieColorForCategory(category) {
     if (!pieColorByCategory[category]) {
       pieColorByCategory[category] =
@@ -458,6 +488,7 @@ function renderReportesPage() {
     return pieColorByCategory[category];
   }
 
+  // FUNCION: renderPieChart - construye el pie de gastos por categoria y su leyenda.
   function renderPieChart(gastos) {
     const pieChart = document.querySelector("#chart-distribucion .pie-chart");
     const pieLegend = document.querySelector("#chart-distribucion .pie-legend");
@@ -514,6 +545,7 @@ function renderReportesPage() {
     }
   }
 
+  // FUNCION: ensureTrendHoverElements - prepara tooltip y puntos flotantes del hover.
   function ensureTrendHoverElements(lineSeries, svg) {
     let tooltip = document.getElementById("trend-tooltip-floating");
     if (!tooltip) {
@@ -548,9 +580,11 @@ function renderReportesPage() {
 
     if (!svg.dataset.hoverBound) {
       svg.addEventListener("mousemove", (e) => {
-        if (!trendHoverData || trendHoverData.months.length === 0) return;
+        const hoverData = svg.__trendHoverData;
+        if (!hoverData || hoverData.months.length === 0) return;
 
         const rect = svg.getBoundingClientRect();
+        // Tomamos la posicion relativa para seleccionar el punto mas cercano.
         const relX = Math.max(
           0,
           Math.min(100, ((e.clientX - rect.left) / rect.width) * 100),
@@ -558,7 +592,7 @@ function renderReportesPage() {
 
         let idx = 0;
         let minDist = Number.POSITIVE_INFINITY;
-        trendHoverData.xValues.forEach((x, i) => {
+        hoverData.xValues.forEach((x, i) => {
           const dist = Math.abs(relX - x);
           if (dist < minDist) {
             minDist = dist;
@@ -566,9 +600,9 @@ function renderReportesPage() {
           }
         });
 
-        const cx = trendHoverData.xValues[idx];
-        const cyIn = trendHoverData.yIngresos[idx];
-        const cyOut = trendHoverData.yEgresos[idx];
+        const cx = hoverData.xValues[idx];
+        const cyIn = hoverData.yIngresos[idx];
+        const cyOut = hoverData.yEgresos[idx];
 
         const dotRadius = getTrendDotRadiusPx();
         const dotSize = dotRadius * 2;
@@ -593,9 +627,9 @@ function renderReportesPage() {
         outDot.style.top = `${Math.max(dotRadius, Math.min(lineSeries.clientHeight - dotRadius, outYPx))}px`;
         outDot.style.display = "block";
 
-        const month = trendHoverData.months[idx].monthName;
-        const inValue = trendHoverData.ingresos[idx];
-        const outValue = trendHoverData.egresos[idx];
+        const month = hoverData.months[idx].monthName;
+        const inValue = hoverData.ingresos[idx];
+        const outValue = hoverData.egresos[idx];
         tooltip.textContent = `${month} | Ingresos: $${store.formatCOP(inValue)} | Egresos: $${store.formatCOP(outValue)}`;
         tooltip.style.display = "block";
 
@@ -626,6 +660,7 @@ function renderReportesPage() {
     }
   }
 
+  // FUNCION: renderTrendChart - actualiza la tendencia segun filtros, zoom y periodo.
   function renderTrendChart(tx, windowMonths) {
     const trendRoot = document.querySelector("#chart-tendencia");
     if (!trendRoot) return;
@@ -658,6 +693,7 @@ function renderReportesPage() {
       xAxisTrack.style.width = `${contentWidth}px`;
       xAxisTrack.style.minWidth = `${contentWidth}px`;
     }
+    // Ajusta la escala para que la linea conserve detalle con mas o menos datos.
     const maxValue = Math.max(...ingresos, ...egresos, 0);
     const chartMax = getNiceMax(Math.max(1, (maxValue * 1.1) / trendZoom));
     const xValues = months.map((_, i) =>
@@ -665,7 +701,7 @@ function renderReportesPage() {
     );
     const yIngresos = ingresos.map((v) => mapValueToY(v, chartMax));
     const yEgresos = egresos.map((v) => mapValueToY(v, chartMax));
-    trendHoverData = {
+    svg.__trendHoverData = {
       months,
       ingresos,
       egresos,
@@ -716,6 +752,7 @@ function renderReportesPage() {
     }
   }
 
+  // FUNCION: render - recalcula toda la vista de reportes con el estado actual.
   function render() {
     const state = store.getState();
     const selectedMonthIndex = getSelectedMonthIndex();

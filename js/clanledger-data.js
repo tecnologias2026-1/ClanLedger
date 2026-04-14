@@ -1,8 +1,12 @@
+﻿// ARCHIVO: clanledger-data.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
 (function () {
   // TEMP ADAPTER BRIDGE
   // Swap adapter implementation (local/backend) without touching store logic.
   const MODE_KEY = "clanledger_current_mode_v1";
 
+  // FUNCION: getCurrentMode - explica su proposito, entradas y salida.
   function getCurrentMode() {
     try {
       const mode =
@@ -15,6 +19,7 @@
     }
   }
 
+  // FUNCION: createFallbackAdapter - explica su proposito, entradas y salida.
   function createFallbackAdapter() {
     const STORAGE_KEY_PREFIX = "clanledger_state_v1";
     return {
@@ -59,6 +64,7 @@
   const storageAdapter =
     window.ClanLedgerStorageAdapter || createFallbackAdapter();
 
+  // FUNCION: createFamilyDefaultState - explica su proposito, entradas y salida.
   function createFamilyDefaultState() {
     const monthNames = [
       "Enero",
@@ -122,7 +128,7 @@
           nombre: "Mercado quincenal",
           tipo: "gasto",
           monto: 690000,
-          categoria: "Alimentación",
+          categoria: "AlimentaciÃ³n",
           miembro: "Ana",
           metodo: "Checking",
           fecha: "24/02/26",
@@ -155,7 +161,7 @@
           nombre: "Colegio",
           tipo: "gasto",
           monto: 780000,
-          categoria: "Educación",
+          categoria: "EducaciÃ³n",
           miembro: "Familia",
           metodo: "Checking",
           fecha: "12/04/26",
@@ -197,11 +203,11 @@
             },
           },
         ],
-        objectiveAreas: ["Hogar", "Educación", "Viajes", "Salud"],
+        objectiveAreas: ["Hogar", "EducaciÃ³n", "Viajes", "Salud"],
         categories: [
           {
             id: 1,
-            name: "Alimentación",
+            name: "AlimentaciÃ³n",
             current: 690000,
             total: 1300000,
             period: "Mensual",
@@ -228,6 +234,7 @@
     };
   }
 
+  // FUNCION: createPersonalDefaultState - explica su proposito, entradas y salida.
   function createPersonalDefaultState() {
     const currentYear = String(new Date().getFullYear());
     return {
@@ -341,7 +348,12 @@
             savings: { Abril: 1250000 },
           },
         ],
-        objectiveAreas: ["Desarrollo personal", "Hogar", "Viajes", "Educación"],
+        objectiveAreas: [
+          "Desarrollo personal",
+          "Hogar",
+          "Viajes",
+          "EducaciÃ³n",
+        ],
         categories: [
           {
             id: 1,
@@ -372,12 +384,14 @@
     };
   }
 
+  // FUNCION: getDefaultStateForMode - devuelve el estado base correcto para cada modo.
   function getDefaultStateForMode(mode) {
     return mode === "personal"
       ? createPersonalDefaultState()
       : createFamilyDefaultState();
   }
 
+  // FUNCION: includesName - detecta coincidencias por nombre ignorando mayusculas y espacios.
   function includesName(items, name) {
     const target = String(name || "")
       .trim()
@@ -390,6 +404,7 @@
     );
   }
 
+  // FUNCION: normalizeModeBudgetState - evita que se mezclen objetivos y categorias entre modos.
   function normalizeModeBudgetState(nextState, mode, defaults) {
     const objectives = nextState?.budgets?.objectives || [];
     const categories = nextState?.budgets?.categories || [];
@@ -447,10 +462,12 @@
     "Diciembre",
   ];
 
+  // FUNCION: deepClone - crea copias independientes para no mutar el estado base.
   function deepClone(obj) {
     return JSON.parse(JSON.stringify(obj));
   }
 
+  // FUNCION: mergeDefaults - completa el estado guardado con campos nuevos de los defaults.
   function mergeDefaults(target, defaults) {
     Object.keys(defaults).forEach((key) => {
       const defVal = defaults[key];
@@ -470,10 +487,12 @@
     return target;
   }
 
+  // FUNCION: formatCOP - formatea numeros en estilo colombiano para mostrar montos.
   function formatCOP(value) {
     return (Number(value) || 0).toLocaleString("es-CO");
   }
 
+  // FUNCION: parseTransactionDate - interpreta la fecha de una transaccion para calcular periodos.
   function parseTransactionDate(tx) {
     if (tx.dateISO) {
       const d = new Date(tx.dateISO);
@@ -487,9 +506,11 @@
     return null;
   }
 
+  // FUNCION: applyDerivedData - recalcula totales de categorias a partir de las transacciones.
   function applyDerivedData(state) {
     const categories = state.budgets.categories || [];
     if (categories.length > 0) {
+      // Solo las categorias existentes reciben el gasto acumulado del periodo.
       const spendingByCategory = {};
       state.transactions.forEach((tx) => {
         if (tx.tipo !== "gasto") return;
@@ -506,6 +527,7 @@
     return state;
   }
 
+  // FUNCION: loadState - carga el estado actual del almacenamiento segun el modo activo.
   function loadState() {
     try {
       const currentMode = getCurrentMode();
@@ -520,6 +542,7 @@
 
   let state = applyDerivedData(loadState());
 
+  // FUNCION: saveState - normaliza, recalcula derivados y persiste el estado final.
   function saveState(nextState) {
     const currentMode = getCurrentMode();
     const defaults = getDefaultStateForMode(currentMode);
@@ -531,25 +554,30 @@
     return state;
   }
 
+  // FUNCION: reloadForCurrentMode - recarga el estado cuando el usuario cambia de modo.
   function reloadForCurrentMode() {
     state = applyDerivedData(loadState());
     return getState();
   }
 
+  // FUNCION: setState - aplica una mutacion controlada sobre una copia del estado.
   function setState(updater) {
     const draft = deepClone(state);
     const updated = updater(draft) || draft;
     return saveState(updated);
   }
 
+  // FUNCION: getState - devuelve una copia segura del estado actual.
   function getState() {
     return deepClone(state);
   }
 
+  // FUNCION: getCurrentMonthName - obtiene el mes actual como etiqueta en espanol.
   function getCurrentMonthName() {
     return MONTHS[new Date().getMonth()];
   }
 
+  // FUNCION: computeFinancials - calcula ingresos, gastos, ahorro y balance por mes o miembro.
   function computeFinancials(opts) {
     const options = opts || {};
     const monthName = options.monthName || getCurrentMonthName();
@@ -594,6 +622,7 @@
     };
   }
 
+  // FUNCION: addCategoryIfMissing - agrega una categoria solo si aun no existe en el modo actual.
   function addCategoryIfMissing(name) {
     const clean = String(name || "").trim();
     if (!clean) return false;

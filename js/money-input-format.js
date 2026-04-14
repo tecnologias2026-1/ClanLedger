@@ -1,4 +1,8 @@
+﻿// ARCHIVO: money-input-format.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
 (function () {
+  // FUNCION: parseValue - explica su proposito, entradas y salida.
   function parseValue(raw) {
     const text = String(raw == null ? "" : raw).trim();
     if (!text) return 0;
@@ -12,12 +16,14 @@
     return isNegative ? -numeric : numeric;
   }
 
+  // FUNCION: formatInputValue - explica su proposito, entradas y salida.
   function formatInputValue(raw) {
     const value = parseValue(raw);
     const abs = Math.abs(value).toLocaleString("es-CO");
     return value < 0 ? `-${abs}` : abs;
   }
 
+  // FUNCION: attach - explica su proposito, entradas y salida.
   function attach(inputEl) {
     if (!inputEl) return;
 
@@ -26,6 +32,7 @@
     }
     inputEl.setAttribute("inputmode", "numeric");
 
+    // FUNCION: reformat - explica su proposito, entradas y salida.
     const reformat = function () {
       const value = String(inputEl.value || "").trim();
       if (!value || value === "-") return;
@@ -40,6 +47,7 @@
     }
   }
 
+  // FUNCION: attachByIds - explica su proposito, entradas y salida.
   function attachByIds(ids) {
     if (!Array.isArray(ids)) return;
     ids.forEach((id) => attach(document.getElementById(id)));
@@ -52,3 +60,4 @@
     attachByIds,
   };
 })();
+

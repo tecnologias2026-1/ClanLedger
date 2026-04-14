@@ -1,4 +1,7 @@
-<!doctype html>
+﻿<!doctype html>
+
+<!-- ARCHIVO: presupuestos.html -->
+<!-- DESCRIPCION: Estructura y secciones de la vista. -->
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -120,7 +123,7 @@
                   <span>Usar balance de cuentas</span>
                   <img
                     src="../assets/imagenes/Done.png"
-                    alt="✓"
+                    alt="âœ“"
                     class="check-icon"
                   />
                 </div>
@@ -198,7 +201,7 @@
                     )
                   "
                 >
-                  <span class="select-display">Año</span>
+                  <span class="select-display">AÃ±o</span>
                   <img
                     src="../assets/imagenes/keyboard_arrow_down_gris.png"
                     alt=""
@@ -288,10 +291,10 @@
           </div>
         </section>
 
-        <!-- ===== CATEGORÍAS ===== -->
+        <!-- ===== CATEGORÃAS ===== -->
         <section class="section">
           <div class="section-header">
-            <h2 class="section-title">Categorías</h2>
+            <h2 class="section-title">CategorÃ­as</h2>
             <button
               class="btn-primary"
               onclick="openModal('modal-presupuesto')"
@@ -304,13 +307,13 @@
             <div class="items-grid" id="categorias-grid">
               <div
                 class="budget-item"
-                data-name="Alimentación"
+                data-name="AlimentaciÃ³n"
                 data-current="600000"
                 data-total="1000000"
                 data-period="Mensual"
               >
                 <div class="item-header">
-                  <span class="item-name">Alimentación</span>
+                  <span class="item-name">AlimentaciÃ³n</span>
                   <div class="item-header-right">
                     <span class="item-percent">60%</span>
                     <button
@@ -399,7 +402,7 @@
             </div>
             <div class="textosvert" id="ftxt">
               <h4>Tu ecosistema financiero todo en uno.</h4>
-              <h4>© 2026. The ClanLedger Team</h4>
+              <h4>Â© 2026. The ClanLedger Team</h4>
             </div>
           </div>
         </footer>
@@ -419,7 +422,7 @@
         <div>
           <h3 class="modal-title">Nuevo Objetivo</h3>
           <p class="modal-subtitle">
-            Establece un objetivo a alcanzar y asígnale un área
+            Establece un objetivo a alcanzar y asÃ­gnale un Ã¡rea
           </p>
         </div>
         <button class="modal-close" onclick="closeModal('modal-objetivo')">
@@ -443,13 +446,13 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Área</label>
+          <label>Ãrea</label>
           <div class="custom-select" id="sel-obj-area">
             <div
               class="select-header"
               onclick="toggleDropdown('drop-obj-area', 'sel-obj-area')"
             >
-              <span class="select-display">Área</span>
+              <span class="select-display">Ãrea</span>
               <img
                 src="../assets/imagenes/keyboard_arrow_down_gris.png"
                 alt=""
@@ -479,9 +482,9 @@
               </div>
               <div
                 class="select-option"
-                onclick="selectOption('sel-obj-area', 'Educación', this)"
+                onclick="selectOption('sel-obj-area', 'EducaciÃ³n', this)"
               >
-                <span>Educación</span>
+                <span>EducaciÃ³n</span>
               </div>
               <div
                 class="select-option new-cat-opt"
@@ -492,19 +495,19 @@
                   alt="+"
                   class="new-cat-icon"
                 />
-                Crear nueva área
+                Crear nueva Ã¡rea
               </div>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <label>Año del Objetivo</label>
+          <label>AÃ±o del Objetivo</label>
           <div class="custom-select" id="sel-obj-year">
             <div
               class="select-header"
               onclick="toggleDropdown('drop-obj-year', 'sel-obj-year')"
             >
-              <span class="select-display">Elige el año</span>
+              <span class="select-display">Elige el aÃ±o</span>
               <img
                 src="../assets/imagenes/keyboard_arrow_down_gris.png"
                 alt=""
@@ -547,7 +550,7 @@
         <div>
           <h3 class="modal-title">Nuevo Presupuesto</h3>
           <p class="modal-subtitle">
-            Establece un límite de gasto para una categoría
+            Establece un lÃ­mite de gasto para una categorÃ­a
           </p>
         </div>
         <button class="modal-close" onclick="closeModal('modal-presupuesto')">
@@ -560,17 +563,17 @@
           <input
             type="text"
             id="pres-nombre"
-            placeholder="Ej: Gasto en alimentación"
+            placeholder="Ej: Gasto en alimentaciÃ³n"
           />
         </div>
         <div class="form-group">
-          <label>Categoría</label>
+          <label>CategorÃ­a</label>
           <div class="custom-select" id="sel-pres-cat">
             <div
               class="select-header"
               onclick="toggleDropdown('drop-pres-cat', 'sel-pres-cat')"
             >
-              <span class="select-display">Categoría</span>
+              <span class="select-display">CategorÃ­a</span>
               <img
                 src="../assets/imagenes/keyboard_arrow_down_gris.png"
                 alt=""
@@ -586,9 +589,9 @@
               </div>
               <div
                 class="select-option"
-                onclick="selectOption('sel-pres-cat', 'Alimentación', this)"
+                onclick="selectOption('sel-pres-cat', 'AlimentaciÃ³n', this)"
               >
-                <span>Alimentación</span>
+                <span>AlimentaciÃ³n</span>
               </div>
               <div
                 class="select-option"
@@ -611,13 +614,13 @@
                   alt="+"
                   class="new-cat-icon"
                 />
-                Crear nueva categoría
+                Crear nueva categorÃ­a
               </div>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <label>Límite de Gasto</label>
+          <label>LÃ­mite de Gasto</label>
           <div class="input-suffix-wrap">
             <input
               type="number"
@@ -636,7 +639,7 @@
               class="select-header"
               onclick="toggleDropdown('drop-periodo', 'sel-periodo')"
             >
-              <span class="select-display">Elige el período</span>
+              <span class="select-display">Elige el perÃ­odo</span>
               <img
                 src="../assets/imagenes/keyboard_arrow_down_gris.png"
                 alt=""
@@ -673,7 +676,7 @@
         <div>
           <h3 class="modal-title" id="edit-item-title">Editar</h3>
           <p class="modal-subtitle">
-            Modifica el valor actual y la meta o límite
+            Modifica el valor actual y la meta o lÃ­mite
           </p>
         </div>
         <button class="modal-close" onclick="closeModal('modal-editar-item')">
@@ -683,7 +686,7 @@
       <div class="modal-body">
         <div class="form-group">
           <label>Nombre</label>
-          <input type="text" id="edit-name" placeholder="Nombre del ítem" />
+          <input type="text" id="edit-name" placeholder="Nombre del Ã­tem" />
         </div>
         <div class="form-group">
           <label>Valor Actual ($)</label>
@@ -698,7 +701,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Meta / Límite ($)</label>
+          <label>Meta / LÃ­mite ($)</label>
           <div class="input-suffix-wrap">
             <input
               type="number"
@@ -710,13 +713,13 @@
           </div>
         </div>
         <div class="form-group" id="edit-period-group">
-          <label>Período</label>
+          <label>PerÃ­odo</label>
           <div class="custom-select" id="sel-edit-periodo">
             <div
               class="select-header"
               onclick="toggleDropdown('drop-edit-periodo', 'sel-edit-periodo')"
             >
-              <span class="select-display">Sin período</span>
+              <span class="select-display">Sin perÃ­odo</span>
               <img
                 src="../assets/imagenes/keyboard_arrow_down_gris.png"
                 alt=""
@@ -744,7 +747,7 @@
           id="edit-objective-area-group"
           style="display: none"
         >
-          <label>Área</label>
+          <label>Ãrea</label>
           <div class="custom-select" id="sel-edit-obj-area">
             <div
               class="select-header"
@@ -752,7 +755,7 @@
                 toggleDropdown('drop-edit-obj-area', 'sel-edit-obj-area')
               "
             >
-              <span class="select-display">Área</span>
+              <span class="select-display">Ãrea</span>
               <img
                 src="../assets/imagenes/keyboard_arrow_down_gris.png"
                 alt=""
@@ -774,13 +777,13 @@
       </div>
     </div>
 
-    <!-- ===== MODAL: NUEVA CATEGORÍA ===== -->
+    <!-- ===== MODAL: NUEVA CATEGORÃA ===== -->
     <div class="modal modal-sm" id="modal-nueva-cat">
       <div class="modal-header">
         <div>
-          <h3 class="modal-title" id="new-item-modal-title">Nueva Categoría</h3>
+          <h3 class="modal-title" id="new-item-modal-title">Nueva CategorÃ­a</h3>
           <p class="modal-subtitle" id="new-item-modal-subtitle">
-            Escribe el nombre de la nueva categoría
+            Escribe el nombre de la nueva categorÃ­a
           </p>
         </div>
         <button class="modal-close" onclick="cancelNewCategory()">
@@ -789,13 +792,13 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label id="new-item-modal-label">Nombre de la Categoría</label>
+          <label id="new-item-modal-label">Nombre de la CategorÃ­a</label>
           <input type="text" id="new-cat-input" placeholder="Ej: Salud" />
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn-primary full-width" onclick="confirmNewCategory()">
-          <span id="new-item-modal-btn">Crear Categoría</span>
+          <span id="new-item-modal-btn">Crear CategorÃ­a</span>
         </button>
       </div>
     </div>
@@ -807,3 +810,4 @@
     <script src="../js/presupuestos.js"></script>
   </body>
 </html>
+

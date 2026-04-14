@@ -1,3 +1,6 @@
+﻿// ARCHIVO: script.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
 document.addEventListener("DOMContentLoaded", () => {
   const store = window.ClanLedgerStore;
   if (!store) return;
@@ -99,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     efectivo: "../assets/imagenes/efectivo.png",
   };
 
+  // FUNCION: readSessionUser - explica su proposito, entradas y salida.
   function readSessionUser() {
     try {
       const raw = localStorage.getItem(SESSION_USER_KEY);
@@ -108,15 +112,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // FUNCION: writeSessionUser - explica su proposito, entradas y salida.
   function writeSessionUser(session) {
     if (!session) return;
     localStorage.setItem(SESSION_USER_KEY, JSON.stringify(session));
   }
 
+  // FUNCION: clearSessionUser - explica su proposito, entradas y salida.
   function clearSessionUser() {
     localStorage.removeItem(SESSION_USER_KEY);
   }
 
+  // FUNCION: getRoleLine - explica su proposito, entradas y salida.
   function getRoleLine(member) {
     const normalized = normalizeMember(member);
     return normalized.isAdmin
@@ -124,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       : `${normalized.name} - ${normalized.role}`;
   }
 
+  // FUNCION: ensureActiveSessionMember - explica su proposito, entradas y salida.
   function ensureActiveSessionMember() {
     const mode =
       window.ClanLedgerModeManager?.getMode?.() ||
@@ -169,6 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     writeSessionUser(session);
   }
 
+  // FUNCION: normalizeMember - explica su proposito, entradas y salida.
   function normalizeMember(member) {
     const rawRole = String(member.role || "Invitado").trim();
     const inferredAdmin =
@@ -186,11 +195,13 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  // FUNCION: getMemberRoleLabel - explica su proposito, entradas y salida.
   function getMemberRoleLabel(member) {
     const normalized = normalizeMember(member);
     return normalized.isAdmin ? `${normalized.role} - Admin` : normalized.role;
   }
 
+  // FUNCION: setPaletteSelection - explica su proposito, entradas y salida.
   function setPaletteSelection(nodes, color) {
     const target = String(color || "").toLowerCase();
     nodes.forEach((node) => {
@@ -200,6 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // FUNCION: openEditMember - explica su proposito, entradas y salida.
   function openEditMember(memberId, originRef) {
     const state = store.getState();
     const member = state.members.find((m) => Number(m.id) === Number(memberId));
@@ -216,6 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
     openModal(modalEditMember, originRef);
   }
 
+  // FUNCION: setModalStartPosition - explica su proposito, entradas y salida.
   function setModalStartPosition(el, originRef) {
     if (!el) return;
     const modalContent = el.querySelector(".modal-content");
@@ -248,20 +261,24 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  // FUNCION: openModal - abre una ventana modal desde la posicion del control origen.
   function openModal(el, originRef) {
     if (!el) return;
     setModalStartPosition(el, originRef);
     el.classList.add("visible");
   }
 
+  // FUNCION: closeModal - cierra la ventana modal indicada.
   function closeModal(el) {
     if (el) el.classList.remove("visible");
   }
 
+  // FUNCION: closeUserMenu - colapsa el menu desplegable del usuario.
   function closeUserMenu() {
     if (userMenu) userMenu.classList.remove("open");
   }
 
+  // FUNCION: getAccountIconUrl - resuelve el icono visual de una cuenta segun su tipo.
   function getAccountIconUrl(account) {
     if (account && account.icon && ACCOUNT_ICON_MAP[account.icon]) {
       return ACCOUNT_ICON_MAP[account.icon];
@@ -279,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (
       text.includes("credito") ||
-      text.includes("crédito") ||
+      text.includes("crÃ©dito") ||
       text.includes("tarjeta")
     ) {
       return ACCOUNT_ICON_MAP.credito;
@@ -291,6 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return ACCOUNT_ICON_MAP.credito;
   }
 
+  // FUNCION: inferAccountIconKey - infiere la clave del icono a partir del nombre o tipo de cuenta.
   function inferAccountIconKey(account) {
     if (account && account.icon && ACCOUNT_ICON_MAP[account.icon]) {
       return account.icon;
@@ -308,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (
       text.includes("credito") ||
-      text.includes("crédito") ||
+      text.includes("crÃ©dito") ||
       text.includes("tarjeta")
     ) {
       return "credito";
@@ -320,6 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return "credito";
   }
 
+  // FUNCION: setAccountIconSelection - marca visualmente el icono de cuenta seleccionado.
   function setAccountIconSelection(iconKey) {
     const nextIcon = ACCOUNT_ICON_MAP[iconKey] ? iconKey : "checking";
     selectedAccountIcon = nextIcon;
@@ -329,6 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // FUNCION: setAccountTypeSelection - sincroniza el tipo de cuenta entre select nativo y dropdown visual.
   function setAccountTypeSelection(typeValue) {
     if (!accountTypeSelect || !accountTypeCustomSelect) return;
     const nextValue = typeValue || "";
@@ -357,6 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // FUNCION: toggleAccountTypeDropdown - abre o cierra el dropdown visual del tipo de cuenta.
   function toggleAccountTypeDropdown(forceOpen) {
     if (!accountTypeCustomSelect) return;
     const shouldOpen =
@@ -366,12 +387,14 @@ document.addEventListener("DOMContentLoaded", () => {
     accountTypeCustomSelect.classList.toggle("open", shouldOpen);
   }
 
+  // FUNCION: closeAccountTypeDropdown - asegura que el dropdown de tipo de cuenta quede cerrado.
   function closeAccountTypeDropdown() {
     if (accountTypeCustomSelect) {
       accountTypeCustomSelect.classList.remove("open");
     }
   }
 
+  // FUNCION: openCreateAccountModal - prepara el modal para crear una cuenta nueva.
   function openCreateAccountModal(originRef) {
     editingAccountId = null;
     if (accountModalTitle) accountModalTitle.textContent = "Nueva Cuenta";
@@ -387,6 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
     openModal(modalAccount, originRef);
   }
 
+  // FUNCION: openEditAccountModal - carga los datos de una cuenta en el modal de edicion.
   function openEditAccountModal(accountId, originRef) {
     const state = store.getState();
     const account = state.accounts.find(
@@ -413,6 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
     openModal(modalAccount, originRef);
   }
 
+  // FUNCION: renderAjustes - refresca miembros, cuentas y textos segun el modo y la sesion.
   function renderAjustes() {
     const state = store.getState();
     const mode =
@@ -421,6 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "familiar";
 
     if (membersSection) {
+      // En modo personal la gestion de miembros no es relevante y se oculta.
       membersSection.style.display = mode === "personal" ? "none" : "";
     }
     if (btnOpenMember) {

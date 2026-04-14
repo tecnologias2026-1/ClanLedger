@@ -1,6 +1,10 @@
+﻿// ARCHIVO: auth.js
+// DESCRIPCION: Logica y comportamiento de esta parte de ClanLedger.
+
 document.addEventListener("DOMContentLoaded", () => {
   const SESSION_USER_KEY = "clanledger_current_user_v1";
 
+  // FUNCION: getLoginNameFromEmail - explica su proposito, entradas y salida.
   function getLoginNameFromEmail(formEl) {
     const emailInput = formEl
       ? formEl.querySelector('input[type="email"]')
@@ -19,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .join(" ");
   }
 
+  // FUNCION: persistSessionUser - explica su proposito, entradas y salida.
   function persistSessionUser(formEl) {
     const emailInput = formEl
       ? formEl.querySelector('input[type="email"]')
@@ -64,3 +69,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+

@@ -1,3 +1,6 @@
+﻿/* ARCHIVO: reportes.css */
+/* DESCRIPCION: Estilos, layout y componentes visuales de esta vista. */
+
 /* =============================================
    RESET & BASE
    ============================================= */
@@ -32,7 +35,7 @@ body {
   min-height: 100vh;
 }
 
-/* ── Sidebar ── */
+/* â”€â”€ Sidebar â”€â”€ */
 .sidebar {
   width: 350px;
   background: var(--titlesecondary);
@@ -109,7 +112,7 @@ body {
   font-weight: 700;
 }
 
-/* ── Toggle persona / familia ── */
+/* â”€â”€ Toggle persona / familia â”€â”€ */
 .user-toggle {
   position: relative;
   display: flex;
@@ -664,7 +667,7 @@ body {
 }
 
 /* =============================================
-   BARS — agrupadas con label debajo
+   BARS â€” agrupadas con label debajo
    ============================================= */
 .bars-wrap {
   position: absolute;
@@ -882,3 +885,4 @@ body {
     grid-template-columns: 1fr;
   }
 }
+

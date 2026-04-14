@@ -1,3 +1,6 @@
+﻿/* ARCHIVO: styleslanding.css */
+/* DESCRIPCION: Estilos, layout y componentes visuales de esta vista. */
+
 :root{
     --background: #dee1e6;
     --subtitlesecondary: #657185;
@@ -113,7 +116,7 @@ body{
 
 
 
-/* ── Footer ── */
+/* â”€â”€ Footer â”€â”€ */
 .footer {
   display: flex;
   flex-direction: column;
