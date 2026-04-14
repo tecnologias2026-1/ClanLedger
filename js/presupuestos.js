@@ -27,6 +27,7 @@ function switchView(view) {
    ============================================= */
 let pendingCatSelectId = null;
 let pendingCatDropId = null;
+let pendingCreateType = "category";
 const monthlyBudgetByMonth = {};
 let budgetSourceMode = "accounts";
 const MONTHS = [
@@ -57,10 +58,34 @@ function collectObjectivesFromDom() {
   ).map((item, index) => ({
     id: item.dataset.id || `obj-${index + 1}`,
     name: item.dataset.name || "Objetivo",
+    area: item.dataset.area || "General",
     total: parseFloat(item.dataset.total) || 0,
     year: item.dataset.year || currentYear,
     savings: getObjectiveSavings(item),
   }));
+}
+
+function getDropdownDataValues(dropId) {
+  const dropdown = document.getElementById(dropId);
+  if (!dropdown) return [];
+  return Array.from(dropdown.querySelectorAll(".select-option"))
+    .filter((opt) => !opt.classList.contains("new-cat-opt"))
+    .map((opt) => {
+      const span = opt.querySelector("span");
+      return span ? span.textContent.trim() : "";
+    })
+    .filter(Boolean);
+}
+
+function getObjectiveAreasFromState(state) {
+  const budgetAreas = Array.isArray(state?.budgets?.objectiveAreas)
+    ? state.budgets.objectiveAreas
+    : [];
+  const objectiveAreas = (state?.budgets?.objectives || [])
+    .map((obj) => String(obj.area || "").trim())
+    .filter(Boolean);
+  const merged = [...budgetAreas, ...objectiveAreas];
+  return Array.from(new Set(merged));
 }
 
 function collectCategoriesFromDom() {
@@ -87,43 +112,40 @@ function renderBudgetDataFromStore() {
 
   Object.assign(monthlyBudgetByMonth, budgets.monthlyBudgetByMonth || {});
 
-  if (objectives.length > 0) {
-    const grid = document.getElementById("objetivos-grid");
-    if (grid) {
-      grid.innerHTML = "";
-      objectives.forEach((obj) => {
-        const current = sumObjectiveSavings(obj.savings || {});
-        const el = buildItemEl(
-          obj.name,
-          current,
-          obj.total,
-          "",
-          obj.year || currentYear,
-        );
-        el.dataset.id = obj.id || "";
-        setObjectiveSavings(el, obj.savings || {});
-        el.dataset.current = current;
-        grid.appendChild(el);
-      });
-    }
+  const objectivesGrid = document.getElementById("objetivos-grid");
+  if (objectivesGrid) {
+    objectivesGrid.innerHTML = "";
+    objectives.forEach((obj) => {
+      const current = sumObjectiveSavings(obj.savings || {});
+      const el = buildItemEl(
+        obj.name,
+        current,
+        obj.total,
+        "",
+        obj.year || currentYear,
+        obj.area || "General",
+      );
+      el.dataset.id = obj.id || "";
+      setObjectiveSavings(el, obj.savings || {});
+      el.dataset.current = current;
+      objectivesGrid.appendChild(el);
+    });
   }
 
-  if (categories.length > 0) {
-    const grid = document.getElementById("categorias-grid");
-    if (grid) {
-      grid.innerHTML = "";
-      categories.forEach((cat) => {
-        const el = buildItemEl(
-          cat.name,
-          cat.current,
-          cat.total,
-          cat.period || "Mensual",
-          "",
-        );
-        el.dataset.id = cat.id || "";
-        grid.appendChild(el);
-      });
-    }
+  const categoriesGrid = document.getElementById("categorias-grid");
+  if (categoriesGrid) {
+    categoriesGrid.innerHTML = "";
+    categories.forEach((cat) => {
+      const el = buildItemEl(
+        cat.name,
+        cat.current,
+        cat.total,
+        cat.period || "Mensual",
+        "",
+      );
+      el.dataset.id = cat.id || "";
+      categoriesGrid.appendChild(el);
+    });
   }
 }
 
@@ -173,11 +195,13 @@ function persistBudgetDataToStore() {
   if (!store) return;
   const objectives = collectObjectivesFromDom();
   const categories = collectCategoriesFromDom();
+  const objectiveAreas = getDropdownDataValues("drop-obj-area");
 
   store.setState((s) => {
     s.budgets.monthlyBudgetByMonth = { ...monthlyBudgetByMonth };
     s.budgets.objectives = objectives;
     s.budgets.categories = categories;
+    s.budgets.objectiveAreas = objectiveAreas;
     s.budgets.budgetSourceMode = budgetSourceMode;
     return s;
   });
@@ -281,13 +305,17 @@ function ensureCategoryOption(dropId, name) {
   option.className = "select-option";
   option.innerHTML = `<span>${escapeHtml(clean)}</span>`;
 
-  if (dropId === "drop-obj-cat") {
-    option.onclick = function () {
-      selectOption("sel-obj-cat", clean, this);
-    };
-  } else {
+  if (dropId === "drop-pres-cat") {
     option.onclick = function () {
       selectOption("sel-pres-cat", clean, this);
+    };
+  } else if (dropId === "drop-obj-area") {
+    option.onclick = function () {
+      selectOption("sel-obj-area", clean, this);
+    };
+  } else if (dropId === "drop-edit-obj-area") {
+    option.onclick = function () {
+      selectOption("sel-edit-obj-area", clean, this);
     };
   }
 
@@ -295,16 +323,60 @@ function ensureCategoryOption(dropId, name) {
 }
 
 function syncCategoryDropdownsFromStore() {
+  const dropdown = document.getElementById("drop-pres-cat");
+  if (!dropdown) return;
+
   const store = getStore();
   if (!store) return;
   const state = store.getState();
   const names = (state.budgets.categories || [])
     .map((c) => c.name)
     .filter(Boolean);
-  names.forEach((name) => {
-    ensureCategoryOption("drop-obj-cat", name);
-    ensureCategoryOption("drop-pres-cat", name);
-  });
+
+  dropdown.innerHTML = "";
+  names.forEach((name) => ensureCategoryOption("drop-pres-cat", name));
+
+  const action = document.createElement("div");
+  action.className = "select-option new-cat-opt";
+  action.onclick = function () {
+    createNewCategory("sel-pres-cat", "drop-pres-cat");
+  };
+  action.innerHTML = `
+    <img src="../assets/imagenes/add blue.png" alt="+" class="new-cat-icon" />
+    Crear nueva categoría
+  `;
+  dropdown.appendChild(action);
+}
+
+function syncObjectiveAreaDropdownsFromStore() {
+  const store = getStore();
+  if (!store) return;
+  const state = store.getState();
+  const areas = getObjectiveAreasFromState(state);
+
+  const objectiveDrop = document.getElementById("drop-obj-area");
+  const editDrop = document.getElementById("drop-edit-obj-area");
+
+  if (objectiveDrop) {
+    objectiveDrop.innerHTML = "";
+    areas.forEach((area) => ensureCategoryOption("drop-obj-area", area));
+
+    const action = document.createElement("div");
+    action.className = "select-option new-cat-opt";
+    action.onclick = function () {
+      createNewCategory("sel-obj-area", "drop-obj-area");
+    };
+    action.innerHTML = `
+      <img src="../assets/imagenes/add blue.png" alt="+" class="new-cat-icon" />
+      Crear nueva área
+    `;
+    objectiveDrop.appendChild(action);
+  }
+
+  if (editDrop) {
+    editDrop.innerHTML = "";
+    areas.forEach((area) => ensureCategoryOption("drop-edit-obj-area", area));
+  }
 }
 
 /* =============================================
@@ -313,6 +385,24 @@ function syncCategoryDropdownsFromStore() {
 function createNewCategory(selectId, dropId) {
   pendingCatSelectId = selectId;
   pendingCatDropId = dropId;
+  pendingCreateType = dropId === "drop-pres-cat" ? "category" : "area";
+
+  const title = document.getElementById("new-item-modal-title");
+  const subtitle = document.getElementById("new-item-modal-subtitle");
+  const label = document.getElementById("new-item-modal-label");
+  const btn = document.getElementById("new-item-modal-btn");
+  const isArea = pendingCreateType === "area";
+
+  if (title) title.textContent = isArea ? "Nueva Área" : "Nueva Categoría";
+  if (subtitle) {
+    subtitle.textContent = isArea
+      ? "Escribe el nombre de la nueva área"
+      : "Escribe el nombre de la nueva categoría";
+  }
+  if (label) {
+    label.textContent = isArea ? "Nombre del Área" : "Nombre de la Categoría";
+  }
+  if (btn) btn.textContent = isArea ? "Crear Área" : "Crear Categoría";
 
   // Open the new-category sub-modal (overlay stays active)
   document.getElementById("modal-nueva-cat").classList.add("active");
@@ -324,6 +414,7 @@ function cancelNewCategory() {
   document.getElementById("modal-nueva-cat").classList.remove("active");
   pendingCatSelectId = null;
   pendingCatDropId = null;
+  pendingCreateType = "category";
 }
 
 function confirmNewCategory() {
@@ -352,53 +443,77 @@ function confirmNewCategory() {
 
     dropdown.insertBefore(newOpt, newCatBtn);
 
-    const otherDropId =
-      pendingCatDropId === "drop-obj-cat" ? "drop-pres-cat" : "drop-obj-cat";
-    ensureCategoryOption(otherDropId, name);
-
     // Auto-select the new category
     selectOption(pendingCatSelectId, name, newOpt);
 
     const store = getStore();
-    if (store && typeof store.addCategoryIfMissing === "function") {
-      store.addCategoryIfMissing(name);
+    if (store && pendingCreateType === "category") {
+      if (typeof store.addCategoryIfMissing === "function") {
+        store.addCategoryIfMissing(name);
+      }
+    } else if (store && pendingCreateType === "area") {
+      store.setState((s) => {
+        if (!Array.isArray(s.budgets.objectiveAreas)) {
+          s.budgets.objectiveAreas = [];
+        }
+        const exists = s.budgets.objectiveAreas.some(
+          (area) =>
+            String(area || "")
+              .trim()
+              .toLowerCase() ===
+            String(name || "")
+              .trim()
+              .toLowerCase(),
+        );
+        if (!exists) {
+          s.budgets.objectiveAreas.push(name);
+        }
+        return s;
+      });
+      ensureCategoryOption("drop-edit-obj-area", name);
     }
   }
 
   document.getElementById("modal-nueva-cat").classList.remove("active");
   pendingCatSelectId = null;
   pendingCatDropId = null;
+  pendingCreateType = "category";
 }
 
 /* Enter key on new category input */
-document.addEventListener("DOMContentLoaded", function () {
-  const newCatInput = document.getElementById("new-cat-input");
-  if (newCatInput) {
-    newCatInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") confirmNewCategory();
-      if (e.key === "Escape") cancelNewCategory();
-    });
-  }
+function renderPresupuestosPage() {
+  if (!window.__clanledgerPresupuestosBound) {
+    const newCatInput = document.getElementById("new-cat-input");
+    if (newCatInput) {
+      newCatInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") confirmNewCategory();
+        if (e.key === "Escape") cancelNewCategory();
+      });
+    }
 
-  const budgetInput = document.getElementById("budget-total-input");
-  if (budgetInput) {
-    budgetInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") saveBudgetTotal();
-    });
-  }
+    const budgetInput = document.getElementById("budget-total-input");
+    if (budgetInput) {
+      budgetInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") saveBudgetTotal();
+      });
+    }
 
-  if (window.ClanLedgerMoneyInput) {
-    window.ClanLedgerMoneyInput.attachByIds([
-      "budget-total-input",
-      "obj-meta",
-      "pres-limite",
-      "edit-current",
-      "edit-total",
-    ]);
+    if (window.ClanLedgerMoneyInput) {
+      window.ClanLedgerMoneyInput.attachByIds([
+        "budget-total-input",
+        "obj-meta",
+        "pres-limite",
+        "edit-current",
+        "edit-total",
+      ]);
+    }
+
+    window.__clanledgerPresupuestosBound = true;
   }
 
   renderBudgetDataFromStore();
   syncCategoryDropdownsFromStore();
+  syncObjectiveAreaDropdownsFromStore();
   initializeObjectiveMonthState();
   preselectDropdown(
     "sel-budget-source",
@@ -409,6 +524,15 @@ document.addEventListener("DOMContentLoaded", function () {
   updateBudgetSourceControls();
   refreshAllProgress();
   persistBudgetDataToStore();
+}
+
+document.addEventListener("DOMContentLoaded", renderPresupuestosPage);
+window.addEventListener("clanledger:mode-change", () => {
+  const store = window.ClanLedgerStore;
+  if (store && typeof store.reloadForCurrentMode === "function") {
+    store.reloadForCurrentMode();
+  }
+  renderPresupuestosPage();
 });
 
 window.addEventListener("focus", function () {
@@ -736,6 +860,7 @@ function openEditItem(itemEl) {
     : parseFloat(itemEl.dataset.current) || 0;
   const total = parseFloat(itemEl.dataset.total) || 0;
   const period = itemEl.dataset.period || "";
+  const area = itemEl.dataset.area || "General";
 
   document.getElementById("edit-item-title").textContent = "Editar — " + name;
   document.getElementById("edit-name").value = name;
@@ -744,12 +869,21 @@ function openEditItem(itemEl) {
 
   // Periodo: show group only if item has a period, pre-select it
   const periodGroup = document.getElementById("edit-period-group");
+  const objectiveAreaGroup = document.getElementById(
+    "edit-objective-area-group",
+  );
   if (!isObjective && period) {
     periodGroup.style.display = "";
     resetSelect("sel-edit-periodo", "Sin período");
     preselectDropdown("sel-edit-periodo", period);
+    if (objectiveAreaGroup) objectiveAreaGroup.style.display = "none";
   } else {
     periodGroup.style.display = "none";
+    if (objectiveAreaGroup) {
+      objectiveAreaGroup.style.display = "";
+      resetSelect("sel-edit-obj-area", "Área");
+      preselectDropdown("sel-edit-obj-area", area);
+    }
   }
 
   openModal("modal-editar-item");
@@ -783,6 +917,9 @@ function saveEditItem() {
     savings[selectedObjectiveMonth] = current;
     setObjectiveSavings(currentEditItem, savings);
     currentEditItem.dataset.current = sumObjectiveSavings(savings);
+
+    const newArea = getSelectValue("sel-edit-obj-area") || "General";
+    currentEditItem.dataset.area = newArea;
   } else {
     currentEditItem.dataset.current = current;
   }
@@ -840,7 +977,7 @@ function upsertItemBadge(itemEl, labelText) {
   badge.textContent = labelText;
 }
 
-function buildItemEl(name, current, total, period, year) {
+function buildItemEl(name, current, total, period, year, area) {
   const { pctInt, isExceeded, barPct } = calcProgress(current, total);
 
   const div = document.createElement("div");
@@ -850,6 +987,7 @@ function buildItemEl(name, current, total, period, year) {
   div.dataset.total = total;
   if (period) div.dataset.period = period;
   if (year) div.dataset.year = year;
+  if (area) div.dataset.area = area;
 
   if (year && !period) {
     const initialSavings = {};
@@ -896,6 +1034,7 @@ function resetSelect(selectId, placeholder) {
 function addObjetivo() {
   const nameEl = document.getElementById("obj-nombre");
   const metaEl = document.getElementById("obj-meta");
+  const area = getSelectValue("sel-obj-area") || "General";
   const year = getSelectValue("sel-obj-year") || currentYear;
   const name = nameEl.value.trim();
   if (!name) {
@@ -906,11 +1045,11 @@ function addObjetivo() {
   }
   const meta = parseMoneyInputValue(metaEl.value);
   const grid = document.getElementById("objetivos-grid");
-  grid.appendChild(buildItemEl(name, 0, meta > 0 ? meta : 1, "", year));
+  grid.appendChild(buildItemEl(name, 0, meta > 0 ? meta : 1, "", year, area));
 
   nameEl.value = "";
   metaEl.value = "";
-  resetSelect("sel-obj-cat", "Categoría");
+  resetSelect("sel-obj-area", "Área");
   preselectDropdown("sel-obj-year", currentYear);
   closeModal("modal-objetivo");
   refreshAllProgress();

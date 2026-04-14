@@ -259,11 +259,99 @@
       </div>
     </div>
 
+    <script src="../js/mode-manager.js"></script>
     <script src="../js/storage-adapter.local.js"></script>
     <script src="../js/clanledger-data.js"></script>
     <script src="../js/money-input-format.js"></script>
     <script>
       // ── Datos iniciales ──
+      const SEEDED_TRANSACTIONS_BY_MODE = {
+        familiar: [
+          {
+            id: 1,
+            nombre: "Salario",
+            tipo: "ingreso",
+            monto: 4000000,
+            categoria: "Salario",
+            miembro: "Alejandro",
+            metodo: "Efectivo",
+            fecha: "21/02/26",
+          },
+          {
+            id: 2,
+            nombre: "Supermercado",
+            tipo: "gasto",
+            monto: 600000,
+            categoria: "Alimentación",
+            miembro: "Sofia",
+            metodo: "Checking",
+            fecha: "20/02/26",
+          },
+          {
+            id: 3,
+            nombre: "Cine",
+            tipo: "gasto",
+            monto: 96000,
+            categoria: "Ocio",
+            miembro: "Ana",
+            metodo: "Checking",
+            fecha: "19/02/26",
+          },
+          {
+            id: 4,
+            nombre: "Freelance",
+            tipo: "ingreso",
+            monto: 600000,
+            categoria: "Extras",
+            miembro: "Alejandro",
+            metodo: "Ahorros",
+            fecha: "19/02/26",
+          },
+          {
+            id: 5,
+            nombre: "Cena",
+            tipo: "gasto",
+            monto: 150000,
+            categoria: "Alimentación",
+            miembro: "Familia",
+            metodo: "Checking",
+            fecha: "18/02/26",
+          },
+        ],
+        personal: [
+          {
+            id: 1,
+            nombre: "Salario personal",
+            tipo: "ingreso",
+            monto: 4200000,
+            categoria: "Salario",
+            miembro: "Usuario",
+            metodo: "Cuenta Principal",
+            fecha: "21/02/26",
+          },
+          {
+            id: 2,
+            nombre: "Mercado",
+            tipo: "gasto",
+            monto: 380000,
+            categoria: "Bienestar",
+            miembro: "Usuario",
+            metodo: "Personal Cash",
+            fecha: "20/02/26",
+          },
+          {
+            id: 3,
+            nombre: "Ahorro mensual",
+            tipo: "gasto",
+            monto: 450000,
+            categoria: "Meta de ahorro",
+            miembro: "Usuario",
+            metodo: "Ahorro Personal",
+            fecha: "19/02/26",
+          },
+        ],
+      };
+
       let transacciones = [
         {
           id: 1,
@@ -318,29 +406,60 @@
       ];
 
       const store = window.ClanLedgerStore;
-      if (store) {
+
+      function recalculateNextId() {
+        return (
+          transacciones.reduce(
+            (max, t) => Math.max(max, Number(t.id) || 0),
+            0,
+          ) + 1
+        );
+      }
+
+      function syncTransactionsFromStore(seedIfEmpty) {
+        if (!store) {
+          nextId = recalculateNextId();
+          return;
+        }
+
         const state = store.getState();
         if (
           Array.isArray(state.transactions) &&
           state.transactions.length > 0
         ) {
           transacciones = state.transactions.map((t) => ({ ...t }));
-        } else {
-          store.setState((s) => {
-            const seededAccounts = (s.accounts || []).map((a) => ({ ...a }));
-            transacciones.forEach((tx) =>
-              applyTransactionToAccounts(seededAccounts, tx, "add"),
-            );
-            s.accounts = seededAccounts;
-            s.transactions = transacciones.map((t) => ({ ...t }));
-            return s;
-          });
+          nextId = recalculateNextId();
+          return;
         }
+
+        if (!seedIfEmpty) {
+          transacciones = [];
+          nextId = 1;
+          return;
+        }
+
+        const mode = window.ClanLedgerModeManager?.getMode?.() || "familiar";
+        const seed = (
+          SEEDED_TRANSACTIONS_BY_MODE[mode] ||
+          SEEDED_TRANSACTIONS_BY_MODE.familiar
+        ).map((t) => ({ ...t }));
+
+        store.setState((s) => {
+          const seededAccounts = (s.accounts || []).map((a) => ({ ...a }));
+          seed.forEach((tx) =>
+            applyTransactionToAccounts(seededAccounts, tx, "add"),
+          );
+          s.accounts = seededAccounts;
+          s.transactions = seed.map((t) => ({ ...t }));
+          return s;
+        });
+
+        transacciones = seed;
+        nextId = recalculateNextId();
       }
 
-      let nextId =
-        transacciones.reduce((max, t) => Math.max(max, Number(t.id) || 0), 0) +
-        1;
+      let nextId = 1;
+      syncTransactionsFromStore(true);
 
       function persistTransactions() {
         if (!store) return;
@@ -360,6 +479,10 @@
         "input-miembro",
         "input-metodo",
       ];
+      const filtroMiembro = document.getElementById("filtro-miembro");
+      const filtroMiembroGroup = filtroMiembro
+        ? filtroMiembro.closest(".grupo-filtro")
+        : null;
 
       function closeAllCustomSelects() {
         document.querySelectorAll(".trans-custom-select.open").forEach((el) => {
@@ -539,7 +662,11 @@
       function hydrateDynamicOptions() {
         if (!store) return;
         const state = store.getState();
-        const members = state.members.map((m) => m.name);
+        const mode = window.ClanLedgerModeManager?.getMode?.() || "familiar";
+        const members =
+          mode === "personal" || state.members.length === 0
+            ? ["Usuario"]
+            : state.members.map((m) => m.name);
         const categories = (state.budgets.categories || []).map((c) => c.name);
         const accounts = state.accounts || [];
 
@@ -562,6 +689,17 @@
             "Ocio",
             "Extras",
           ]);
+        }
+
+        if (filtroMiembroGroup) {
+          filtroMiembroGroup.style.display = mode === "personal" ? "none" : "";
+        }
+        if (mode === "personal") {
+          const select = document.getElementById("filtro-miembro");
+          if (select) {
+            select.value = "";
+            refreshCustomSelect("filtro-miembro");
+          }
         }
       }
 
@@ -739,15 +877,14 @@
         const miembro = document.getElementById("filtro-miembro").value;
         const cuenta = document.getElementById("filtro-cuenta").value;
         const modo = getModoVista();
+        const applyMemberFilter = modo !== "personal";
 
         const resultado = transacciones.filter(
           (t) =>
-            // Si está en modo personal, solo muestra las de Alejandro
-            (modo === "personal" ? t.miembro === "Alejandro" : true) &&
             t.nombre.toLowerCase().includes(buscar) &&
             (tipo === "" || t.tipo === tipo) &&
             (categoria === "" || t.categoria === categoria) &&
-            (miembro === "" || t.miembro === miembro) &&
+            (!applyMemberFilter || miembro === "" || t.miembro === miembro) &&
             accountMatchesFilter(cuenta, t.metodo),
         );
 
@@ -906,6 +1043,15 @@
         if (!e.target.closest(".trans-custom-select")) {
           closeAllCustomSelects();
         }
+      });
+
+      window.addEventListener("clanledger:mode-change", () => {
+        if (store && typeof store.reloadForCurrentMode === "function") {
+          store.reloadForCurrentMode();
+        }
+        syncTransactionsFromStore(false);
+        hydrateDynamicOptions();
+        filtrarCards();
       });
 
       hydrateDynamicOptions();

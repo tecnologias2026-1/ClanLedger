@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+function renderDashboardPage() {
   const store = window.ClanLedgerStore;
   if (!store) return;
   let dashboardTrendHoverData = null;
@@ -488,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderMemberPie("mes");
 
-  if (memberPeriodSwitch) {
+  if (memberPeriodSwitch && !memberPeriodSwitch.dataset.bound) {
     memberPeriodSwitch.addEventListener("click", (e) => {
       const btn = e.target.closest(".period-btn");
       if (!btn) return;
@@ -499,5 +499,15 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("active");
       renderMemberPie(period);
     });
+    memberPeriodSwitch.dataset.bound = "1";
   }
+}
+
+document.addEventListener("DOMContentLoaded", renderDashboardPage);
+window.addEventListener("clanledger:mode-change", () => {
+  const store = window.ClanLedgerStore;
+  if (store && typeof store.reloadForCurrentMode === "function") {
+    store.reloadForCurrentMode();
+  }
+  renderDashboardPage();
 });

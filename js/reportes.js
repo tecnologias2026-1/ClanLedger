@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+function renderReportesPage() {
   const store = window.ClanLedgerStore;
   if (!store) return;
   let trendHoverData = null;
@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const periodSelect = document.getElementById("filter-periodo");
   const monthAnalysisSelect = document.getElementById("filter-mes-analisis");
   const memberSelect = document.getElementById("filter-miembro");
+  const memberFilterGroup = memberSelect
+    ? memberSelect.closest(".filter-group")
+    : null;
   const CUSTOM_FILTER_IDS = [
     "filter-periodo",
     "filter-mes-analisis",
@@ -134,16 +137,35 @@ document.addEventListener("DOMContentLoaded", () => {
     CUSTOM_FILTER_IDS.forEach((id) => refreshCustomSelect(id));
   }
 
+  function applyMemberFilterVisibility() {
+    const mode = window.ClanLedgerModeManager?.getMode?.() || "familiar";
+    const isPersonal = mode === "personal";
+    if (memberFilterGroup) {
+      memberFilterGroup.style.display = isPersonal ? "none" : "";
+    }
+    if (memberSelect && isPersonal) {
+      memberSelect.value = "Todos";
+      refreshCustomSelect("filter-miembro");
+    }
+  }
+
   if (memberSelect) {
     const state = store.getState();
+    const mode = window.ClanLedgerModeManager?.getMode?.() || "familiar";
     memberSelect.innerHTML = "<option>Todos</option>";
-    state.members.forEach((m) => {
+    const members =
+      mode === "personal" || state.members.length === 0
+        ? ["Usuario"]
+        : state.members.map((m) => m.name);
+    members.forEach((name) => {
       const op = document.createElement("option");
-      op.textContent = m.name;
+      op.textContent = name;
       memberSelect.appendChild(op);
     });
     refreshCustomSelect("filter-miembro");
   }
+
+  applyMemberFilterVisibility();
 
   if (monthAnalysisSelect) {
     const currentMonth = new Date().getMonth();
@@ -698,7 +720,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const windowKeys = new Set(
       windowMonths.map((slot) => monthKey(slot.year, slot.monthIndex)),
     );
-    const member = memberSelect ? memberSelect.value : "Todos";
+    const mode = window.ClanLedgerModeManager?.getMode?.() || "familiar";
+    const member =
+      mode === "personal"
+        ? "Todos"
+        : memberSelect
+          ? memberSelect.value
+          : "Todos";
     const tx = state.transactions.filter(
       (item) => member === "Todos" || item.miembro === member,
     );
@@ -817,33 +845,45 @@ document.addEventListener("DOMContentLoaded", () => {
     renderPieChart(gastos);
   }
 
-  if (periodSelect) periodSelect.addEventListener("change", render);
-  if (monthAnalysisSelect)
-    monthAnalysisSelect.addEventListener("change", render);
-  if (memberSelect) memberSelect.addEventListener("change", render);
-  if (zoomOutBtn) {
-    zoomOutBtn.addEventListener("click", () => {
-      trendZoomIndex = Math.max(0, trendZoomIndex - 1);
-      updateZoomUI();
-      render();
+  if (!window.__clanledgerReportesBound) {
+    if (periodSelect) periodSelect.addEventListener("change", render);
+    if (monthAnalysisSelect)
+      monthAnalysisSelect.addEventListener("change", render);
+    if (memberSelect) memberSelect.addEventListener("change", render);
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener("click", () => {
+        trendZoomIndex = Math.max(0, trendZoomIndex - 1);
+        updateZoomUI();
+        render();
+      });
+    }
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener("click", () => {
+        trendZoomIndex = Math.min(
+          TREND_ZOOM_LEVELS.length - 1,
+          trendZoomIndex + 1,
+        );
+        updateZoomUI();
+        render();
+      });
+    }
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".report-custom-select")) {
+        closeAllCustomSelects();
+      }
     });
-  }
-  if (zoomInBtn) {
-    zoomInBtn.addEventListener("click", () => {
-      trendZoomIndex = Math.min(
-        TREND_ZOOM_LEVELS.length - 1,
-        trendZoomIndex + 1,
-      );
-      updateZoomUI();
-      render();
-    });
+    window.__clanledgerReportesBound = true;
   }
   initializeCustomSelects();
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".report-custom-select")) {
-      closeAllCustomSelects();
-    }
-  });
   updateZoomUI();
   render();
+}
+
+document.addEventListener("DOMContentLoaded", renderReportesPage);
+window.addEventListener("clanledger:mode-change", () => {
+  const store = window.ClanLedgerStore;
+  if (store && typeof store.reloadForCurrentMode === "function") {
+    store.reloadForCurrentMode();
+  }
+  renderReportesPage();
 });

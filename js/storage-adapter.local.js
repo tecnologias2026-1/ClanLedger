@@ -8,6 +8,7 @@
   // - clearState()
 
   const STORAGE_PREFIX = "clanledger_state_v1";
+  const MODE_KEY = "clanledger_current_mode_v1";
   const SESSION_USER_KEY = "clanledger_current_user_v1";
 
   function deepClone(obj) {
@@ -38,8 +39,22 @@
     return normalizeSessionId(base) || "guest";
   }
 
+  function getMode() {
+    try {
+      const mode = localStorage.getItem(MODE_KEY);
+      return mode === "personal" ? "personal" : "familiar";
+    } catch {
+      return "familiar";
+    }
+  }
+
   function getStorageKey() {
-    return `${STORAGE_PREFIX}__${getSessionId()}`;
+    const sessionId = getSessionId();
+    const mode = getMode();
+    if (mode === "personal") {
+      return `${STORAGE_PREFIX}__personal__${sessionId}`;
+    }
+    return `${STORAGE_PREFIX}__${sessionId}`;
   }
 
   function getState(defaultState) {

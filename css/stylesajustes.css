@@ -90,6 +90,12 @@ body {
   margin-bottom: 10px;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
 /* COLOR TITULO AJUSTES */
 h1 {
   margin: 0;
@@ -111,6 +117,88 @@ h1 {
   width: 60px;
   height: 60px;
   border-radius: 50%;
+}
+
+.user-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #dde0e8;
+  border-radius: 100px;
+  padding: 5px;
+  gap: 0;
+  width: fit-content;
+}
+
+.view-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toggle-circle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: var(--primary);
+  border-radius: 50%;
+  top: 5px;
+  left: 5px;
+  transition: left 0.3s ease;
+  pointer-events: none;
+}
+
+#view-family:checked ~ .toggle-circle {
+  left: 65px;
+}
+
+.toggle-btn {
+  position: relative;
+  z-index: 1;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-btn img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.toggle-icon-person-active,
+.toggle-icon-family-active {
+  display: none;
+}
+
+#view-person:checked ~ label#btn-person .toggle-icon-person-default {
+  display: block;
+}
+#view-person:checked ~ label#btn-person .toggle-icon-person-active {
+  display: none;
+}
+#view-person:checked ~ label#btn-family .toggle-icon-family-default {
+  display: block;
+}
+#view-person:checked ~ label#btn-family .toggle-icon-family-active {
+  display: none;
+}
+
+#view-family:checked ~ label#btn-person .toggle-icon-person-default {
+  display: none;
+}
+#view-family:checked ~ label#btn-person .toggle-icon-person-active {
+  display: block;
+}
+#view-family:checked ~ label#btn-family .toggle-icon-family-default {
+  display: none;
+}
+#view-family:checked ~ label#btn-family .toggle-icon-family-active {
+  display: block;
 }
 
 .user-menu {

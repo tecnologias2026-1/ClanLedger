@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const SESSION_USER_KEY = "clanledger_current_user_v1";
 
   const membersWrap = document.querySelector(".members");
+  const membersSection = membersWrap ? membersWrap.closest(".section") : null;
   const accountsWrap = document.querySelector(".accounts");
   const infoCard = document.querySelector(".section .inner-card");
   const headerSub = document.querySelector(".header-top .sub");
@@ -124,6 +125,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function ensureActiveSessionMember() {
+    const mode =
+      window.ClanLedgerModeManager?.getMode?.() ||
+      store.getMode?.() ||
+      "familiar";
+    if (mode === "personal") return;
+
     const session = readSessionUser();
     if (!session || !session.name) return;
 
@@ -408,16 +415,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderAjustes() {
     const state = store.getState();
+    const mode =
+      window.ClanLedgerModeManager?.getMode?.() ||
+      store.getMode?.() ||
+      "familiar";
+
+    if (membersSection) {
+      membersSection.style.display = mode === "personal" ? "none" : "";
+    }
+    if (btnOpenMember) {
+      btnOpenMember.style.display = mode === "personal" ? "none" : "";
+    }
 
     if (headerSub) {
       const session = readSessionUser();
-      const active = session
-        ? state.members.find((m) => Number(m.id) === Number(session.memberId))
-        : state.members[0];
+      const active =
+        mode === "personal"
+          ? null
+          : session
+            ? state.members.find(
+                (m) => Number(m.id) === Number(session.memberId),
+              )
+            : state.members[0];
       if (active) {
         headerSub.textContent = getRoleLine(active);
       } else if (session?.name) {
-        headerSub.textContent = `${session.name} - Admin`;
+        headerSub.textContent =
+          mode === "personal" ? session.name : `${session.name} - Admin`;
       }
     }
 
@@ -836,4 +860,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ensureActiveSessionMember();
   renderAjustes();
+
+  window.addEventListener("clanledger:mode-change", () => {
+    if (typeof store.reloadForCurrentMode === "function") {
+      store.reloadForCurrentMode();
+    }
+    ensureActiveSessionMember();
+    renderAjustes();
+  });
 });

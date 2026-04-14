@@ -44,18 +44,64 @@
             <h1>Ajustes</h1>
             <p class="sub">Usuario - Admin</p>
           </div>
-          <div class="user-menu" id="user-menu">
-            <button
-              class="user-menu-trigger"
-              id="user-menu-trigger"
-              type="button"
-            >
-              <img src="../assets/imagenes/hombre1.png" alt="Usuario" />
-            </button>
-            <div class="user-menu-dropdown" id="user-menu-dropdown">
-              <button type="button" class="user-menu-item" id="cerrarSesionBtn">
-                Cerrar sesion
+          <div class="header-actions">
+            <div class="user-toggle">
+              <input
+                type="radio"
+                name="view-mode"
+                id="view-person"
+                class="view-radio"
+              />
+              <input
+                type="radio"
+                name="view-mode"
+                id="view-family"
+                class="view-radio"
+                checked
+              />
+              <div class="toggle-circle"></div>
+              <label class="toggle-btn" id="btn-person" for="view-person">
+                <img
+                  class="toggle-icon toggle-icon-person-default"
+                  src="../assets/imagenes/person_2.png"
+                  alt="Personal"
+                />
+                <img
+                  class="toggle-icon toggle-icon-person-active"
+                  src="../assets/imagenes/person_1.png"
+                  alt="Personal activo"
+                />
+              </label>
+              <label class="toggle-btn" id="btn-family" for="view-family">
+                <img
+                  class="toggle-icon toggle-icon-family-default"
+                  src="../assets/imagenes/family_group_1.png"
+                  alt="Familiar"
+                />
+                <img
+                  class="toggle-icon toggle-icon-family-active"
+                  src="../assets/imagenes/family_group_2.png"
+                  alt="Familiar activo"
+                />
+              </label>
+            </div>
+            <div class="user-menu" id="user-menu">
+              <button
+                class="user-menu-trigger"
+                id="user-menu-trigger"
+                type="button"
+              >
+                <img src="../assets/imagenes/hombre1.png" alt="Usuario" />
               </button>
+              <div class="user-menu-dropdown" id="user-menu-dropdown">
+                <button
+                  type="button"
+                  class="user-menu-item"
+                  id="cerrarSesionBtn"
+                >
+                  Cerrar sesion
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -517,6 +563,7 @@
       </div>
     </div>
 
+    <script src="../js/mode-manager.js"></script>
     <script src="../js/storage-adapter.local.js"></script>
     <script src="../js/clanledger-data.js"></script>
     <script src="../js/money-input-format.js"></script>

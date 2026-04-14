@@ -419,7 +419,7 @@
         <div>
           <h3 class="modal-title">Nuevo Objetivo</h3>
           <p class="modal-subtitle">
-            Establece un objetivo a alcanzar y asígnale una categoría
+            Establece un objetivo a alcanzar y asígnale un área
           </p>
         </div>
         <button class="modal-close" onclick="closeModal('modal-objetivo')">
@@ -443,54 +443,56 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Categoría</label>
-          <div class="custom-select" id="sel-obj-cat">
+          <label>Área</label>
+          <div class="custom-select" id="sel-obj-area">
             <div
               class="select-header"
-              onclick="toggleDropdown('drop-obj-cat', 'sel-obj-cat')"
+              onclick="toggleDropdown('drop-obj-area', 'sel-obj-area')"
             >
-              <span class="select-display">Categoría</span>
+              <span class="select-display">Área</span>
               <img
                 src="../assets/imagenes/keyboard_arrow_down_gris.png"
                 alt=""
                 class="select-arrow"
               />
             </div>
-            <div class="select-dropdown" id="drop-obj-cat">
+            <div class="select-dropdown" id="drop-obj-area">
               <div
                 class="select-option"
-                onclick="selectOption('sel-obj-cat', 'Salario', this)"
+                onclick="
+                  selectOption('sel-obj-area', 'Desarrollo personal', this)
+                "
               >
-                <span>Salario</span>
+                <span>Desarrollo personal</span>
               </div>
               <div
                 class="select-option"
-                onclick="selectOption('sel-obj-cat', 'Alimentación', this)"
+                onclick="selectOption('sel-obj-area', 'Hogar', this)"
               >
-                <span>Alimentación</span>
+                <span>Hogar</span>
               </div>
               <div
                 class="select-option"
-                onclick="selectOption('sel-obj-cat', 'Ocio', this)"
+                onclick="selectOption('sel-obj-area', 'Viajes', this)"
               >
-                <span>Ocio</span>
+                <span>Viajes</span>
               </div>
               <div
                 class="select-option"
-                onclick="selectOption('sel-obj-cat', 'Extras', this)"
+                onclick="selectOption('sel-obj-area', 'Educación', this)"
               >
-                <span>Extras</span>
+                <span>Educación</span>
               </div>
               <div
                 class="select-option new-cat-opt"
-                onclick="createNewCategory('sel-obj-cat', 'drop-obj-cat')"
+                onclick="createNewCategory('sel-obj-area', 'drop-obj-area')"
               >
                 <img
                   src="../assets/imagenes/add blue.png"
                   alt="+"
                   class="new-cat-icon"
                 />
-                Crear nueva categoría
+                Crear nueva área
               </div>
             </div>
           </div>
@@ -737,6 +739,29 @@
             </div>
           </div>
         </div>
+        <div
+          class="form-group"
+          id="edit-objective-area-group"
+          style="display: none"
+        >
+          <label>Área</label>
+          <div class="custom-select" id="sel-edit-obj-area">
+            <div
+              class="select-header"
+              onclick="
+                toggleDropdown('drop-edit-obj-area', 'sel-edit-obj-area')
+              "
+            >
+              <span class="select-display">Área</span>
+              <img
+                src="../assets/imagenes/keyboard_arrow_down_gris.png"
+                alt=""
+                class="select-arrow"
+              />
+            </div>
+            <div class="select-dropdown" id="drop-edit-obj-area"></div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer modal-footer-row">
         <button class="btn-danger" onclick="deleteEditItem()" title="Eliminar">
@@ -753,8 +778,10 @@
     <div class="modal modal-sm" id="modal-nueva-cat">
       <div class="modal-header">
         <div>
-          <h3 class="modal-title">Nueva Categoría</h3>
-          <p class="modal-subtitle">Escribe el nombre de la nueva categoría</p>
+          <h3 class="modal-title" id="new-item-modal-title">Nueva Categoría</h3>
+          <p class="modal-subtitle" id="new-item-modal-subtitle">
+            Escribe el nombre de la nueva categoría
+          </p>
         </div>
         <button class="modal-close" onclick="cancelNewCategory()">
           <img src="../assets/imagenes/x_icon.png" alt="Cerrar" />
@@ -762,17 +789,18 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label>Nombre de la Categoría</label>
+          <label id="new-item-modal-label">Nombre de la Categoría</label>
           <input type="text" id="new-cat-input" placeholder="Ej: Salud" />
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn-primary full-width" onclick="confirmNewCategory()">
-          Crear Categoría
+          <span id="new-item-modal-btn">Crear Categoría</span>
         </button>
       </div>
     </div>
 
+    <script src="../js/mode-manager.js"></script>
     <script src="../js/storage-adapter.local.js"></script>
     <script src="../js/clanledger-data.js"></script>
     <script src="../js/money-input-format.js"></script>
