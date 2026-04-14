@@ -2,23 +2,31 @@
 /* DESCRIPCION: Estilos, layout y componentes visuales de esta vista. */
 
 /* Shared button hover system across ClanLedger */
+
+/* Transición de opacidad suave en el cuerpo de la página */
 body {
   transition: opacity 0.14s ease;
 }
 
+/* Estado de carga y salida: oculta el body con opacidad 0 */
 html.pt-loading body,
 html.pt-leave body {
   opacity: 0;
 }
 
+/* Durante la salida, desactiva interacciones para evitar clics accidentales */
 html.pt-leave body {
   pointer-events: none;
 }
 
+/* Una vez la página está lista, restaura la visibilidad completa */
 html.pt-ready body {
   opacity: 1;
 }
 
+/* ─── Transiciones base para todos los tipos de botón ─────────────────────────
+   Define qué propiedades animarán al interactuar, con duraciones uniformes.
+   Aplica al sistema completo de botones de ClanLedger. */
 .btn,
 .btn-primary,
 .btn-danger,
@@ -35,10 +43,13 @@ html.pt-ready body {
     background-color 0.2s ease,
     color 0.2s ease,
     box-shadow 0.2s ease,
-    transform 0.15s ease,
+    transform 0.15s ease,   /* Ligeramente más rápido para que el lift se sienta ágil */
     filter 0.2s ease;
 }
 
+/* ─── Estado hover ─────────────────────────────────────────────────────────────
+   Solo actúa sobre botones habilitados (:not(:disabled)).
+   Eleva visualmente el botón: sombra suave + desplazamiento vertical de 1px. */
 .btn:not(:disabled):hover,
 .btn-primary:not(:disabled):hover,
 .btn-danger:not(:disabled):hover,
@@ -51,10 +62,13 @@ html.pt-ready body {
 .period-btn:not(:disabled):hover,
 #btnsup a:hover,
 #btnbtm a:hover {
-  box-shadow: 0 3px 8px rgba(26, 39, 68, 0.16);
-  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(26, 39, 68, 0.16); /* Sombra sutil con el color de marca */
+  transform: translateY(-1px);                   /* Efecto "lift": sube 1px */
 }
 
+/* ─── Estado active (clic) ─────────────────────────────────────────────────────
+   Invierte el efecto hover al presionar: baja el botón a su posición original
+   y elimina la sombra, simulando que el botón fue pulsado físicamente. */
 .btn:not(:disabled):active,
 .btn-primary:not(:disabled):active,
 .btn-danger:not(:disabled):active,
@@ -67,7 +81,6 @@ html.pt-ready body {
 .period-btn:not(:disabled):active,
 #btnsup a:active,
 #btnbtm a:active {
-  transform: translateY(0);
-  box-shadow: none;
+  transform: translateY(0); /* Regresa a la posición base */
+  box-shadow: none;         /* Elimina la sombra al presionar */
 }
-

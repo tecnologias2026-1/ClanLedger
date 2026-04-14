@@ -1,17 +1,20 @@
 ﻿/* ARCHIVO: stylesdashboard.css */
 /* DESCRIPCION: Estilos, layout y componentes visuales de esta vista. */
 
+/* ─── Variables globales de color ─────────────────────────────────────────────
+   Paleta centralizada; cambiar aquí afecta toda la vista. */
 :root {
-  --background: #edf0f5;
-  --subtitlesecondary: #657185;
-  --titleprimary: #222b4d;
-  --titlesecondary: #dee2e7;
-  --green: #249a40;
-  --red: #be3232;
-  --sidebar: #c5c8d2;
-  --accent: #dee1e6;
+  --background: #edf0f5; /* Fondo general de la página */
+  --subtitlesecondary: #657185; /* Texto secundario / etiquetas */
+  --titleprimary: #222b4d; /* Texto principal y elementos activos */
+  --titlesecondary: #dee2e7; /* Fondos de tarjetas y separadores */
+  --green: #249a40; /* Ingresos / valores positivos */
+  --red: #be3232; /* Gastos / valores negativos */
+  --sidebar: #c5c8d2; /* Fondo de la barra lateral */
+  --accent: #dee1e6; /* Fondo de tarjetas KPI y gráficas */
 }
 
+/* Reset universal: evita márgenes y paddings por defecto del navegador */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -26,12 +29,13 @@ body {
   color: var(--titleprimary);
 }
 
+/* Contenedor raíz: sidebar + contenido principal en fila */
 .layout {
   display: flex;
   min-height: 100vh;
 }
 
-/* â”€â”€ Sidebar â”€â”€ */
+/* ─── Sidebar ─────────────────────────────────────────────────────────────── */
 .sidebar {
   width: 350px;
   background: var(--titlesecondary);
@@ -39,9 +43,10 @@ body {
   flex-direction: column;
   padding: 16px 0;
   gap: 4px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* No se comprime cuando el contenido crece */
 }
 
+/* Logotipo centrado en la parte superior del sidebar */
 .sidebar-logo {
   display: flex;
   align-items: center;
@@ -54,6 +59,7 @@ body {
   object-fit: contain;
 }
 
+/* Cada enlace de navegación del sidebar */
 .nav-item {
   display: flex;
   align-items: center;
@@ -71,18 +77,19 @@ body {
   object-fit: contain;
 }
 
+/* Resalta la página activa: fondo oscuro e icono claro */
 .nav-item.active {
   background: var(--titleprimary);
   color: var(--titlesecondary);
 }
 
-/* CONTENIDO PRINCIPAL */
+/* ─── Contenido principal ─────────────────────────────────────────────────── */
 .main-content {
   flex: 1;
   padding: 36px 52px 52px;
 }
 
-/* â”€â”€ Header â”€â”€ */
+/* ─── Header ──────────────────────────────────────────────────────────────── */
 .header {
   display: flex;
   align-items: center;
@@ -95,13 +102,16 @@ body {
   font-size: 36px;
   margin-bottom: 4px;
 }
+
+/* Subtítulo del header (período, nombre de vista, etc.) */
 .header p {
   font-size: 36px;
   font-weight: 600;
   color: var(--subtitlesecondary);
 }
 
-/* â”€â”€ Toggle persona / familia â”€â”€ */
+/* ─── Toggle persona / familia ────────────────────────────────────────────── */
+/* Contenedor tipo "píldora" con dos opciones circulares */
 .user-toggle {
   position: relative;
   display: flex;
@@ -113,12 +123,14 @@ body {
   width: fit-content;
 }
 
+/* Radio oculto; el estado checked controla qué icono se muestra */
 .view-radio {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
+/* Círculo deslizante que indica la opción activa */
 .toggle-circle {
   position: absolute;
   width: 60px;
@@ -127,14 +139,16 @@ body {
   border-radius: 50%;
   top: 5px;
   left: 5px;
-  transition: left 0.3s ease;
+  transition: left 0.3s ease; /* Animación de deslizamiento entre opciones */
   pointer-events: none;
 }
 
+/* Desplaza el círculo hacia la opción "familia" cuando está activa */
 #view-family:checked ~ .toggle-circle {
   left: 65px;
 }
 
+/* Botón circular que envuelve cada ícono del toggle */
 .toggle-btn {
   position: relative;
   z-index: 1;
@@ -153,6 +167,43 @@ body {
   object-fit: contain;
 }
 
+/* Íconos activos ocultos por defecto; se muestran con los selectores de radio */
+.toggle-icon-person-active,
+.toggle-icon-family-active {
+  display: none;
+}
+
+/* ─── Visibilidad de íconos según radio seleccionado ──────────────────────────
+   Con #view-person activo: muestra íconos por defecto en ambos botones.
+   Con #view-family activo: muestra íconos activos (versión clara) en ambos. */
+#view-person:checked ~ label#btn-person .toggle-icon-person-default {
+  display: block;
+}
+#view-person:checked ~ label#btn-person .toggle-icon-person-active {
+  display: none;
+}
+#view-person:checked ~ label#btn-family .toggle-icon-family-default {
+  display: block;
+}
+#view-person:checked ~ label#btn-family .toggle-icon-family-active {
+  display: none;
+}
+
+#view-family:checked ~ label#btn-person .toggle-icon-person-default {
+  display: none;
+}
+#view-family:checked ~ label#btn-person .toggle-icon-person-active {
+  display: block;
+}
+#view-family:checked ~ label#btn-family .toggle-icon-family-default {
+  display: none;
+}
+#view-family:checked ~ label#btn-family .toggle-icon-family-active {
+  display: block;
+}
+
+/* NOTE: El bloque anterior está duplicado en el archivo original.
+   Se puede eliminar una de las dos copias sin afectar el comportamiento. */
 .toggle-icon-person-active,
 .toggle-icon-family-active {
   display: none;
@@ -184,38 +235,8 @@ body {
   display: block;
 }
 
-.toggle-icon-person-active,
-.toggle-icon-family-active {
-  display: none;
-}
-
-#view-person:checked ~ label#btn-person .toggle-icon-person-default {
-  display: block;
-}
-#view-person:checked ~ label#btn-person .toggle-icon-person-active {
-  display: none;
-}
-#view-person:checked ~ label#btn-family .toggle-icon-family-default {
-  display: block;
-}
-#view-person:checked ~ label#btn-family .toggle-icon-family-active {
-  display: none;
-}
-
-#view-family:checked ~ label#btn-person .toggle-icon-person-default {
-  display: none;
-}
-#view-family:checked ~ label#btn-person .toggle-icon-person-active {
-  display: block;
-}
-#view-family:checked ~ label#btn-family .toggle-icon-family-default {
-  display: none;
-}
-#view-family:checked ~ label#btn-family .toggle-icon-family-active {
-  display: block;
-}
-
-/* KPI CARDS (tarjetas de arriba)*/
+/* ─── KPI Cards (tarjetas de resumen superiores) ──────────────────────────── */
+/* Grid de 4 columnas iguales para las métricas principales */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -232,35 +253,35 @@ body {
   gap: 6px;
 }
 
+/* Etiqueta descriptiva de la métrica */
 .kpi-label {
   font-size: 12px;
   color: var(--subtitlesecondary);
   font-weight: 500;
 }
 
-/* El valor grande: neutro / verde / rojo segÃºn el tipo */
+/* Valor numérico grande; el color varía según el contexto semántico */
 .kpi-value {
   font-size: 24px;
   font-weight: 800;
 }
 .kpi-value.neutral {
   color: var(--titleprimary);
-}
+} /* Sin carga positiva/negativa */
 .kpi-value.green {
   color: var(--green);
-}
+} /* Ingreso o valor positivo */
 .kpi-value.red {
   color: var(--red);
-}
+} /* Gasto o valor negativo */
 
+/* Nota auxiliar debajo del valor (p.ej. variación vs. mes anterior) */
 .kpi-note {
   font-size: 11px;
   color: var(--subtitlesecondary);
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   FILA DE GRÃFICAS (2 columnas)
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ─── Fila de gráficas (2 columnas) ──────────────────────────────────────── */
 .charts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -268,19 +289,20 @@ body {
   margin-bottom: 20px;
 }
 
-/* Caja de cada grÃ¡fica */
+/* Contenedor de cada gráfica individual */
 .chart-box {
   background: var(--accent);
   border-radius: 16px;
   padding: 20px;
 }
 
-/* GrÃ¡fica que ocupa todo el ancho */
+/* Variante que estira la gráfica a todo el ancho del grid */
 .chart-box.full-width {
   grid-column: 1 / -1;
   margin-bottom: 20px;
 }
 
+/* Título de sección dentro de la caja de gráfica */
 .chart-title {
   font-size: 16px;
   font-weight: 600;
@@ -288,6 +310,7 @@ body {
   margin-bottom: 14px;
 }
 
+/* Fila que combina el título con el selector de período */
 .chart-title-row {
   display: flex;
   align-items: center;
@@ -296,10 +319,12 @@ body {
   margin-bottom: 14px;
 }
 
+/* Cuando el título está en la fila, anula su margen propio */
 .chart-title-row .chart-title {
   margin-bottom: 0;
 }
 
+/* Selector de período (píldora con botones Semana / Mes / Año) */
 .member-period-switch {
   display: inline-flex;
   align-items: center;
@@ -310,6 +335,7 @@ body {
   gap: 4px;
 }
 
+/* Botón individual dentro del selector de período */
 .period-btn {
   border: none;
   border-radius: 999px;
@@ -321,22 +347,21 @@ body {
   cursor: pointer;
 }
 
+/* Estado activo: fondo oscuro sobre el período seleccionado */
 .period-btn.active {
   background: #22345d;
   color: #ffffff;
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   ÃREA DE GRÃFICA (lÃ­nea y barras)
-   Estructura: y-labels | chart-plot
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ─── Área de gráficas de línea y barras ─────────────────────────────────────
+   Estructura interna: columna de etiquetas Y | área de trazado */
 .chart-area {
   display: flex;
   gap: 8px;
   height: 160px;
 }
 
-/* Etiquetas del eje Y */
+/* Etiquetas del eje Y, distribuidas de arriba a abajo */
 .y-labels {
   display: flex;
   flex-direction: column;
@@ -344,23 +369,23 @@ body {
   font-size: 10px;
   color: var(--subtitlesecondary);
   text-align: right;
-  padding-bottom: 20px; /* espacio para las etiquetas X */
+  padding-bottom: 20px; /* Reserva espacio equivalente a las etiquetas del eje X */
 }
 
-/* Ãrea donde va el SVG o las barras */
+/* Área donde se renderiza el SVG o las barras */
 .chart-plot {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* â”€â”€ GrÃ¡fica de lÃ­neas (SVG) â”€â”€ */
+/* El SVG de líneas ocupa todo el espacio disponible del plot */
 .line-chart .chart-plot svg {
   flex: 1;
   width: 100%;
 }
 
-/* Etiquetas del eje X */
+/* Etiquetas del eje X (meses, días, etc.) */
 .x-labels {
   display: flex;
   justify-content: space-between;
@@ -369,7 +394,7 @@ body {
   padding: 4px 0;
 }
 
-/* Leyenda de colores debajo de la grÃ¡fica */
+/* Leyenda de series debajo de la gráfica */
 .chart-legend {
   display: flex;
   gap: 16px;
@@ -378,6 +403,9 @@ body {
   margin-top: 8px;
 }
 
+/* ─── Gráfica de tendencia (líneas ingresos vs. gastos) ───────────────────── */
+
+/* Superficie con fondo cuadriculado para la gráfica de tendencia */
 .trend-surface {
   background: #d0d4dd;
   border-radius: 12px;
@@ -390,6 +418,7 @@ body {
   background-size: 56px 52px;
 }
 
+/* Etiquetas del eje Y de la gráfica de tendencia */
 .trend-y-axis {
   position: absolute;
   left: 10px;
@@ -405,6 +434,7 @@ body {
   font-weight: 700;
 }
 
+/* Área de trazado de las líneas, con ejes dibujados via pseudo-elementos */
 .trend-plot {
   position: absolute;
   left: 56px;
@@ -413,6 +443,7 @@ body {
   bottom: 68px;
 }
 
+/* Eje Y: línea vertical izquierda */
 .trend-plot::before {
   content: "";
   position: absolute;
@@ -423,6 +454,7 @@ body {
   background: #1d2d58;
 }
 
+/* Eje X: línea horizontal inferior */
 .trend-plot::after {
   content: "";
   position: absolute;
@@ -433,6 +465,7 @@ body {
   background: #1d2d58;
 }
 
+/* Contenedor SVG de las líneas de la serie */
 .trend-line-series {
   position: absolute;
   left: 2px;
@@ -446,6 +479,7 @@ body {
   height: 100%;
 }
 
+/* Etiquetas del eje X de la gráfica de tendencia */
 .trend-x-axis {
   position: absolute;
   left: 56px;
@@ -459,6 +493,7 @@ body {
   font-weight: 700;
 }
 
+/* Leyenda inferior centrada con las series del gráfico */
 .trend-legend {
   position: absolute;
   bottom: 12px;
@@ -471,6 +506,7 @@ body {
   font-weight: 700;
 }
 
+/* Punto indicador que aparece al hacer hover sobre la línea */
 .trend-dot-ui {
   position: absolute;
   width: 12px;
@@ -481,20 +517,23 @@ body {
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 5;
-  display: none;
+  display: none; /* Se activa por JS al mover el cursor */
 }
 
+/* Color del punto para la serie de ingresos */
 .trend-dot-income-ui {
   background: #1f8f49;
 }
 
+/* Color del punto para la serie de gastos */
 .trend-dot-expense-ui {
   background: #d6475f;
 }
 
+/* Tooltip flotante que muestra el valor al hacer hover */
 .trend-tooltip {
   position: fixed;
-  display: none;
+  display: none; /* Se muestra por JS al interactuar con las líneas */
   transform: translate(-50%, -115%);
   background: rgba(26, 39, 68, 0.95);
   color: #ffffff;
@@ -508,6 +547,9 @@ body {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
+/* ─── Gráfica de categorías (barras por categoría de gasto) ──────────────── */
+
+/* Superficie con cuadrícula, misma estructura que trend-surface */
 .category-surface {
   background: #d0d4dd;
   border-radius: 12px;
@@ -520,6 +562,7 @@ body {
   background-size: 56px 52px;
 }
 
+/* Etiquetas del eje Y de la gráfica de categorías */
 .category-y-axis {
   position: absolute;
   left: 10px;
@@ -535,6 +578,7 @@ body {
   font-weight: 700;
 }
 
+/* Área de trazado con ejes via pseudo-elementos (mismo patrón que trend-plot) */
 .category-plot {
   position: absolute;
   left: 56px;
@@ -543,6 +587,7 @@ body {
   bottom: 68px;
 }
 
+/* Eje Y: línea vertical izquierda */
 .category-plot::before {
   content: "";
   position: absolute;
@@ -553,6 +598,7 @@ body {
   background: #1d2d58;
 }
 
+/* Eje X: línea horizontal inferior */
 .category-plot::after {
   content: "";
   position: absolute;
@@ -563,6 +609,7 @@ body {
   background: #1d2d58;
 }
 
+/* Grid de barras para la vista familiar; --bar-count se define por JS */
 #dashboard-category-chart .bars-wrap {
   position: absolute;
   left: 18%;
@@ -576,10 +623,12 @@ body {
   justify-items: center;
 }
 
+/* Sección personal oculta por defecto; JS la muestra cuando aplica */
 #dashboard-personal-category-section {
   display: none;
 }
 
+/* Grid de barras para la vista personal (márgenes laterales menores) */
 #dashboard-personal-category-chart .bars-wrap {
   position: absolute;
   left: 10%;
@@ -593,18 +642,20 @@ body {
   justify-items: center;
 }
 
+/* Grupo de una sola barra con su etiqueta */
 #dashboard-category-chart .bar-group,
 #dashboard-personal-category-chart .bar-group {
   position: relative;
   width: 100%;
   height: 100%;
-  padding-bottom: 42px;
+  padding-bottom: 42px; /* Espacio para la etiqueta de categoría */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
 }
 
+/* Contenedor que define la altura máxima de la barra */
 #dashboard-category-chart .bar-track,
 #dashboard-personal-category-chart .bar-track {
   width: 100%;
@@ -615,13 +666,15 @@ body {
   height: auto;
 }
 
+/* La barra coloreada que crece desde abajo */
 #dashboard-category-chart .bar,
 #dashboard-personal-category-chart .bar {
   width: 100%;
   border-radius: 12px 12px 0 0;
-  min-height: 6px;
+  min-height: 6px; /* Garantiza visibilidad incluso con valores muy pequeños */
 }
 
+/* Etiqueta de categoría posicionada en la parte inferior del grupo */
 #dashboard-category-chart .bar-label,
 #dashboard-personal-category-chart .bar-label {
   position: absolute;
@@ -639,11 +692,13 @@ body {
   hyphens: none;
 }
 
+/* Ajuste extra hacia abajo para etiquetas que ocupan dos líneas */
 #dashboard-category-chart .bar-label.is-multiline,
 #dashboard-personal-category-chart .bar-label.is-multiline {
   bottom: -6px;
 }
 
+/* Punto de color circular para las leyendas de las gráficas */
 .legend-dot {
   display: inline-block;
   width: 8px;
@@ -659,7 +714,7 @@ body {
   background: var(--red);
 }
 
-/* â”€â”€ GrÃ¡fica de barras â”€â”€ */
+/* ─── Gráfica de barras genérica (componente reutilizable) ───────────────── */
 .bars-wrap {
   flex: 1;
   display: flex;
@@ -678,7 +733,7 @@ body {
   justify-content: flex-end;
 }
 
-/* Contenedor de la barra (fondo gris) */
+/* Fondo del track: muestra el "espacio vacío" de la barra */
 .bar-track {
   width: 100%;
   height: 120px;
@@ -689,13 +744,14 @@ body {
   overflow: hidden;
 }
 
-/* La barra de color */
+/* Relleno de la barra con animación de altura */
 .bar {
   width: 100%;
   border-radius: 6px;
   transition: height 0.4s ease;
 }
 
+/* Variantes de color por tipo de dato */
 .bar.red {
   background: var(--red);
 }
@@ -715,9 +771,8 @@ body {
   text-align: center;
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   PIE CHART (gastos por miembro)
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ─── Pie chart (gastos por miembro) ─────────────────────────────────────── */
+/* Layout de 3 columnas: leyenda izquierda | donut | leyenda derecha */
 .pie-section {
   display: grid;
   grid-template-columns: minmax(180px, 1fr) auto minmax(180px, 1fr);
@@ -725,7 +780,7 @@ body {
   column-gap: 40px;
 }
 
-/* El SVG del pie */
+/* Contenedor cuadrado para el SVG del donut */
 .pie-wrap {
   width: 180px;
   height: 180px;
@@ -733,14 +788,15 @@ body {
   justify-self: center;
 }
 
+/* Rota el SVG para que el primer segmento comience desde las 12 */
 .pie-svg {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  transform: rotate(-90deg); /* empieza desde arriba */
+  transform: rotate(-90deg);
 }
 
-/* Leyendas a los lados del pie */
+/* Columna de leyenda a cada lado del donut */
 .pie-legend {
   display: flex;
   flex-direction: column;
@@ -750,8 +806,7 @@ body {
 
 .pie-legend.left {
   justify-self: end;
-}
-
+} /* Alineada al borde del donut */
 .pie-legend.right {
   justify-self: start;
 }
@@ -762,6 +817,7 @@ body {
   gap: 2px;
 }
 
+/* Leyenda derecha con texto alineado a la derecha */
 .pie-legend-item.right {
   text-align: right;
 }
@@ -775,16 +831,14 @@ body {
   color: var(--subtitlesecondary);
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   ÃšLTIMAS TRANSACCIONES
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ─── Últimas transacciones ───────────────────────────────────────────────── */
 .transacciones-list {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-/* Cada fila de transacciÃ³n */
+/* Fila individual con separador inferior */
 .tx-item {
   display: flex;
   justify-content: space-between;
@@ -793,10 +847,12 @@ body {
   border-bottom: 1px solid var(--titlesecondary);
 }
 
+/* Elimina el separador en la última transacción */
 .tx-item:last-child {
   border-bottom: none;
 }
 
+/* Columna izquierda: nombre y metadatos de la transacción */
 .tx-info {
   display: flex;
   flex-direction: column;
@@ -812,32 +868,33 @@ body {
   color: var(--subtitlesecondary);
 }
 
+/* Monto alineado a la derecha con color según signo */
 .tx-monto {
   font-size: 15px;
   font-weight: 700;
 }
 .tx-monto.pos {
   color: var(--green);
-}
+} /* Ingreso */
 .tx-monto.neg {
   color: var(--red);
-}
+} /* Gasto */
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   ESTADO DE PRESUPUESTOS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ─── Estado de presupuestos ──────────────────────────────────────────────── */
 .presupuestos-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+/* Cada presupuesto: encabezado + barra de progreso + montos */
 .pres-item {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
+/* Fila superior con nombre y porcentaje ejecutado */
 .pres-header {
   display: flex;
   justify-content: space-between;
@@ -855,20 +912,22 @@ body {
   color: var(--titleprimary);
 }
 
-/* Barra de progreso (igual a presupuestos) */
+/* Barra de progreso del presupuesto */
 .progress-bar {
   height: 4px;
-  background: var(--titlesecondary);
+  background: var(--titlesecondary); /* Fondo: monto total */
   border-radius: 99px;
   overflow: hidden;
 }
 
+/* Relleno que representa el porcentaje ejecutado */
 .progress-fill {
   height: 100%;
   background: var(--titleprimary);
   border-radius: 99px;
 }
 
+/* Fila inferior: monto gastado vs. monto total */
 .pres-amounts {
   display: flex;
   justify-content: space-between;
@@ -876,10 +935,7 @@ body {
   color: var(--subtitlesecondary);
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   FOOTER
-   (mismo patrÃ³n que landing y transacciones)
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ─── Footer ──────────────────────────────────────────────────────────────── */
 #foot {
   display: flex;
   flex-direction: column;
@@ -887,6 +943,7 @@ body {
   padding-left: 20px;
 }
 
+/* Línea divisora horizontal antes del footer */
 .divisor {
   border: none;
   height: 2px;
@@ -895,6 +952,7 @@ body {
   margin: 0 40px 20px;
 }
 
+/* Logo en el footer */
 #fimg img {
   height: 60px;
   padding-top: 10px;
@@ -902,6 +960,7 @@ body {
   max-width: 200px;
 }
 
+/* Texto legal / créditos del footer */
 #ftxt h4 {
   font-weight: 300;
   font-size: 13px;

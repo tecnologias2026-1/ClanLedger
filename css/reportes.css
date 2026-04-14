@@ -3,6 +3,9 @@
 
 /* =============================================
    RESET & BASE
+   Elimina márgenes, paddings y establece box-sizing
+   en todos los elementos para un punto de partida limpio.
+   Define las variables de color globales del sistema de diseño.
    ============================================= */
 *,
 *::before,
@@ -12,9 +15,13 @@
   padding: 0;
 }
 :root {
+  /* Color de fondo principal de la página */
   --background: #dee1e6;
+  /* Color de texto secundario (subtítulos, labels, notas) */
   --subtitlesecondary: #657185;
+  /* Color primario de marca (sidebar activo, botones, acentos) */
   --primary: #222b4d;
+  /* Color de fondo del sidebar y encabezados secundarios */
   --titlesecondary: #dee2e7;
 }
 
@@ -29,13 +36,16 @@ body {
 
 /* =============================================
    LAYOUT
+   Estructura principal de dos columnas:
+   sidebar fijo a la izquierda + contenido principal a la derecha.
    ============================================= */
 .layout {
   display: flex;
   min-height: 100vh;
 }
 
-/* â”€â”€ Sidebar â”€â”€ */
+/* ── Sidebar ── */
+/* Panel de navegación lateral izquierdo */
 .sidebar {
   width: 350px;
   background: var(--titlesecondary);
@@ -43,9 +53,10 @@ body {
   flex-direction: column;
   padding: 16px 0;
   gap: 4px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Evita que el sidebar se comprima */
 }
 
+/* Contenedor del logo dentro del sidebar */
 .sidebar-logo {
   display: flex;
   align-items: center;
@@ -53,11 +64,13 @@ body {
   padding: 30px 0px 50px;
 }
 
+/* Imagen del logo */
 .sidebar-logo img {
   width: 250px;
   object-fit: contain;
 }
 
+/* Ítem de navegación genérico del sidebar */
 .nav-item {
   display: flex;
   align-items: center;
@@ -69,16 +82,20 @@ body {
   text-decoration: none;
 }
 
+/* Icono dentro de cada ítem de navegación */
 .nav-item img {
   width: 35px;
   height: 35px;
   object-fit: contain;
 }
 
+/* Estado activo del ítem de navegación: fondo oscuro, texto blanco */
 .nav-item.active {
   background: var(--primary);
   color: #fff;
 }
+
+/* Área de contenido principal a la derecha del sidebar */
 .main-content {
   flex: 1;
   padding: 36px 52px 52px;
@@ -88,6 +105,8 @@ body {
 
 /* =============================================
    HEADER
+   Encabezado de la página con título, subtítulo
+   y el toggle de vista persona/familia.
    ============================================= */
 .page-header {
   display: flex;
@@ -96,6 +115,7 @@ body {
   margin-bottom: 20px;
 }
 
+/* Título principal grande de la página */
 .page-title {
   margin-top: 16px;
   font-size: 36px;
@@ -105,6 +125,7 @@ body {
   line-height: 1;
 }
 
+/* Subtítulo debajo del título principal */
 .page-subtitle {
   margin-top: 4px;
   font-size: 36px;
@@ -112,7 +133,8 @@ body {
   font-weight: 700;
 }
 
-/* â”€â”€ Toggle persona / familia â”€â”€ */
+/* ── Toggle persona / familia ── */
+/* Contenedor del interruptor de vista entre "persona" y "familia" */
 .user-toggle {
   position: relative;
   display: flex;
@@ -124,12 +146,14 @@ body {
   width: fit-content;
 }
 
+/* Radio buttons ocultos que controlan el estado del toggle */
 .view-radio {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
+/* Círculo deslizante que indica la opción activa */
 .toggle-circle {
   position: absolute;
   width: 60px;
@@ -138,14 +162,16 @@ body {
   border-radius: 50%;
   top: 5px;
   left: 5px;
-  transition: left 0.3s ease;
+  transition: left 0.3s ease; /* Animación suave al cambiar de opción */
   pointer-events: none;
 }
 
+/* Desplaza el círculo a la derecha cuando "familia" está seleccionada */
 #view-family:checked ~ .toggle-circle {
   left: 65px;
 }
 
+/* Botón individual del toggle (etiqueta clickeable sobre el radio) */
 .toggle-btn {
   position: relative;
   z-index: 1;
@@ -158,23 +184,28 @@ body {
   justify-content: center;
 }
 
+/* Icono dentro de cada botón del toggle */
 .toggle-btn img {
   width: 28px;
   height: 28px;
   object-fit: contain;
 }
 
+/* Íconos activos ocultos por defecto; se muestran mediante lógica CSS */
 .toggle-icon-person-active,
 .toggle-icon-family-active {
   display: none;
 }
 
+/* ── Lógica de íconos del toggle según el radio seleccionado ── */
+/* Cuando "persona" está activo: muestra ícono default de persona, oculta el activo */
 #view-person:checked ~ label#btn-person .toggle-icon-person-default {
   display: block;
 }
 #view-person:checked ~ label#btn-person .toggle-icon-person-active {
   display: none;
 }
+/* Cuando "persona" está activo: muestra ícono default de familia, oculta el activo */
 #view-person:checked ~ label#btn-family .toggle-icon-family-default {
   display: block;
 }
@@ -182,12 +213,14 @@ body {
   display: none;
 }
 
+/* Cuando "familia" está activo: oculta ícono default de persona, muestra el activo */
 #view-family:checked ~ label#btn-person .toggle-icon-person-default {
   display: none;
 }
 #view-family:checked ~ label#btn-person .toggle-icon-person-active {
   display: block;
 }
+/* Cuando "familia" está activo: oculta ícono default de familia, muestra el activo */
 #view-family:checked ~ label#btn-family .toggle-icon-family-default {
   display: none;
 }
@@ -197,6 +230,8 @@ body {
 
 /* =============================================
    FILTERS
+   Panel de filtros en grilla de 3 columnas con
+   selectores personalizados y nativos ocultos.
    ============================================= */
 .filters-panel {
   background: #d5d8df;
@@ -208,18 +243,21 @@ body {
   margin-bottom: 18px;
 }
 
+/* Grupo individual de filtro: label + select */
 .filter-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
+/* Etiqueta descriptiva del filtro */
 .filter-label {
   font-size: 20px;
   color: #657185;
   font-weight: 700;
 }
 
+/* Select nativo de respaldo (poco usado; reemplazado por el custom) */
 .filter-select {
   width: 100%;
   border: none;
@@ -231,14 +269,18 @@ body {
   outline: none;
 }
 
+/* Oculta el select nativo cuando se usa el custom select */
 .native-select-hidden {
   display: none !important;
 }
 
+/* ── Custom Select ── */
+/* Contenedor del selector desplegable personalizado */
 .report-custom-select {
   position: relative;
 }
 
+/* Cabecera visible del select: muestra el valor seleccionado y la flecha */
 .report-custom-select-header {
   width: 100%;
   border: none;
@@ -253,20 +295,24 @@ body {
   cursor: pointer;
 }
 
+/* Texto del valor actualmente seleccionado */
 .report-custom-select-display {
   text-align: left;
 }
 
+/* Flecha indicadora del dropdown */
 .report-custom-select-arrow {
   width: 18px;
   height: 18px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease; /* Gira 180° al abrir */
 }
 
+/* Rota la flecha cuando el select está abierto */
 .report-custom-select.open .report-custom-select-arrow {
   transform: rotate(180deg);
 }
 
+/* Lista desplegable de opciones, oculta por defecto */
 .report-custom-select-dropdown {
   position: absolute;
   top: calc(100% + 6px);
@@ -281,10 +327,12 @@ body {
   z-index: 35;
 }
 
+/* Muestra el dropdown cuando el select está en estado .open */
 .report-custom-select.open .report-custom-select-dropdown {
   display: block;
 }
 
+/* Opción individual dentro del dropdown */
 .report-custom-select-option {
   padding: 12px 14px;
   font-size: 14px;
@@ -295,19 +343,23 @@ body {
   cursor: pointer;
 }
 
+/* Separador entre opciones consecutivas */
 .report-custom-select-option + .report-custom-select-option {
   border-top: 1px solid #e1e6ef;
 }
 
+/* Resaltado al pasar el cursor sobre una opción */
 .report-custom-select-option:hover {
   background: #e9eef8;
 }
 
+/* Estilo de la opción actualmente seleccionada */
 .report-custom-select-option.selected {
   background: #e3e8f2;
   font-weight: 700;
 }
 
+/* Check de confirmación; solo visible en la opción seleccionada */
 .report-custom-select-option .check {
   opacity: 0;
   color: #1b264f;
@@ -317,6 +369,7 @@ body {
   opacity: 1;
 }
 
+/* Opción deshabilitada: apariencia atenuada y sin interacción */
 .report-custom-select-option.disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -324,6 +377,8 @@ body {
 
 /* =============================================
    KPI CARDS
+   Grilla de 4 tarjetas horizontales con indicadores
+   clave de rendimiento (KPI) separados por divisores.
    ============================================= */
 .kpi-grid {
   display: grid;
@@ -335,15 +390,18 @@ body {
   margin-bottom: 24px;
 }
 
+/* Tarjeta individual de KPI */
 .kpi-card {
   padding: 14px 14px 12px;
-  border-right: 1px solid #bcc3cf;
+  border-right: 1px solid #bcc3cf; /* Separador vertical entre tarjetas */
 }
 
+/* La última tarjeta no tiene borde derecho */
 .kpi-card:last-child {
   border-right: none;
 }
 
+/* Etiqueta descriptiva del KPI */
 .kpi-label {
   font-size: 20px;
   color: #657185;
@@ -351,6 +409,7 @@ body {
   margin-bottom: 10px;
 }
 
+/* Valor numérico principal del KPI */
 .kpi-value {
   font-size: 30px;
   font-weight: 800;
@@ -360,18 +419,20 @@ body {
   margin-top: 15px;
 }
 
+/* Variantes de color para el valor según su significado */
 .kpi-value.primary {
-  color: #1e2f56;
+  color: #1e2f56; /* Neutral / informativo */
 }
 
 .kpi-value.green {
-  color: #1f9f48;
+  color: #1f9f48; /* Positivo */
 }
 
 .kpi-value.red {
-  color: #cc3f3f;
+  color: #cc3f3f; /* Negativo / alerta */
 }
 
+/* Nota aclaratoria debajo del valor (p.ej. unidad, período) */
 .kpi-note {
   font-size: 16px;
   color: #7f8797;
@@ -381,7 +442,12 @@ body {
 
 /* =============================================
    CHART BLOCKS
+   Bloques de gráficas: título de sección, grilla
+   de dos columnas, carta con superficie de gráfica,
+   controles de zoom, tooltips y ejes.
    ============================================= */
+
+/* Título de sección encima de los gráficos */
 .section-title {
   font-size: 30px;
   color: #a9b0bd;
@@ -390,6 +456,7 @@ body {
   margin-bottom: 10px;
 }
 
+/* Grilla de dos columnas para mostrar gráficas en paralelo */
 .charts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -397,6 +464,7 @@ body {
   margin-bottom: 26px;
 }
 
+/* Tarjeta contenedora de una gráfica individual */
 .chart-card {
   background: #d5d8df;
   border-radius: 16px;
@@ -404,6 +472,7 @@ body {
   position: relative;
 }
 
+/* Controles de zoom flotantes en la esquina superior derecha de la gráfica */
 .trend-zoom-controls {
   position: absolute;
   top: 10px;
@@ -418,6 +487,7 @@ body {
   padding: 5px 10px;
 }
 
+/* Botón circular de zoom (+ / -) */
 .zoom-btn {
   width: 28px;
   height: 28px;
@@ -431,11 +501,13 @@ body {
   cursor: pointer;
 }
 
+/* Estado deshabilitado del botón de zoom */
 .zoom-btn:disabled {
   opacity: 0.45;
   cursor: default;
 }
 
+/* Etiqueta que muestra el nivel de zoom actual */
 .zoom-value {
   min-width: 52px;
   text-align: center;
@@ -444,6 +516,7 @@ body {
   font-weight: 700;
 }
 
+/* Superficie de dibujado de la gráfica */
 .chart-surface {
   background: #d0d4dd;
   border-radius: 12px;
@@ -452,6 +525,7 @@ body {
   overflow: hidden;
 }
 
+/* Superficie de gráfica de líneas con cuadrícula de fondo */
 .chart-surface.line {
   background-image:
     linear-gradient(to right, rgba(97, 111, 141, 0.25) 1px, transparent 1px),
@@ -459,6 +533,7 @@ body {
   background-size: 56px 52px;
 }
 
+/* Etiquetas del eje Y (valores numéricos en el lado izquierdo) */
 .y-axis-labels {
   position: absolute;
   left: 10px;
@@ -474,6 +549,7 @@ body {
   font-weight: 700;
 }
 
+/* Área de trazado de la gráfica, desplazada para dejar espacio a los ejes */
 .chart-plot {
   position: absolute;
   left: 56px;
@@ -482,6 +558,7 @@ body {
   bottom: 68px;
 }
 
+/* Línea del eje Y (borde izquierdo del área de trazado) */
 .chart-plot::before {
   content: "";
   position: absolute;
@@ -492,6 +569,7 @@ body {
   background: #1d2d58;
 }
 
+/* Línea del eje X (borde inferior del área de trazado) */
 .chart-plot::after {
   content: "";
   position: absolute;
@@ -502,6 +580,7 @@ body {
   background: #1d2d58;
 }
 
+/* Contenedor de las series de líneas; permite scroll horizontal */
 .line-series {
   position: absolute;
   left: 2px;
@@ -512,9 +591,10 @@ body {
   overflow-y: hidden;
 }
 
+/* Tooltip genérico de la gráfica de tendencia */
 .trend-tooltip {
   position: absolute;
-  display: none;
+  display: none; /* Se muestra programáticamente al hacer hover */
   transform: translate(-50%, -115%);
   background: rgba(26, 39, 68, 0.95);
   color: #ffffff;
@@ -523,11 +603,12 @@ body {
   border-radius: 8px;
   padding: 6px 8px;
   white-space: nowrap;
-  pointer-events: none;
+  pointer-events: none; /* No interfiere con eventos del mouse */
   z-index: 999;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
+/* Variante de tooltip fijo (fixed) para mayor control de posición */
 .trend-tooltip.floating {
   position: fixed;
   z-index: 9999;
@@ -536,21 +617,24 @@ body {
   display: none;
 }
 
+/* En la gráfica de tendencia, deshabilita el overflow para evitar desbordamiento */
 #chart-tendencia .chart-surface,
 #chart-tendencia .chart-plot,
 #chart-tendencia .line-series {
   overflow: hidden;
 }
 
+/* SVG de la serie de líneas: ocupa todo el espacio disponible */
 .line-series svg {
   width: 100%;
   min-width: 100%;
   height: 100%;
 }
 
+/* Punto visual flotante sobre la gráfica al hacer hover (indicador de valor) */
 .trend-dot-ui {
   position: absolute;
-  display: none;
+  display: none; /* Se activa mediante JS */
   border-radius: 50%;
   border: 3px solid #ffffff;
   box-shadow: 0 2px 8px rgba(16, 26, 49, 0.2);
@@ -559,14 +643,17 @@ body {
   z-index: 5;
 }
 
+/* Color del punto para la serie de ingresos */
 .trend-dot-income-ui {
   background: #1f8f49;
 }
 
+/* Color del punto para la serie de gastos */
 .trend-dot-expense-ui {
   background: #d6475f;
 }
 
+/* Leyenda de la gráfica (ingresos / gastos) centrada en la parte inferior */
 .legend {
   position: absolute;
   bottom: 12px;
@@ -579,6 +666,7 @@ body {
   font-weight: 700;
 }
 
+/* Punto de color que acompaña cada ítem de la leyenda */
 .legend-dot {
   width: 10px;
   height: 10px;
@@ -587,6 +675,7 @@ body {
   margin-right: 8px;
 }
 
+/* Etiquetas del eje X (categorías o fechas en la parte inferior) */
 .x-axis-labels {
   position: absolute;
   bottom: 42px;
@@ -597,6 +686,7 @@ body {
   font-weight: 700;
 }
 
+/* Previene quiebres de línea en etiquetas de ejes y pistas del eje X */
 .x-axis-labels,
 .x-axis-track,
 .x-axis-track span {
@@ -606,6 +696,7 @@ body {
   hyphens: none;
 }
 
+/* Variante scrollable de las etiquetas del eje X (para muchos puntos) */
 .x-axis-labels-line {
   left: 56px;
   right: 18px;
@@ -614,6 +705,7 @@ body {
   scrollbar-width: thin;
 }
 
+/* Pista interna del eje X: alinea los labels de forma distribuida */
 .x-axis-track {
   min-width: 100%;
   width: 100%;
@@ -623,15 +715,18 @@ body {
   gap: 18px;
 }
 
+/* Cada label del eje X no se encoge */
 .x-axis-track span {
   flex: 0 0 auto;
 }
 
+/* Caso especial: un solo punto → centra el label en lugar de distribuir */
 .x-axis-labels-line.single-point .x-axis-track {
   justify-content: center;
   padding: 0;
 }
 
+/* Contenedor centrado para el gráfico de pastel */
 .pie-wrap {
   display: flex;
   justify-content: center;
@@ -639,6 +734,7 @@ body {
   padding-top: 10px;
 }
 
+/* Gráfico de pastel (donut) generado con conic-gradient */
 .pie-chart {
   width: 160px;
   height: 160px;
@@ -653,11 +749,13 @@ body {
   );
 }
 
+/* Estado vacío del pastel: sin datos, borde punteado */
 .pie-chart.pie-empty {
   background: none;
   border: 2px dashed rgba(90, 104, 137, 0.6);
 }
 
+/* Leyenda del gráfico de pastel en grilla de dos columnas */
 .pie-legend {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -669,19 +767,25 @@ body {
   font-weight: 700;
 }
 
+/* Leyenda vacía: una sola columna centrada */
 .pie-legend.empty {
   grid-template-columns: 1fr;
   justify-items: center;
 }
 
+/* Leyenda con una sola categoría: una sola columna centrada */
 .pie-legend.single {
   grid-template-columns: 1fr;
   justify-items: center;
 }
 
 /* =============================================
-   BARS â€” agrupadas con label debajo
+   BARS – agrupadas con label debajo
+   Barras verticales agrupadas posicionadas
+   sobre la superficie de la gráfica de barras.
    ============================================= */
+
+/* Contenedor de todas las barras; usa CSS custom property para el número de columnas */
 .bars-wrap {
   position: absolute;
   left: 18%;
@@ -695,17 +799,19 @@ body {
   justify-items: center;
 }
 
+/* Grupo de una barra individual (pista + barra + label) */
 .bar-group {
   position: relative;
   width: 100%;
   height: 100%;
-  padding-bottom: 24px;
+  padding-bottom: 24px; /* Espacio para el label inferior */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
 }
 
+/* Pista que ocupa el alto completo disponible para alinear la barra al fondo */
 .bar-track {
   width: 100%;
   flex: 1;
@@ -713,12 +819,14 @@ body {
   align-items: flex-end;
 }
 
+/* La barra propiamente dicha; su altura se define en línea */
 .bar {
   width: 100%;
-  border-radius: 12px 12px 0 0;
-  min-height: 6px;
+  border-radius: 12px 12px 0 0; /* Esquinas redondeadas solo arriba */
+  min-height: 6px; /* Mínimo visible incluso con valor cero */
 }
 
+/* Etiqueta de categoría debajo de cada barra */
 .bar-label {
   position: absolute;
   left: 0;
@@ -732,10 +840,12 @@ body {
   padding: 0 2px;
 }
 
+/* Desplaza el label más abajo cuando ocupa dos líneas */
 .bar-label.is-multiline {
   bottom: -16px;
 }
 
+/* Colores predefinidos para las barras según categoría */
 .bar.red {
   background: #c33b56;
 }
@@ -754,6 +864,8 @@ body {
 
 /* =============================================
    STATS BOTTOM
+   Grilla de tres tarjetas de estadísticas
+   ubicadas en la parte inferior de la vista.
    ============================================= */
 .stats-grid {
   display: grid;
@@ -762,12 +874,14 @@ body {
   margin-bottom: 36px;
 }
 
+/* Tarjeta individual de estadística */
 .stat-card {
   background: #d5d8df;
   border-radius: 12px;
   padding: 12px;
 }
 
+/* Etiqueta descriptiva de la estadística */
 .stat-label {
   font-size: 20px;
   color: var(--subtitlesecondary);
@@ -775,6 +889,7 @@ body {
   margin-bottom: 12px;
 }
 
+/* Valor principal de la estadística */
 .stat-value {
   text-align: right;
   font-size: 34px;
@@ -783,6 +898,7 @@ body {
   letter-spacing: -0.4px;
 }
 
+/* Nota aclaratoria debajo del valor de la estadística */
 .stat-note {
   text-align: right;
   font-size: 16px;
@@ -792,6 +908,7 @@ body {
 
 /* FOOTER */
 
+/* Pie de página con logo y textos legales/informativos */
 .footer {
   display: flex;
   flex-direction: column;
@@ -799,6 +916,7 @@ body {
   padding-left: 20px;
 }
 
+/* Línea divisora horizontal sobre el footer */
 .divisor {
   border: none;
   height: 2px;
@@ -807,6 +925,7 @@ body {
   margin: 0 40px 20px;
 }
 
+/* Logo en el footer */
 .textofoot img {
   height: 60px;
   padding-top: 20px;
@@ -814,15 +933,21 @@ body {
   max-width: 200px;
 }
 
+/* Textos verticales pequeños del footer (créditos, versión, etc.) */
 .textosvert h4 {
   font-weight: 300;
   font-size: 13px;
   color: #657185;
   margin: 4px 0;
 }
+
 /* =============================================
    RESPONSIVE
+   Ajustes de layout y tipografía para pantallas
+   menores a 1200 px, 900 px y 600 px.
    ============================================= */
+
+/* ── Pantallas medianas (≤ 1200 px) ── */
 @media (max-width: 1200px) {
   .page-title {
     font-size: 32px;
@@ -860,12 +985,14 @@ body {
     font-size: 10px;
   }
 
+  /* Colapsa las grillas de stats, KPIs y gráficas a una sola columna */
   .stats-grid,
   .kpi-grid,
   .charts-row {
     grid-template-columns: 1fr;
   }
 
+  /* En columna única, los KPI cards usan borde inferior en lugar de derecho */
   .kpi-card {
     border-right: none;
     border-bottom: 1px solid #bcc3cf;
@@ -876,7 +1003,9 @@ body {
   }
 }
 
+/* ── Pantallas pequeñas (≤ 900 px) ── */
 @media (max-width: 900px) {
+  /* Sidebar compacto: solo íconos */
   .sidebar {
     width: 92px;
     min-width: 92px;
@@ -894,11 +1023,12 @@ body {
     font-size: 15px;
   }
 
+  /* Filtros en columna única */
   .filters-panel {
     grid-template-columns: 1fr;
   }
 
-  /* KPI block in mobile: 2x2 cards like reference */
+  /* KPI en móvil: grilla 2×2 */
   .kpi-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     border-radius: 22px;
@@ -915,14 +1045,17 @@ body {
     justify-content: space-between;
   }
 
+  /* Elimina el borde derecho de las tarjetas en posición par (columna derecha) */
   .kpi-card:nth-child(2n) {
     border-right: none;
   }
 
+  /* Elimina el borde inferior de las dos últimas tarjetas (fila inferior) */
   .kpi-card:nth-last-child(-n + 2) {
     border-bottom: none;
   }
 
+  /* Tipografía fluida para labels, valores y notas de KPI */
   .kpi-label {
     font-size: clamp(21px, 4.3vw, 34px);
     line-height: 1.15;
@@ -941,7 +1074,7 @@ body {
     line-height: 1.25;
   }
 
-  /* Distribution chart in mobile: center pie and keep legend balanced */
+  /* Gráfica de distribución en móvil: columna centrada */
   #chart-distribucion .chart-surface {
     display: flex;
     flex-direction: column;
@@ -957,11 +1090,13 @@ body {
     justify-content: center;
   }
 
+  /* Tamaño fluido del pastel en móvil */
   #chart-distribucion .pie-chart {
     width: clamp(190px, 32vw, 240px);
     height: clamp(190px, 32vw, 240px);
   }
 
+  /* Leyenda del pastel en 2 columnas, adaptada al ancho disponible */
   #chart-distribucion .pie-legend {
     margin: 0;
     width: min(100%, 520px);
@@ -976,11 +1111,13 @@ body {
   }
 }
 
+/* ── Pantallas muy pequeñas (≤ 600 px) ── */
 @media (max-width: 600px) {
   .kpi-grid {
     border-radius: 16px;
   }
 
+  /* KPI cards más compactas en móviles pequeños */
   .kpi-card {
     min-height: 118px;
     padding: 12px 10px 10px;
@@ -998,6 +1135,7 @@ body {
     font-size: clamp(10px, 3.2vw, 13px);
   }
 
+  /* Gráfica de distribución más compacta en pantallas muy pequeñas */
   #chart-distribucion .chart-surface {
     gap: 14px;
     padding: 14px 10px;

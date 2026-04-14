@@ -42,7 +42,7 @@ textarea:focus-visible,
   box-shadow: 0 0 0 4px var(--a11y-focus-shadow);
 }
 
-/* Escalado uniforme del contenido para conservar proporciones entre textos y botones */
+/* Escalado tipografico global sin romper layout */
 body.texto-pequeno {
   --a11y-font-scale: 0.92;
 }
@@ -51,22 +51,31 @@ body.texto-grande {
   --a11y-font-scale: 1.12;
 }
 
-body.texto-pequeno .layout,
-body.texto-pequeno .container,
-body.texto-grande .layout,
-body.texto-grande .container {
-  zoom: var(--a11y-font-scale);
-}
-
-@supports not (zoom: 1) {
-  body.texto-pequeno .layout,
-  body.texto-pequeno .container,
-  body.texto-grande .layout,
-  body.texto-grande .container {
-    transform-origin: top left;
-    transform: scale(var(--a11y-font-scale));
-    width: calc(100% / var(--a11y-font-scale));
-  }
+body.texto-pequeno h1,
+body.texto-pequeno h2,
+body.texto-pequeno h3,
+body.texto-pequeno h4,
+body.texto-pequeno p,
+body.texto-pequeno span,
+body.texto-pequeno label,
+body.texto-pequeno a,
+body.texto-pequeno button,
+body.texto-pequeno input,
+body.texto-pequeno select,
+body.texto-pequeno textarea,
+body.texto-grande h1,
+body.texto-grande h2,
+body.texto-grande h3,
+body.texto-grande h4,
+body.texto-grande p,
+body.texto-grande span,
+body.texto-grande label,
+body.texto-grande a,
+body.texto-grande button,
+body.texto-grande input,
+body.texto-grande select,
+body.texto-grande textarea {
+  font-size: calc(1em * var(--a11y-font-scale));
 }
 
 body.fuente-legible,
@@ -499,40 +508,6 @@ body.alto-contraste.page-presupuestos .modal-close img {
 
 body.alto-contraste.page-presupuestos .modal-close:hover img {
   filter: brightness(0) invert(1);
-}
-
-body.alto-contraste.page-presupuestos[data-budget-source-mode="accounts"]
-  #budget-save-btn {
-  background: #ffffff !important;
-  color: #111111 !important;
-  border: 2px solid #111111 !important;
-  opacity: 1 !important;
-  box-shadow: none !important;
-}
-
-body.alto-contraste.page-presupuestos[data-budget-source-mode="accounts"]
-  #budget-save-btn:disabled {
-  background: #ffffff !important;
-  color: #111111 !important;
-  border: 2px solid #111111 !important;
-  opacity: 1 !important;
-}
-
-body.alto-contraste.page-presupuestos[data-budget-source-mode="manual"]
-  #budget-save-btn {
-  background: #111111 !important;
-  color: #ffffff !important;
-  border: 2px solid #ffffff !important;
-  opacity: 1 !important;
-  box-shadow: none !important;
-}
-
-body.alto-contraste.page-presupuestos[data-budget-source-mode="manual"]
-  #budget-save-btn:disabled {
-  background: #111111 !important;
-  color: #ffffff !important;
-  border: 2px solid #ffffff !important;
-  opacity: 1 !important;
 }
 
 body.alto-contraste.page-reportes .report-custom-select-option .check {
