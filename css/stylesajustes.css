@@ -679,6 +679,7 @@ h1 {
 
 .modal-content input {
   width: 100%;
+  box-sizing: border-box;
   padding: 10px;
   border: none;
   border-radius: 8px;
@@ -737,6 +738,7 @@ h1 {
 
 .select {
   width: 100%;
+  box-sizing: border-box;
   padding: 10px;
   border-radius: 10px;
   border: none;
@@ -751,6 +753,8 @@ h1 {
 
 .account-type-select {
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
   margin-bottom: 10px;
 }
 
@@ -833,6 +837,8 @@ h1 {
 }
 
 .account-icon-picker {
+  width: 100%;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
@@ -841,6 +847,8 @@ h1 {
 }
 
 .account-icon-option {
+  width: 100%;
+  box-sizing: border-box;
   border: 1px solid #d6dbe6;
   background: #f3f6fb;
   border-radius: 10px;

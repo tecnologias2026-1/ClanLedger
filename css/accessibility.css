@@ -87,7 +87,10 @@ body.fuente-legible textarea {
   letter-spacing: 0.02em;
 }
 
-body.daltonismo {
+body.daltonismo
+  > :not(.skip-link):not(.a11y-live):not(.a11y-panel-backdrop):not(
+    .a11y-panel
+  ):not(.a11y-fab) {
   filter: saturate(0.78) contrast(1.08);
 }
 
@@ -162,7 +165,6 @@ body.alto-contraste .modal,
 body.alto-contraste .chart-surface,
 body.alto-contraste .trend-surface,
 body.alto-contraste .category-surface,
-body.alto-contraste .pie-chart,
 body.alto-contraste .pie-wrap {
   background: #ffffff !important;
   color: #111111 !important;
@@ -332,6 +334,410 @@ body.alto-contraste p,
 body.alto-contraste span,
 body.alto-contraste label {
   color: #111111 !important;
+}
+
+body.alto-contraste.page-transacciones .btn-nueva,
+body.alto-contraste.page-transacciones .trans-custom-select-header,
+body.alto-contraste.page-reportes .report-custom-select-header {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+}
+
+body.alto-contraste.page-transacciones .trans-custom-select-header,
+body.alto-contraste.page-reportes .report-custom-select-header {
+  box-shadow: none !important;
+}
+
+body.alto-contraste.page-transacciones .btn-nueva img {
+  filter: brightness(0);
+}
+
+body.alto-contraste.page-transacciones .trans-custom-select-arrow,
+body.alto-contraste.page-reportes .report-custom-select-arrow {
+  filter: brightness(0);
+}
+
+body.alto-contraste.page-transacciones .trans-custom-select-dropdown {
+  background: #ffffff !important;
+  border: 2px solid #111111 !important;
+}
+
+body.alto-contraste.page-transacciones .trans-custom-select-option {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-transacciones
+  .trans-custom-select-option
+  + .trans-custom-select-option {
+  border-top: 1px solid #111111 !important;
+}
+
+body.alto-contraste.page-transacciones .trans-custom-select-option.selected {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-transacciones
+  .trans-custom-select-option.selected
+  span {
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-transacciones .trans-custom-select-option .check {
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-transacciones
+  .trans-custom-select-option.selected
+  .check {
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-presupuestos .month-filter-custom .select-header,
+body.alto-contraste.page-presupuestos .custom-select .select-header,
+body.alto-contraste.page-reportes .report-custom-select-header {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+body.alto-contraste.page-presupuestos .month-filter-custom .select-arrow,
+body.alto-contraste.page-presupuestos .custom-select .select-arrow,
+body.alto-contraste.page-reportes .report-custom-select-arrow {
+  filter: brightness(0);
+}
+
+body.alto-contraste.page-presupuestos .month-filter-custom .select-dropdown,
+body.alto-contraste.page-presupuestos .custom-select .select-dropdown,
+body.alto-contraste.page-reportes .report-custom-select-dropdown {
+  background: #ffffff !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+body.alto-contraste.page-presupuestos .month-filter-custom .select-option,
+body.alto-contraste.page-presupuestos .custom-select .select-option,
+body.alto-contraste.page-reportes .report-custom-select-option {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-presupuestos
+  .month-filter-custom
+  .select-option
+  + .select-option,
+body.alto-contraste.page-presupuestos
+  .custom-select
+  .select-option
+  + .select-option,
+body.alto-contraste.page-reportes
+  .report-custom-select-option
+  + .report-custom-select-option {
+  border-top: 1px solid #111111 !important;
+}
+
+body.alto-contraste.page-presupuestos
+  .month-filter-custom
+  .select-option.selected,
+body.alto-contraste.page-presupuestos .custom-select .select-option.selected,
+body.alto-contraste.page-reportes .report-custom-select-option.selected {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-presupuestos
+  .month-filter-custom
+  .select-option.selected
+  span,
+body.alto-contraste.page-presupuestos
+  .custom-select
+  .select-option.selected
+  span,
+body.alto-contraste.page-reportes .report-custom-select-option.selected span {
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-presupuestos
+  .month-filter-custom
+  .select-option
+  .check-icon,
+body.alto-contraste.page-presupuestos
+  .custom-select
+  .select-option
+  .check-icon {
+  filter: brightness(0);
+}
+
+body.alto-contraste.page-presupuestos
+  .month-filter-custom
+  .select-option.selected
+  .check-icon,
+body.alto-contraste.page-presupuestos
+  .custom-select
+  .select-option.selected
+  .check-icon {
+  filter: brightness(0) invert(1);
+}
+
+body.alto-contraste.page-presupuestos .modal-close {
+  background: #ffffff !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+  color: #111111 !important;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+body.alto-contraste.page-presupuestos .modal-close:hover {
+  opacity: 1;
+  background: #111111 !important;
+}
+
+body.alto-contraste.page-presupuestos .modal-close img {
+  width: 14px;
+  height: 14px;
+  filter: brightness(0);
+}
+
+body.alto-contraste.page-presupuestos .modal-close:hover img {
+  filter: brightness(0) invert(1);
+}
+
+body.alto-contraste.page-reportes .report-custom-select-option .check {
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-reportes .report-custom-select-option.selected .check {
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-transacciones .del-btn img {
+  filter: brightness(0) invert(1);
+}
+
+body.alto-contraste.page-transacciones .del-btn {
+  background: #111111 !important;
+  border: 2px solid #111111 !important;
+  border-radius: 10px;
+  opacity: 1 !important;
+  padding: 6px;
+}
+
+body.alto-contraste.page-transacciones .card-title h4,
+body.alto-contraste.page-transacciones .card-meta,
+body.alto-contraste.page-transacciones .cardright,
+body.alto-contraste.page-reportes .page-title,
+body.alto-contraste.page-reportes .page-subtitle,
+body.alto-contraste.page-reportes .chart-title,
+body.alto-contraste.page-reportes .kpi-label,
+body.alto-contraste.page-reportes .kpi-value,
+body.alto-contraste.page-reportes .kpi-note {
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-reportes .filters-panel,
+body.alto-contraste.page-reportes .kpi-card {
+  background: #ffffff !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+body.alto-contraste.page-reportes .kpi-grid {
+  background: #ffffff !important;
+}
+
+body.alto-contraste.page-reportes .kpi-label,
+body.alto-contraste.page-reportes .kpi-note,
+body.alto-contraste.page-reportes .kpi-value {
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-reportes .kpi-value.primary,
+body.alto-contraste.page-reportes .kpi-value.green,
+body.alto-contraste.page-reportes .kpi-value.red {
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-ajustes #abrirModalCuenta,
+body.alto-contraste.page-ajustes .account-edit-btn,
+body.alto-contraste.page-ajustes #guardarCuentaBtn {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+body.alto-contraste.page-ajustes #guardarCuentaBtn {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-type-header {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-type-arrow {
+  filter: brightness(0);
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-type-dropdown {
+  background: #ffffff !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-type-option {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-ajustes
+  #modalCuenta
+  .account-type-option
+  + .account-type-option {
+  border-top: 1px solid #111111 !important;
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-type-option.selected {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-type-option .check {
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-ajustes
+  #modalCuenta
+  .account-type-option.selected
+  .check {
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-ajustes
+  #modalCuenta
+  .account-type-option.selected
+  span {
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-icon-option {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-icon-option img {
+  filter: brightness(0);
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .account-icon-option.selected {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #111111 !important;
+}
+
+body.alto-contraste.page-ajustes
+  #modalCuenta
+  .account-icon-option.selected
+  span {
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-ajustes
+  #modalCuenta
+  .account-icon-option.selected
+  img {
+  filter: brightness(0) invert(1);
+}
+
+body.alto-contraste.page-ajustes #modalCuenta .modal-content input {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+}
+
+body.alto-contraste.page-ajustes
+  #modalCuenta
+  .modal-content
+  input::placeholder {
+  color: #505050 !important;
+}
+
+body.alto-contraste.page-dashboard .member-period-switch {
+  background: #ffffff !important;
+  border: 2px solid #111111 !important;
+}
+
+body.alto-contraste.page-dashboard .period-btn {
+  background: transparent !important;
+  color: #111111 !important;
+  border: 2px solid transparent !important;
+}
+
+body.alto-contraste.page-dashboard .period-btn.active {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+body.alto-contraste.page-dashboard .pie-section,
+body.alto-contraste.page-dashboard .pie-wrap,
+body.alto-contraste.page-dashboard .pie-legend {
+  background: #ffffff !important;
+}
+
+body.alto-contraste.page-dashboard .pie-svg {
+  outline: 2px solid #111111;
+  outline-offset: 4px;
+}
+
+body.alto-contraste.page-dashboard .pie-legend-name,
+body.alto-contraste.page-dashboard .pie-legend-value {
+  color: #111111 !important;
+}
+
+body.alto-contraste.page-dashboard .pie-legend-name {
+  text-shadow: none !important;
+}
+
+body.alto-contraste.page-reportes .chart-card,
+body.alto-contraste.page-reportes .chart-surface,
+body.alto-contraste.page-reportes .pie-wrap,
+body.alto-contraste.page-reportes .pie-legend {
+  background: #ffffff !important;
+  border-color: #111111 !important;
+}
+
+body.alto-contraste.page-reportes .pie-chart {
+  outline: 2px solid #111111;
+  outline-offset: 4px;
+  filter: saturate(1.12) contrast(1.12);
+}
+
+body.alto-contraste.page-reportes .pie-legend,
+body.alto-contraste.page-reportes .pie-legend span {
+  color: #111111 !important;
+}
+
+body.alto-contraste .mobile-nav-toggle {
+  background: transparent !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+}
+
+body.alto-contraste .mobile-nav-toggle span {
+  background: #111111 !important;
 }
 
 .a11y-fab {

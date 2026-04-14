@@ -104,7 +104,7 @@ function renderReportesPage() {
       const optEl = document.createElement("div");
       optEl.className = "report-custom-select-option";
       optEl.dataset.value = opt.value;
-      optEl.innerHTML = `<span>${opt.textContent}</span><span class="check">âœ“</span>`;
+      optEl.innerHTML = `<span>${opt.textContent}</span><span class="check" aria-hidden="true">✓</span>`;
 
       if (opt.disabled) optEl.classList.add("disabled");
       if (opt.selected) optEl.classList.add("selected");
